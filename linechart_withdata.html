@@ -511,6 +511,7 @@
 
 
   var panel1 = QuickSettings.create(920, 10, "Settings")
+  panel1.addRange("Duration in ms", 2000,12000, time_consume, 1000,  function (value) {time_consume=value})
   panel1.addBoolean("Spectrograph Log View", true, function (value) {logView=value});  
   panel1.addBoolean("Volume Map", true, function (value) {is_map_volume=value});  
   panel1.addRange("Tremolo Frequency line 1", 0, 10, tremolo_1.frequency.value, 0.5,  function (value) {tremolo_1.frequency.value=value})
