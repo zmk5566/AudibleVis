@@ -4,6 +4,13 @@
 <head>
   <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/quicksettings/latest/quicksettings.min.js"></script>
+  <script src="log_scale_helper.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+
+  <script src="p5.gui.js"></script>
+
+
   <style>
     body {
       font: 10px sans-serif;
@@ -60,7 +67,9 @@
     var stopped=true;
     var starttime;
     var time_consume =3000;
-
+    var spectro_vis;
+    var speed=2;
+    var logView=true;
 
     var margin = {
         top: 20,
@@ -325,7 +334,7 @@
             d3.select(this).select('text')
               .text(y.invert(pos.y).toFixed(2));
                trigger_synth_activation(i,pos.y/height);
-               console.log("current index: "+i+" , current Value: "+pos.y/height);
+               //console.log("current index: "+i+" , current Value: "+pos.y/height);
               
             return "translate(" + input_timeline*width + "," + pos.y +")";
           });
@@ -394,14 +403,15 @@
 
 
 
+      const toneFFT = new Tone.FFT();
 
       const tremolo_1 = new Tone.Tremolo(0, 1).toDestination().start();
       const tremolo_2 = new Tone.Tremolo(12, 1).toDestination().start();
       const tremolo_3 = new Tone.Tremolo(24, 1).toDestination().start();
 
-      const panner_1 = new Tone.Panner(-1).connect(tremolo_1).toDestination();
-      const panner_2 = new Tone.Panner(0).connect(tremolo_2).toDestination();
-      const panner_3 = new Tone.Panner(1).connect(tremolo_3).toDestination();
+      const panner_1 = new Tone.Panner(-1).connect(tremolo_1).connect(toneFFT).toDestination();
+      const panner_2 = new Tone.Panner(0).connect(tremolo_2).connect(toneFFT).toDestination();
+      const panner_3 = new Tone.Panner(1).connect(tremolo_3).connect(toneFFT).toDestination();
 
 
       const synth_1 = new Tone.Synth({
@@ -444,7 +454,7 @@
 
 
         const synth_list = [synth_1,synth_2,synth_3];
-        var is_map_volume = true;
+        var is_map_volume = false;
         var is_okay=true;
 
         function trigger_synth_activation(index_number,data){
@@ -460,7 +470,7 @@
 
         
         function caculate_freq(input_index){
-          return 440* Math.pow(2, ((1-input_index)*24-24)/12);
+          return 440* Math.pow(2, ((1-input_index)*72-24)/12);
         }
 
 
@@ -476,6 +486,28 @@
 
 </div>
 
+  <div id='container'></div>
+  <script>
+
+
+
+
+  let sketch = function(p) {
+    p.setup = function(){
+      p.createCanvas(200, 200);
+      p.background(0);
+      spectro_vis = p.createGraphics(200, 200);
+    }
+    p.draw = function(){
+
+      process_spectrograph_fft(toneFFT.getValue());
+      //console.log(toneFFT.getValue()[0])
+      //spectro_vis.background(255,255,255)
+      p.image(spectro_vis, 0, 0);
+    }
+  };
+  new p5(sketch, 'container');
+  </script>
 </body>
 
 </html>
