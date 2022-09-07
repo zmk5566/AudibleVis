@@ -38,9 +38,9 @@ spectro_vis.copy(spectro_vis, 0, 0, spectro_vis.width, spectro_vis.height, -spee
     var value;
     if (logView) {
       logIndex = logScale(i, input_spectrum.length);
-      value = (1+input_spectrum[logIndex]/100)*255;
+      value = (1+input_spectrum[logIndex]/100)*450;
     } else {
-      value = (1+input_spectrum[i]/100)*255;
+      value = (1+input_spectrum[i]/100)*450;
     }
 
     if (i==0){
