@@ -27,7 +27,7 @@
 		</script>
 
 		<script type="module">
-			
+
 			import * as THREE from './js/three.module.js';
 			import { RGBELoader } from './js/addons/loaders/RGBELoader.js';
 			import { ARButton } from './js/addons/webxr/ARButton.js';
@@ -119,25 +119,18 @@
 				const ballGroup = new THREE.Group();
 				ballGroup.position.z = - 2;
 
-				const rows = 3;
-				const cols = 3;
 
-				for ( let i = 0; i < rows; i ++ ) {
 
-					for ( let j = 0; j < cols; j ++ ) {
-
-						const ballMaterial = new THREE.MeshStandardMaterial( {
+				const ballMaterial = new THREE.MeshStandardMaterial( {
 							color: 0xdddddd,
-							roughness: i / rows,
-							metalness: j / cols
-						} );
-						const ballMesh = new THREE.Mesh( ballGeometry, ballMaterial );
-						ballMesh.position.set( ( i + 0.5 - rows * 0.5 ) * 0.4, ( j + 0.5 - cols * 0.5 ) * 0.4, 0 );
-						ballGroup.add( ballMesh );
+							roughness: 1,
+							metalness: 1
+				} );
+				const ballMesh = new THREE.Mesh( ballGeometry, ballMaterial );
+				ballMesh.position.set( 0, 0, 0 );
+				ballGroup.add( ballMesh );
 
-					}
 
-				}
 
 				scene.add( ballGroup );
 
