@@ -342,6 +342,9 @@
         }
   
         function start() {
+          if (Tone.context.state !="running"){
+              Tone.start();
+          }
 
           if (stopped){
             // Return the number of milliseconds since 1970/01/01:
@@ -425,7 +428,11 @@
           if (is_map_volume){
           synth_list[index_number].volume.value = (0.5-data)*80;
           }
+          if (Tone.now()>0.5){
           synth_list[index_number].triggerAttack(caculate_freq(data), now)
+        } else{
+          Tone.start();
+        }
         }
 
 
