@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/quicksettings/latest/quicksettings.min.js"></script>
+  <script src="../js/log_scale_helper.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+
+  <script src="../lib/p5.gui.js"></script>
+
+  <style>
+    .ARButton{
+      left: calc(10% - 50px);
+    }
+    body {
+      font: 10px sans-serif;
+    }
+    
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    
+    .x.axis path {
+      display: none;
+    }
+    
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main_graph">
+  <script src="../js/d3_line_chart.js"> </script>
+<div>
+
+<button id="start" onclick="start()">start</button>
+<button id="stop" onclick="stop_play()">stop</button>
+
+
+</div>
+  <div id='container'></div>
+  <script type="module" src="../js/main.js" ></script>
+
+</body>
+
+</html>

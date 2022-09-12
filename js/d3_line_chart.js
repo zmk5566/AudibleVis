@@ -1,43 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/quicksettings/latest/quicksettings.min.js"></script>
-  <script src="log_scale_helper.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
-
-  <script src="p5.gui.js"></script>
-
-
-  <style>
-    body {
-      font: 10px sans-serif;
-    }
-    
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-    
-    .x.axis path {
-      display: none;
-    }
-    
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="main_graph">
-  <script>
     var myData = "date	New York	San Francisco	Austin\n\
 20111001	63.4	62.7	72.2\n\
 20111002	58.0	59.9	67.7\n\
@@ -474,25 +434,7 @@
           return 440* Math.pow(2, ((1-input_index)*pitch_range+pitch_start)/12);
         }
 
-
-      
-  </script>
-
-
-<div>
-
-<button id="start" onclick="start()">start</button>
-<button id="stop" onclick="stop_play()">stop</button>
-
-
-</div>
-
-  <div id='container'></div>
-  <script>
-
-
-
-
+        
   let sketch = function(p) {
     p.setup = function(){
       p.createCanvas(200, 200);
@@ -520,10 +462,3 @@
   panel1.addRange("Pitch range", 12, 72, pitch_range, 12,  function (value) {pitch_range=value})
   panel1.addRange("Pitch start", -36, 24, pitch_start, 12,  function (value) {pitch_start=value} )
 
-
-
-
-  </script>
-</body>
-
-</html>

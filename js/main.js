@@ -1,21 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>three.js ar - cones</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<link type="text/css" rel="stylesheet" href="main.css">
-	</head>
-	<body>
 
-		<div id="info">
-			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> ar - cones<br/>(Chrome Android 81+)
-		</div>
-
-		<script type="module">
-
-			import * as THREE from '../build/three.module.js';
-			import { ARButton } from './jsm/webxr/ARButton.js';
+			import * as THREE from '../lib/three.module.js';
+			import { ARButton } from '../lib/addons/webxr/ARButton.js';
 
 			let camera, scene, renderer;
 			let controller;
@@ -53,6 +38,7 @@
 				const geometry = new THREE.CylinderGeometry( 0, 0.05, 0.2, 32 ).rotateX( Math.PI / 2 );
 
 				function onSelect() {
+					start();
 
 					const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 					const mesh = new THREE.Mesh( geometry, material );
@@ -94,7 +80,3 @@
 				renderer.render( scene, camera );
 
 			}
-
-		</script>
-	</body>
-</html>
