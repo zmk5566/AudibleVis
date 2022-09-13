@@ -28,7 +28,7 @@ function setup() {
   gui.addGlobals('speed', 'logView');
   sliderRange(1, 2, 0.1);
   gui.addGlobals('wave_scale');
-  soundFile = loadSound('aiyuao.mp3');
+  soundFile = loadSound('../res/aiyuao.mp3');
   currentSource = "mic";
 
   
