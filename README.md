@@ -1,4 +1,4 @@
-# Introduction-To-Audio-Visualization-Analysis
+#  3D-Audio-Visualization-Sonification
 
 A sonification project which aid the help people who are blind and visual impariment.
 
