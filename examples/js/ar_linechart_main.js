@@ -1,6 +1,6 @@
 
-			import * as THREE from '../lib/three.module.js';
-			import { ARButton } from '../lib/addons/webxr/ARButton.js';
+			import * as THREE from '../../lib/three.module.js';
+			import { ARButton } from '../../lib/addons/webxr/ARButton.js';
 
 			let camera, scene, renderer;
 			let controller;

@@ -4,62 +4,37 @@
 <head>
   <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/quicksettings/latest/quicksettings.min.js"></script>
-  <script src="./js/log_scale_helper.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
-  <script src="../lib/p5.gui.js"></script>
-
-  <style>
-    .ARButton{
-      left: calc(10% - 50px);
-    }
-    body {
-      font: 10px sans-serif;
-    }
-    
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-    
-    .x.axis path {
-      display: none;
-    }
-    
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
-    }
-  </style>
+  <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
+  <script src="./utils/transformHelper.js"></script> </script>
 </head>
 
 <body>
-  <div id="main_graph">
-  <script src="./js/d3_line_chart.js"> </script>
-<div>
+  
+<button id="start" >start</button>
+<button id="stop"">stop</button>
 
-<button id="start" onclick="start()">start</button>
-<button id="stop" onclick="stop_play()">stop</button>
+  <div id="main_graph">
+    <script  type="module" src="./js/DataPoint3D.js"></script>
+    <script type ="module"> 
+         import {StateTimer} from './js/StateTimer.js';
+
+         console.log(Tone.context);
+         var state_timer = new StateTimer(Tone.context,12);
+         state_timer.init();
+
+         document.getElementById("start").onclick = state_timer.start.bind(state_timer);
+    </script>
+  </div>
+
 
 
 </div>
   <div id='container'></div>
-  <script type="module" src="../js/main.js" ></script>
+  <script type="module" src="./js/ar_linechart_main.js" ></script>
 
 </body>
 
 <footer>
-  
-<script type="text/javascript">
- 
- window.addEventListener('load', (event) => {
-  console.log('page is fully loaded');
-}); 
-
-</script>
 
 </footer>
 
