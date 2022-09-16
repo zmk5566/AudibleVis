@@ -8,10 +8,6 @@ Examples are provided:
 
 https://zmk5566.github.io/3D-Audio-Visualization-Sonification/examples/simple_analysis.html
 
-## D3 linechart with sonification 
-
-https://zmk5566.github.io/3D-Audio-Visualization-Sonification/examples/linechart_withdata.html
-
 ## Simple 3D Audio 
 
 https://zmk5566.github.io/3D-Audio-Visualization-Sonification/examples/simple_3d_source_with_ar.html 
