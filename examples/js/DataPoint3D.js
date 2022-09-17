@@ -33,25 +33,3 @@ export class DataPoint3D {
     }
 }
 
-
-/*
-    * in our case, r should be the distance from the center of the cylinder to the point and suppose to be fixed
-    * theta should be the angle between the x-axis and the point
-*/ 
-
-function CylindricalToCartesian(r, theta, z) {
-    return new THREE.Vector3(r * Math.cos(theta), r * Math.sin(theta), z);
-}
-
-function mapRangetoRange(value, start_range, end_range, new_start_range, new_end_range) {
-    var total_range = end_range - start_range;
-    var new_total_range = new_end_range - new_start_range;
-    var ratio = new_total_range / total_range;
-    return (value - start_range) * ratio + new_start_range;
-}
-
-function value2DtoCartersian(r,x,y,x_start,x_end,y_start,y_end) {
-    var theta = mapRangetoRange(x, x_start, x_end, 0, 2 * Math.PI);
-    var z = mapRangetoRange(y, y_start, y_end, 0, 2 * Math.PI);
-    return CylindricalToCartesian(r, theta, z);
-}

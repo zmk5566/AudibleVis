@@ -6,6 +6,25 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
   <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
   <script src="./utils/transformHelper.js"></script> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
+  <script>
+    var global_config = 
+                  {'time_duration':10,
+                   'spectrum_display':false,
+                   'audio_config': 
+                        {"synths": [
+                                  {"oscillator":{"type":"sine"},"envelope":{"attack":0.01,"decay":0.1,"sustain":0.1,"release":0.1}},
+                                  {"oscillator":{"type":"sine"},"envelope":{"attack":0.01,"decay":0.1,"sustain":0.1,"release":0.1}},
+                                  {"oscillator":{"type":"sine"},"envelope":{"attack":0.01,"decay":0.1,"sustain":0.1,"release":0.1}}],
+                         "audience_location":{'x':0,'y':0,'z':0},
+                         "tremolo_effect":[
+                                  {'frequency':10,'depth':0.5},
+                                  {'frequency':10,'depth':0.5},
+                                  {'frequency':10,'depth':0.5}],
+                        }
+                  };
+
+  </script>
 </head>
 
 <body>
@@ -14,28 +33,22 @@
 <button id="stop"">stop</button>
 
   <div id="main_graph">
-    <script  type="module" src="./js/DataPoint3D.js"></script>
-    <script type ="module"> 
-         import {StateTimer} from './js/StateTimer.js';
-
-         console.log(Tone.context);
-         var state_timer = new StateTimer(Tone.context,12);
-         state_timer.init();
-
-         document.getElementById("start").onclick = state_timer.start.bind(state_timer);
-    </script>
+    <script type="module" src="./main.js" ></script>
   </div>
 
 
 
 </div>
   <div id='container'></div>
-  <script type="module" src="./js/ar_linechart_main.js" ></script>
+  <script type="module" src="./js/ARChartPlayer.js" ></script>
 
 </body>
 
 <footer>
+<script>
+    var gui = new dat.GUI();
 
+</script>
 </footer>
 
 </html>
