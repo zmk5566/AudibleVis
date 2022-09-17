@@ -59,6 +59,10 @@ export class StateTimer {
 
     update_config(config){
         this.stop();
+        if (this.music_core == undefined){
+            this.totalData = this.chart.gettotalData();
+            this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
+        }
         this.config = config;
         this.time_consume = config.time_duration;
         this.music_core.setConfig(config.audio_config);
@@ -72,6 +76,7 @@ export class StateTimer {
     }
 
     start(){
+ 
         console.log("started");
         console.log(this.audioctx.now());
 
