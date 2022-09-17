@@ -35,20 +35,21 @@ audio_location_folder.add(global_config.audio_config.audience_location, 'z', -1,
 
 
 
-global_config.audio_config.tremolo_effect.forEach((trem,i)=>{
+global_config.audio_config.audio_channels.forEach((trem,i)=>{
     
-    var tremolo_effect = synths_folder.addFolder('Synth  ' + i);
-    var osc_type = tremolo_effect.addFolder('OSC Type');
+    var single_channel = synths_folder.addFolder('Channel  ' + i);
+    var osc_type = single_channel.addFolder('OSC Type');
 
-    osc_type.add(global_config.audio_config.synths[i], 'oscillator', ['sine', 'square', 'triangle', 'sawtooth']).name('OSC').onChange( value => {
+    osc_type.add(global_config.audio_config.audio_channels[i].synth.oscillator, 'type', ['sine', 'square', 'triangle', 'sawtooth']).name('OSC').onChange( value => {
+        console.log(value);
         state_timer.update_config(global_config);
     })
 
-    var sub_folder = tremolo_effect.addFolder('Tremolo Effect');
-    sub_folder.add(global_config.audio_config.tremolo_effect[i], 'frequency', 0, 10).step(0.1).name('Frequency').onChange( value => {
+    var sub_folder = single_channel.addFolder('Tremolo Effect');
+    sub_folder.add(global_config.audio_config.audio_channels[i].tremolo_effect, 'frequency', 0, 8).step(1).name('Frequency').onChange( value => {
         state_timer.update_config(global_config);
     })
-    sub_folder.add(global_config.audio_config.tremolo_effect[i], 'depth', 0, 1).step(0.1).name('Depth').onChange( value => {
+    sub_folder.add(global_config.audio_config.audio_channels[i].tremolo_effect, 'depth', 0, 1).step(0.1).name('Depth').onChange( value => {
         state_timer.update_config(global_config);
     })
 

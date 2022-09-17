@@ -61,6 +61,7 @@ export class StateTimer {
         this.stop();
         this.config = config;
         this.time_consume = config.time_duration;
+        this.music_core.setConfig(config.audio_config);
     }
 
 
@@ -75,7 +76,7 @@ export class StateTimer {
         console.log(this.audioctx.now());
 
         this.totalData = this.chart.gettotalData();
-        this.music_core = new ThreeDimensionAuidoCore(this.totalData.length);
+        this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
         console.log(this.totalData.length);
         console.log("total channels of data:  "+ this.totalData.length); 
         
