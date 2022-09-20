@@ -12,7 +12,7 @@ export class StateTimer {
         this.refTime = 0;
         this.intervalCall;
         this.chart = new InteractiveLineChart();
-        this.vis3d = new Simple3Dvis(config);
+        this.vis3d = new Simple3Dvis(config,this.trigger_xr_input.bind(this));
         this.music_core;
         this.totalData = [];
     }
@@ -25,6 +25,12 @@ export class StateTimer {
 
     get_global_config(){
         return this.config;
+    }
+
+    trigger_xr_input(){
+        console.log("triggered xr input");
+        this.start();
+
     }
 
 

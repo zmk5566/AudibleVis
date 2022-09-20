@@ -2,6 +2,7 @@ import * as THREE from '../../lib/three.module.js';
 
 
 import { TrackballControls } from './three-libs/addons/controls/TrackballControls.js';
+import { ARButton } from './ARButton.js';
 
 let perspectiveCamera, orthographicCamera, controls, scene, renderer, stats;
 
@@ -11,7 +12,7 @@ const params = {
 
 
 export class Simple3Dvis {
-    constructor(config) {
+    constructor(config,triggerFunc) {
         this.config = config;
         this.perspectiveCamera;
         this.orthographicCamera;
@@ -24,6 +25,8 @@ export class Simple3Dvis {
         this.frustumSize = 400;
         this.screen_cylinder;
         this.points = []
+        this.locator;
+        this.triggerStartFunc = triggerFunc;
     }
 
     init() {
@@ -49,15 +52,15 @@ export class Simple3Dvis {
 
         const geometry = new THREE.CylinderGeometry( 0, 0.1, 0.3, 3,5 );
         const material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } );
-    
-        const mesh = new THREE.Mesh( geometry, material );
-        mesh.rotateX( -Math.PI / 2 );
-        mesh.position.x = 0;
-        mesh.position.y = 0;
-        mesh.position.z = 0;
-        mesh.updateMatrix();
-        mesh.matrixAutoUpdate = false;
-        this.scene.add( mesh );
+
+        this.locator = new THREE.Mesh( geometry, material );
+        this.locator.rotateX( -Math.PI / 2 );
+        this.locator.position.x = 0;
+        this.locator.position.y = 0;
+        this.locator.position.z = 0;
+        this.locator.updateMatrix();
+        this.locator.matrixAutoUpdate = false;
+        this.scene.add( this.locator );
 
 
     
@@ -106,18 +109,34 @@ export class Simple3Dvis {
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize( this.windowsSizeX, this.windowsSizeY );
         document.getElementById('vis_3d').appendChild( this.renderer.domElement );
+        this.renderer.xr.enabled = true;
+        document.body.appendChild( ARButton.createButton( this ) );
+
+
     
         this.createControls( this.perspectiveCamera );
+
+        var controller = this.renderer.xr.getController( 0 );
+        controller.addEventListener( 'select', this.triggerStartFunc );
+
+    }
+
+    getRender(){
+        return this.renderer;
+    }
+
+    trigger_ar_start(){
+        this.locator.visible = false;
 
     }
 
     createScreenCyliner(){
-             this.screen_cylinder.geometry.dispose();
-             console.log("create screen cylinder");
-                console.log(this.config.radius);
+            this.screen_cylinder.geometry.dispose();
+            console.log("create screen cylinder");
+            console.log(this.config.radius);
             const screen_geometry = new THREE.CylinderGeometry( this.config.radius*this.config.dynamic_scale, this.config.radius*this.config.dynamic_scale, this.config.dynamic_scale, 32,1,true,-this.config.theta/2,this.config.theta );
             this.screen_cylinder.geometry = screen_geometry;
-            }
+    }
 
     animate(){
         requestAnimationFrame(this.animate.bind(this));

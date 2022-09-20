@@ -31,6 +31,7 @@ folder1.add(global_config, 'theta', Math.PI/6, 2*Math.PI).step(0.01).name('Theta
 //var spectrum_display = folder1.add(global_config, 'spectrum_display').name('Spectrum Display');
 
 var audio_config_folder = gui.addFolder('Audio Config');
+audio_config_folder.close();
 var synths_folder = audio_config_folder.addFolder('Synths');
 // var audio_location_folder = audio_config_folder.addFolder('Audience Location');
 
