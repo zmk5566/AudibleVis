@@ -1,6 +1,6 @@
 import {InteractiveLineChart} from './LineCharter.js';
 import { ThreeDimensionAuidoCore } from './3DMusicCore.js';
-import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
+import {Simple3Dvis} from './Simple3Dvis.js';
 
 export class StateTimer {
     constructor(audioctx,config) {
@@ -12,13 +12,15 @@ export class StateTimer {
         this.refTime = 0;
         this.intervalCall;
         this.chart = new InteractiveLineChart();
+        this.vis3d = new Simple3Dvis(config);
         this.music_core;
-        this.radius = 1;
         this.totalData = [];
     }
 
     init(){
         this.chart.drawChart();
+        this.vis3d.init();
+        this.vis3d.animate()
     }
 
     get_global_config(){
@@ -71,8 +73,9 @@ export class StateTimer {
 
     process_each_data_point(data_point,index){
         var [x_cord,y_cord,z_cord]= 
-            value2DtoCartersian(this.radius,this.timer,data_point.uniform_value,0,1,-Math.PI/3,+Math.PI/3,0,1,-0.5,+0.5);
-            this.music_core.playSound(index,data_point.uniform_value,y_cord,x_cord,z_cord);
+            value2DtoCartersian(this.config.radius,this.timer,data_point.uniform_value,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
+            this.music_core.playSound(index,data_point.uniform_value,y_cord*this.config.dynamic_scale,x_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
     }
 
     start(){
@@ -92,6 +95,8 @@ export class StateTimer {
 
         this.chart.trigger_display_lines();
         window.requestAnimationFrame(this.startAnim.bind(this));
+        this.vis3d.start_playing_points();
+
         
     }
 
@@ -107,6 +112,7 @@ export class StateTimer {
         this.refTime = 0;
         this.chart.trigger_end_display_lines();
         this.music_core.stopAllSound();
+        this.vis3d.stop_playing_points();
         }else{
             console.log("already stopped");
         }

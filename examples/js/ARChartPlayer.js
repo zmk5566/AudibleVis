@@ -5,46 +5,52 @@
 			let camera, scene, renderer;
 			let controller;
 
-			init();
-			animate();
-
 			function init() {
 
 				const container = document.createElement( 'div' );
-				document.body.appendChild( container );
+				document.getElementById("container").appendChild( container );
 
 				scene = new THREE.Scene();
 
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+				camera = new THREE.PerspectiveCamera( 70, 950 / 500, 0.01, 20 );
 
-				const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
-				light.position.set( 0.5, 1, 0.25 );
-				scene.add( light );
+				const defaultLight = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
+				defaultLight.position.set( 0.5, 1, 0.25 );
+				scene.add( defaultLight );
 
 				//
 
 				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setSize( 950, 500 );
+				renderer.outputEncoding = THREE.sRGBEncoding;
+				renderer.physicallyCorrectLights = true;
 				renderer.xr.enabled = true;
 				container.appendChild( renderer.domElement );
+				scene.background = new THREE.Color( 0xcccccc );
+
+
+				//const xrLight = new XREstimatedLight( renderer );
+
+
+				document.body.appendChild( ARButton.createButton( renderer, { optionalFeatures: [ 'light-estimation' ] } ) );
 
 				//
 
-				document.body.appendChild( ARButton.createButton( renderer ) );
+				const ballGeometry = new THREE.SphereGeometry( 0.175, 32, 32 );
+				const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+				const ballMesh = new THREE.Mesh( ballGeometry, material );
+				ballMesh.position.set(0,0,-2);
 
-				//
+				scene = new THREE.Scene();
+				scene.add( new THREE.GridHelper( 1000, 10, 0x888888, 0x444444 ) );
 
-				const geometry = new THREE.CylinderGeometry( 0, 0.05, 0.2, 32 ).rotateX( Math.PI / 2 );
+
+				scene.add( ballMesh );
 
 				function onSelect() {
-					start();
 
-					const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
-					const mesh = new THREE.Mesh( geometry, material );
-					mesh.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
-					mesh.quaternion.setFromRotationMatrix( controller.matrixWorld );
-					scene.add( mesh );
+
 
 				}
 

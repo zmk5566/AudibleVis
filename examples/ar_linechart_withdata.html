@@ -11,6 +11,10 @@
     var global_config = 
                   {'time_duration':10,
                    'spectrum_display':false,
+                   "data_types_num":3,
+                   "dynamic_scale" : 2, 
+                   "radius":1,
+                   "theta":Math.PI/3*2,
                    'audio_config':{
                    "audience_location":{"x":0,"y":0,"z":0},
                    "audio_channels":
@@ -39,26 +43,23 @@
 
 <body>
   
-<button id="start" >start</button>
-<button id="stop"">stop</button>
+<div class="flex-container">
 
   <div id="main_graph">
     <script type="module" src="./main.js" ></script>
   </div>
-
-
-
+  <div id="vis_3d">
+  </div>
+  <div id="main_control_pannel">
+  <button id="start" class = "button">start</button>
+  <button id="stop" class ="button">stop</button>
+  </div>
 </div>
-  <div id='container'></div>
-  <script type="module" src="./js/ARChartPlayer.js" ></script>
 
+  <div id='container'></div>
 </body>
 
 <footer>
-<script>
-    var gui = new dat.GUI();
-
-</script>
 </footer>
 
 </html>

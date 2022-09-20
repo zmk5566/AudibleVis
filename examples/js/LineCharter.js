@@ -4,8 +4,8 @@
 
       constructor(){
           this.margin = {top: 20, right: 80, bottom: 30, left: 50};
-          this.width = 960 - this.margin.left - this.margin.right;
-          this.height = 500 - this.margin.top - this.margin.bottom;
+          this.width = 640 - this.margin.left - this.margin.right;
+          this.height = 400 - this.margin.top - this.margin.bottom;
           this.x = d3.time.scale().range([0, this.width]);
           this.y = d3.scale.linear().range([this.height, 0]);
           this.xAxis = d3.svg.axis().scale(this.x).orient("bottom");
@@ -29,7 +29,7 @@
 
         drawChart(){
 
-          var svg = d3.select("body").append("svg")
+          var svg = d3.select("#main_graph").append("svg")
               .attr("width", this.width + this.margin.left + this.margin.right)
               .attr("height", this.height + this.margin.top + this.margin.bottom)
               .append("g")
@@ -63,9 +63,10 @@
 
               this.total_data = cities;
 
-              this.total_data.forEach(function(d) {
+              this.total_data.forEach(function(d,i) {
                 this.total_data.current_value = 0;
                 this.total_data.uniform_value = 0;
+                this.total_data[i].color = color(d.name);
               }.bind(this));
               
             this.x.domain(d3.extent(data, function(d) {
