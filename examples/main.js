@@ -11,26 +11,40 @@ var gui = new GUI();
 var folder1 = gui.addFolder('General');
 console.log(global_config);
 
-var time_duration = folder1.add(global_config, 'time_duration', 1, 20).step(1).name('Time Duration').onChange( value => {
+folder1.add(global_config, 'time_duration', 1, 20).step(1).name('Time Duration').onChange( value => {
     state_timer.update_config(global_config);
 } );
+
+folder1.add(global_config, 'dynamic_scale', 0.5, 3).step(1).name('Scale').onChange( value => {
+    state_timer.update_config(global_config);
+} );
+
+folder1.add(global_config, 'radius', 0.5, 3).step(0.25).name('Radius').onChange( value => {
+    state_timer.update_config(global_config);
+} );
+
+folder1.add(global_config, 'theta', Math.PI/6, 2*Math.PI).step(0.01).name('Theta').onChange( value => {
+    state_timer.update_config(global_config);
+} );
+
+
 //var spectrum_display = folder1.add(global_config, 'spectrum_display').name('Spectrum Display');
 
 var audio_config_folder = gui.addFolder('Audio Config');
 var synths_folder = audio_config_folder.addFolder('Synths');
-var audio_location_folder = audio_config_folder.addFolder('Audience Location');
+// var audio_location_folder = audio_config_folder.addFolder('Audience Location');
 
-audio_location_folder.add(global_config.audio_config.audience_location, 'x', -1, 1).step(0.1).name('X').onChange( value => {
-    state_timer.update_config(global_config);
-})
+// audio_location_folder.add(global_config.audio_config.audience_location, 'x', -1, 1).step(0.1).name('X').onChange( value => {
+//     state_timer.update_config(global_config);
+// })
 
-audio_location_folder.add(global_config.audio_config.audience_location, 'y', -1, 1).step(0.1).name('Y').onChange( value => {
-    state_timer.update_config(global_config);
-})
+// audio_location_folder.add(global_config.audio_config.audience_location, 'y', -1, 1).step(0.1).name('Y').onChange( value => {
+//     state_timer.update_config(global_config);
+// })
 
-audio_location_folder.add(global_config.audio_config.audience_location, 'z', -1, 1).step(0.1).name('Z').onChange( value => {
-    state_timer.update_config(global_config);
-})
+// audio_location_folder.add(global_config.audio_config.audience_location, 'z', -1, 1).step(0.1).name('Z').onChange( value => {
+//     state_timer.update_config(global_config);
+// })
 
 
 

@@ -22,6 +22,7 @@ export class Simple3Dvis {
         this.windowsSizeX = 640;
         this.windowsSizeY= 400;
         this.frustumSize = 400;
+        this.screen_cylinder;
         this.points = []
     }
 
@@ -79,9 +80,10 @@ export class Simple3Dvis {
 
         const screen_geometry = new THREE.CylinderGeometry( this.config.radius*this.config.dynamic_scale, this.config.radius*this.config.dynamic_scale, this.config.dynamic_scale, 32,1,true,-this.config.theta/2,this.config.theta );
         const screen_material = new THREE.MeshBasicMaterial( {color: 0xffff00,side:THREE.DoubleSide,transparent:true,opacity:0.5} );
-        const screen_cylinder = new THREE.Mesh( screen_geometry, screen_material );
-        screen_cylinder.rotateX(Math.PI);
-        this.scene.add( screen_cylinder );
+        this.screen_cylinder = new THREE.Mesh( screen_geometry, screen_material );
+        this.screen_cylinder.rotateX(Math.PI);
+
+        this.scene.add( this.screen_cylinder );
 
         console.log ( "ready to draw ongoing points " + this.config.data_types_num);
 
@@ -109,6 +111,14 @@ export class Simple3Dvis {
 
     }
 
+    createScreenCyliner(){
+             this.screen_cylinder.geometry.dispose();
+             console.log("create screen cylinder");
+                console.log(this.config.radius);
+            const screen_geometry = new THREE.CylinderGeometry( this.config.radius*this.config.dynamic_scale, this.config.radius*this.config.dynamic_scale, this.config.dynamic_scale, 32,1,true,-this.config.theta/2,this.config.theta );
+            this.screen_cylinder.geometry = screen_geometry;
+            }
+
     animate(){
         requestAnimationFrame(this.animate.bind(this));
 
@@ -123,6 +133,12 @@ export class Simple3Dvis {
         this.points[index].position.z = z;
         const material = new THREE.MeshBasicMaterial( { color: color } );
         this.points[index].material = material;
+
+    }
+
+    setConfig(config){
+        this.config=config;
+        this.createScreenCyliner();
 
     }
 

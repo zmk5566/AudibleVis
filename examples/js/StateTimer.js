@@ -68,6 +68,7 @@ export class StateTimer {
         this.config = config;
         this.time_consume = config.time_duration;
         this.music_core.setConfig(config.audio_config);
+        this.vis3d.setConfig(config);
     }
 
 
