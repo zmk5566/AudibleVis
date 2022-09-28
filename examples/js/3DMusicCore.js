@@ -4,6 +4,7 @@ export class ThreeDimensionAuidoCore {
         this.panners = [];
         this.tremolo = [];
         this.synths = [];
+        this.volumes = [];
         this.pitch_range = 12;
         this.pitch_start = 0;
         this.audio_config =audio_config;
@@ -15,7 +16,8 @@ export class ThreeDimensionAuidoCore {
         console.log("audio config");
         this.audio_config.audio_channels.forEach((config,i)=>{
             console.log(config);
-            this.panners[i] = new Tone.Panner3D({panningModel:"HRTF"}).toDestination();
+            this.volumes[i] = new Tone.Volume(0).toDestination();
+            this.panners[i] = new Tone.Panner3D({panningModel:"HRTF"}).connect(this.volumes[i]);
             this.tremolo[i] = new Tone.Tremolo({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth}).connect(this.panners[i]).start();
             this.synths[i] = new Tone.Synth({
                 oscillator: {
@@ -37,17 +39,28 @@ export class ThreeDimensionAuidoCore {
         this.audio_config = audio_config;
         this.audio_config.audio_channels.forEach((config,i)=>{
             this.tremolo[i].set({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth});
+            //this.synths[i].volume.mute = config.mute;
             console.log(config.synth);
             this.synths[i].set({
                 oscillator: {
                   type: config.synth.oscillator.type
-                }});
+                }
+              }).connect(this.tremolo[i]);
+              console.log(this.volumes[i]);
+              this.volumes[i].set({"mute":true});
+              this.volumes[i].mute=true;
+              console.log(this.volumes[i]);
+
         })
     }
 
     playSound(index, uniform_data_height, panX, panY, panZ) {
+        if (this.audio_config.audio_channels[index].mute==false){
         this.synths[index].triggerAttack(this.caculate_freq(uniform_data_height),Tone.now());
         this.panners[index].setPosition(panX, panY, panZ);
+      }else{
+        this.volumes[index].set({"mute":true});
+      }        
     }
 
     stopAllSound(){

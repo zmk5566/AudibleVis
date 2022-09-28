@@ -68,6 +68,11 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
         state_timer.update_config(global_config);
     })
 
+    sub_folder.add(global_config.audio_config.audio_channels[i], 'mute').name('Mute').onChange( value => {
+        state_timer.update_config(global_config);
+    })
+    
+
 
 
 })
