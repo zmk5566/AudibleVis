@@ -9,7 +9,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
   <script>
     var global_config = 
-                  {'time_duration':10,
+                  {'time_duration':20,
                    'spectrum_display':false,
                    "data_types_num":3,
                    "dynamic_scale" : 2, 
@@ -17,6 +17,8 @@
                    "theta":Math.PI/3*2,
                    'audio_config':{
                    "audience_location":{"x":0,"y":0,"z":0},
+                   "mode":"pitchnpan",
+                   "pitchnpan_interval" :2,
                    "audio_channels":
                    [  {
                                 "synth_index":0,

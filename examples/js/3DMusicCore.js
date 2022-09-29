@@ -31,12 +31,11 @@ export class ThreeDimensionAuidoCore {
                 }
               }).connect(this.tremolo[i])
         }) 
-
-
     }
 
     setConfig(audio_config){
         this.audio_config = audio_config;
+        console.log(this.audio_config);
         this.audio_config.audio_channels.forEach((config,i)=>{
             this.tremolo[i].set({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth});
             //this.synths[i].volume.mute = config.mute;
@@ -54,14 +53,24 @@ export class ThreeDimensionAuidoCore {
         })
     }
 
-    playSound(index, uniform_data_height, panX, panY, panZ) {
-        if (this.audio_config.audio_channels[index].mute==false){
+    playSpatialSound(index, uniform_data_height, panX, panY, panZ) {
+      // first mode
+      if (this.audio_config.audio_channels[index].mute==false){
         this.synths[index].triggerAttack(this.caculate_freq(uniform_data_height),Tone.now());
         this.panners[index].setPosition(panX, panY, panZ);
       }else{
         this.volumes[index].set({"mute":true});
-      }        
+      }
+  }
+  playPitchPanSound(index, timer_status, panX, panY, panZ) {
+    console.log(timer_status)
+    if (this.audio_config.audio_channels[index].mute==false){
+      this.synths[index].triggerAttackRelease(this.caculate_freq(timer_status),Tone.now()+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),this.audio_config.pitchnpan_interval/(this.num_of_sources+1));
+      this.panners[index].setPosition(panX, panY, panZ);
+    }else{
+      this.volumes[index].set({"mute":true});
     }
+  }
 
     stopAllSound(){
         this.synths.forEach(function(element) { element.triggerRelease() })
