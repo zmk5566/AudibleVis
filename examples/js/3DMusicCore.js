@@ -63,9 +63,13 @@ export class ThreeDimensionAuidoCore {
       }
   }
   playPitchPanSound(index, timer_status, panX, panY, panZ) {
-    console.log(timer_status)
+    var now  = Tone.now();
+    var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);
+    console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
     if (this.audio_config.audio_channels[index].mute==false){
-      this.synths[index].triggerAttackRelease(this.caculate_freq(timer_status),Tone.now()+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),this.audio_config.pitchnpan_interval/(this.num_of_sources+1));
+      console.log(index);
+      this.synths[index].triggerAttack(this.caculate_freq(timer_status), now+index*interval);
+      this.synths[index].triggerRelease(now+interval*(index+1));
       this.panners[index].setPosition(panX, panY, panZ);
     }else{
       this.volumes[index].set({"mute":true});

@@ -15,7 +15,7 @@ folder1.add(global_config.audio_config, 'mode',  ['pitchpan', 'spatial']).name('
     state_timer.update_config(global_config);
 } );
 
-folder1.add(global_config, 'time_duration', 1, 20).step(1).name('Time Duration').onChange( value => {
+folder1.add(global_config, 'time_duration', 10, 60).step(1).name('Time Duration').onChange( value => {
     state_timer.update_config(global_config);
 } );
 
