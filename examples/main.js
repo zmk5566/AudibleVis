@@ -38,24 +38,26 @@ folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.5,6).step(0.5).n
 
 
 
+
 //var spectrum_display = folder1.add(global_config, 'spectrum_display').name('Spectrum Display');
 
 var audio_config_folder = gui.addFolder('Audio Config');
 audio_config_folder.close();
+//var location_config = audio_config_folder.addFolder('Location');
 var synths_folder = audio_config_folder.addFolder('Synths');
-// var audio_location_folder = audio_config_folder.addFolder('Audience Location');
+var audio_location_folder = audio_config_folder.addFolder('Audience Location');
 
-// audio_location_folder.add(global_config.audio_config.audience_location, 'x', -1, 1).step(0.1).name('X').onChange( value => {
-//     state_timer.update_config(global_config);
-// })
+audio_location_folder.add(global_config.audio_config.audience_location, 'pitch', -1, 1).step(0.05).name('X').onChange( value => {
+    state_timer.update_config(global_config);
+})
 
-// audio_location_folder.add(global_config.audio_config.audience_location, 'y', -1, 1).step(0.1).name('Y').onChange( value => {
-//     state_timer.update_config(global_config);
-// })
+audio_location_folder.add(global_config.audio_config.audience_location, 'yaw', -1, 1).step(0.05).name('Y').onChange( value => {
+    state_timer.update_config(global_config);
+})
 
-// audio_location_folder.add(global_config.audio_config.audience_location, 'z', -1, 1).step(0.1).name('Z').onChange( value => {
-//     state_timer.update_config(global_config);
-// })
+audio_location_folder.add(global_config.audio_config.audience_location, 'roll', -1, 1).step(0.05).name('Z').onChange( value => {
+    state_timer.update_config(global_config);
+})
 
 
 

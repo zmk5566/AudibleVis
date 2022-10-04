@@ -26,6 +26,7 @@ export class Simple3Dvis {
         this.screen_cylinder;
         this.points = []
         this.locator;
+        this.simple_orient;
         this.triggerStartFunc = triggerFunc;
     }
 
@@ -51,16 +52,25 @@ export class Simple3Dvis {
         this.scene.fog = new THREE.FogExp2( 0xcccccc, 0.002 );
 
         const geometry = new THREE.CylinderGeometry( 0, 0.1, 0.3, 3,5 );
+        //const geometry = new THREE.BoxBufferGeometry( 0.1, 0.1, 0.1 );
+
         const material = new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } );
 
-        this.locator = new THREE.Mesh( geometry, material );
-        this.locator.rotateX( -Math.PI / 2 );
+        this.locator = new THREE.Mesh( );
+        this.simple_orient = new THREE.Mesh( geometry, material );
+
+        //this.locator.rotateX( -Math.PI / 2 );
         this.locator.position.x = 0;
         this.locator.position.y = 0;
         this.locator.position.z = 0;
         this.locator.updateMatrix();
         this.locator.matrixAutoUpdate = false;
+        this.simple_orient.rotateX(-Math.PI / 2)
+        this.scene.add(this.simple_orient);
         this.scene.add( this.locator );
+        
+
+        this.locator.rotateX()
 
 
     
@@ -155,8 +165,22 @@ export class Simple3Dvis {
 
     }
 
+    get_localPoints(x,y,z){
+        var local_point = this.locator.worldToLocal(new THREE.Vector3(x,y,z));
+        return [local_point.x,local_point.y,local_point.z];
+        
+    }
+
     setConfig(config){
         this.config=config;
+        
+        console.log(config.audio_config.audience_location);
+
+        this.locator.setRotationFromEuler(new THREE.Euler( this.config.audio_config.audience_location.pitch,this.config.audio_config.audience_location.roll,this.config.audio_config.audience_location.yaw, 'YXZ' )); 
+        this.simple_orient.setRotationFromEuler(new THREE.Euler( -Math.PI / 2+this.config.audio_config.audience_location.pitch,-this.config.audio_config.audience_location.yaw,this.config.audio_config.audience_location.roll, 'YZX' )); 
+
+       
+        this.locator.updateMatrix();
         this.createScreenCyliner();
 
     }

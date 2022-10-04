@@ -102,7 +102,10 @@ export class StateTimer {
             console.log("pitchnpan");
             var [x_cord,y_cord,z_cord]= 
             value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
-            this.music_core.playPitchPanSound(index,this.timer,y_cord*this.config.dynamic_scale,x_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale);
+            var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
+            console.log(x_cord,y_cord,z_cord);
+            console.log(temp_coord);
+            this.music_core.playPitchPanSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
             this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
         }
     }
