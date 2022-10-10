@@ -48,6 +48,7 @@ var synths_folder = audio_config_folder.addFolder('Synths');
 var audio_location_folder = audio_config_folder.addFolder('Audience Location');
 
 audio_location_folder.add(global_config.audio_config.audience_location, 'pitch', -1, 1).step(0.05).name('X').onChange( value => {
+    console.log("changed pitch")
     state_timer.update_config(global_config);
 })
 
@@ -89,10 +90,17 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
 
 })
 
+function global_update_config(){
+console.log("global update config");
+state_timer.update_config(global_config);
 
+}
 
-
+update_global_config =global_update_config;
 
 
 document.getElementById("start").onclick = state_timer.start.bind(state_timer);
+document.getElementById("pitch").onchange = () => {
+    console.log('it changed'); // Do something
+  }
 document.getElementById("stop").onclick = state_timer.stop.bind(state_timer);
