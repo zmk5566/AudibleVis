@@ -52,6 +52,18 @@ export class ThreeDimensionAuidoCore {
 
         })
     }
+    dynamic_update_config(config){
+        this.audio_config = config;
+        console.log(config);
+    }
+
+    updatePan(index, timer_status, panX, panY, panZ){
+      // console.log("update pan");
+      // console.log(index,panX,panY,panZ);
+      this.panners[index].setPosition(panX, panY, panZ);
+      
+
+    }
 
     playSpatialSound(index, uniform_data_height, panX, panY, panZ) {
       // first mode

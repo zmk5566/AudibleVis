@@ -92,7 +92,7 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
 
 function global_update_config(){
 console.log("global update config");
-state_timer.update_config(global_config);
+state_timer.update_pan(global_config);
 
 }
 

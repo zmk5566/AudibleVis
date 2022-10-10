@@ -185,6 +185,14 @@ export class Simple3Dvis {
 
     }
 
+    update_pan(config){
+        this.config=config;
+        this.locator.setRotationFromEuler(new THREE.Euler( this.config.audio_config.audience_location.pitch,this.config.audio_config.audience_location.roll,this.config.audio_config.audience_location.yaw, 'YXZ' )); 
+        this.simple_orient.setRotationFromEuler(new THREE.Euler( -Math.PI / 2+this.config.audio_config.audience_location.pitch,-this.config.audio_config.audience_location.yaw,this.config.audio_config.audience_location.roll, 'YZX' )); 
+        this.locator.updateMatrix();
+
+    }
+
     start_playing_points(){
         this.points.forEach(point => {
 
