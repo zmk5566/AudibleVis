@@ -14,14 +14,20 @@ export class StateTimer {
         this.intervalCall;
         this.chart = new InteractiveLineChart();
         this.vis3d = new Simple3Dvis(config,this.trigger_xr_input.bind(this));
-        this.music_core;
+        this.music_core ;
         this.totalData = [];
     }
 
     init(){
         this.chart.drawChart();
         this.vis3d.init();
-        this.vis3d.animate()
+        this.vis3d.animate();
+
+    }
+
+    initcore(){
+        this.music_core= new ThreeDimensionAuidoCore(this.chart.gettotalData().length,this.config.audio_config)
+        this.music_core.init();
     }
 
     get_global_config(){
@@ -70,20 +76,28 @@ export class StateTimer {
         // })
 
 
-    }else if(this.config.audio_config.mode === "pitchnpan"){
-        //update only the passed time is over a threashold
-        if (this.audioctx.now() - this.previousRef > this.config.audio_config.pitchnpan_interval){
+        }else if(this.config.audio_config.mode === "pitchnpan"){
+            //update only the passed time is over a threashold
+            if (this.audioctx.now() - this.previousRef > this.config.audio_config.pitchnpan_interval){
+                this.previousRef = this.audioctx.now();
+                this.totalData = this.chart.trigger_line_movement(this.timer);
+                this.totalData.forEach((d,i)=>{
+                    this.process_each_data_point(d,i);
+                })
+
+            }
+            this.totalData.forEach((d,i)=>{
+                this.process_each_pan_data_point(d,i);
+            })
+        }else if(this.config.audio_config.mode === "running_pitch_pan"){
+            //console.log("running pitch pan");
+            //update only the passed time is over a threashold
             this.previousRef = this.audioctx.now();
             this.totalData = this.chart.trigger_line_movement(this.timer);
             this.totalData.forEach((d,i)=>{
                 this.process_each_data_point(d,i);
             })
-
         }
-        this.totalData.forEach((d,i)=>{
-            this.process_each_pan_data_point(d,i);
-        })
-    }
 
         
         
@@ -94,7 +108,7 @@ export class StateTimer {
         this.stop();
         if (this.music_core == undefined){
             this.totalData = this.chart.gettotalData();
-            this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
+            //this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
         }
         this.config = config;
         this.time_consume = config.time_duration;
@@ -119,15 +133,29 @@ export class StateTimer {
 
 
     process_each_data_point(data_point,index){
+        //console.log(index,"timer",this.timer,"value",data_point.uniform_value);
 
         if (this.config.audio_config.mode === "spatial"){
         var [x_cord,y_cord,z_cord]= 
             value2DtoCartersian(this.config.radius,this.timer,data_point.uniform_value,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
             var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
+            console.log( data_point.uniform_value, this.timer);
             
-            this.music_core.playSpatialSound(index,data_point.uniform_value,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
+            this.music_core.playSpatialSound(index,data_point.uniform_value,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale,Tone.now());
             this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
-        }else if(this.config.audio_config.mode === "pitchnpan"){
+        } else
+        if (this.config.audio_config.mode === "running_pitch_pan"){
+        var [x_cord,y_cord,z_cord]= 
+
+        value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
+        var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
+
+        this.music_core.playSpatialSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
+        this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+  }
+        
+        
+        else if(this.config.audio_config.mode === "pitchnpan"){
             console.log("pitchnpan");
             var [x_cord,y_cord,z_cord]= 
             value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
@@ -145,7 +173,8 @@ export class StateTimer {
         console.log(this.audioctx.now());
 
         this.totalData = this.chart.gettotalData();
-        this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
+        //TouchList.totalData.update_config
+        //this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
         console.log(this.totalData.length);
         console.log("total channels of data:  "+ this.totalData.length); 
         
@@ -160,6 +189,12 @@ export class StateTimer {
 
         
     }
+
+    // init(){
+    //     // this.vis3d.init();
+    //     // this.chart.init();
+    //     this.music_core.init();
+    // }
 
     get_uniformed_time_elapse(){
         return (1-((this.time_consume-(this.audioctx.now() - this.refTime))/this.time_consume));

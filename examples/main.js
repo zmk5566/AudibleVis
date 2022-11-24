@@ -11,7 +11,7 @@ var gui = new GUI();
 var folder1 = gui.addFolder('General');
 console.log(global_config);
 
-folder1.add(global_config.audio_config, 'mode',  ['pitchpan', 'spatial']).name('Mode').onChange( value => {
+folder1.add(global_config.audio_config, 'mode',  ['running_pitch_pan','pitchpan', 'spatial']).name('Mode').onChange( value => {
     state_timer.update_config(global_config);
 } );
 
@@ -104,3 +104,5 @@ document.getElementById("pitch").onchange = () => {
     console.log('it changed'); // Do something
   }
 document.getElementById("stop").onclick = state_timer.stop.bind(state_timer);
+
+document.getElementById("init").onclick = state_timer.initcore.bind(state_timer);
