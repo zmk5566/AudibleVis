@@ -11,7 +11,7 @@ var gui = new GUI();
 var folder1 = gui.addFolder('General');
 console.log(global_config);
 
-folder1.add(global_config.audio_config, 'mode',  ['pitchpan', 'spatial']).name('Mode').onChange( value => {
+folder1.add(global_config.audio_config, 'mode',  ['pitchpoly','pitchnpan', 'spatial','percnpan','spatial_simple','spatial_explore']).name('Mode').onChange( value => {
     state_timer.update_config(global_config);
 } );
 
@@ -31,7 +31,7 @@ folder1.add(global_config, 'theta', Math.PI/6, 2*Math.PI).step(0.01).name('Theta
     state_timer.update_config(global_config);
 } );
 
-folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.5,6).step(0.5).name('Interval').onChange( value => {
+folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05,2).step(0.1).name('Interval').onChange( value => {
     state_timer.update_config(global_config);
 } );
 

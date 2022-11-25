@@ -61,8 +61,6 @@ export class ThreeDimensionAuidoCore {
       // console.log("update pan");
       // console.log(index,panX,panY,panZ);
       this.panners[index].setPosition(panX, panY, panZ);
-      
-
     }
 
     playSpatialSound(index, uniform_data_height, panX, panY, panZ) {
@@ -82,6 +80,16 @@ export class ThreeDimensionAuidoCore {
       console.log(index);
       this.synths[index].triggerAttack(this.caculate_freq(timer_status), now+index*interval);
       this.synths[index].triggerRelease(now+interval*(index+1));
+      this.panners[index].setPosition(panX, panY, panZ);
+    }else{
+      this.volumes[index].set({"mute":true});
+    }
+  }
+
+  playPitchPolySound(index, timer_status, panX, panY, panZ) {
+    var now  = Tone.now();
+    if (this.audio_config.audio_channels[index].mute==false){
+      this.synths[index].triggerAttack(this.caculate_freq(timer_status),Tone.now());
       this.panners[index].setPosition(panX, panY, panZ);
     }else{
       this.volumes[index].set({"mute":true});
