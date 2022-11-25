@@ -1,9 +1,10 @@
 import {StateTimer} from './js/StateTimer.js';
 import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
 
-console.log(Tone.context);
 console.log(global_config);
-var state_timer = new StateTimer(Tone.context,global_config);
+
+console.log(global_audio_context);
+var state_timer = new StateTimer(global_config);
 state_timer.init();
 
 var gui = new GUI();
@@ -84,8 +85,6 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
     sub_folder.add(global_config.audio_config.audio_channels[i], 'mute').name('Mute').onChange( value => {
         state_timer.update_config(global_config);
     })
-    
-
 
 
 })

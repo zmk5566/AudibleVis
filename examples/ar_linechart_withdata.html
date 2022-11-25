@@ -3,10 +3,18 @@
 
 <head>
   <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
   <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
   <script src="./utils/transformHelper.js"></script> </script>
+  <script> 
+
+    var global_audio_context; // Create a global context
+
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.js"></script>
+
   <script>
     var global_config = 
                   {'time_duration':20,
@@ -50,7 +58,8 @@
 </head>
 
 <body>
-  
+  <script src="js/sketch.js"></script>
+
 <div class="flex-container">
 
   <div id="main_graph">

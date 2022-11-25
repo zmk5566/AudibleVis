@@ -8,7 +8,9 @@ export class ThreeDimensionAuidoCore {
         this.pitch_range = 12;
         this.pitch_start = 0;
         this.audio_config =audio_config;
+        this.reverb = new p5.Reverb();
         this.init();
+        this.notes_buff = [];
     }
 
     init() {
@@ -16,20 +18,17 @@ export class ThreeDimensionAuidoCore {
         console.log("audio config");
         this.audio_config.audio_channels.forEach((config,i)=>{
             console.log(config);
-            this.volumes[i] = new Tone.Volume(0).toDestination();
-            this.panners[i] = new Tone.Panner3D({panningModel:"HRTF"}).connect(this.volumes[i]);
-            this.tremolo[i] = new Tone.Tremolo({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth}).connect(this.panners[i]).start();
-            this.synths[i] = new Tone.Synth({
-                oscillator: {
-                  type: config.synth.oscillator.type
-                },
-                envelope: {
-                  attack: config.synth.envelope.attack,
-                  decay: config.synth.envelope.decay,
-                  sustain: config.synth.envelope.sustain,
-                  release: config.synth.envelope.release
-                }
-              }).connect(this.tremolo[i])
+            this.panners.push(new p5.Panner3D());
+            this.panners[i].disconnect();
+            this.reverb.process(this.panners[i], 0.2, 0);
+            //this.tremolo[i] = new Tone.Tremolo({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth}).connect(this.panners[i]).start();
+            this.synths .push( new p5.MonoSynth());
+            this.panners[i].process(this.synths[i]);
+            //this.synths[i].connect(this.panners[i]);
+            console.log(this.synths)
+            //this.panners.process(this.synths[i]);
+
+
         }) 
     }
 
@@ -37,17 +36,13 @@ export class ThreeDimensionAuidoCore {
         this.audio_config = audio_config;
         console.log(this.audio_config);
         this.audio_config.audio_channels.forEach((config,i)=>{
-            this.tremolo[i].set({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth});
+            //this.tremolo[i].set({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth});
             //this.synths[i].volume.mute = config.mute;
             console.log(config.synth);
-            this.synths[i].set({
-                oscillator: {
-                  type: config.synth.oscillator.type
-                }
-              }).connect(this.tremolo[i]);
-              console.log(this.volumes[i]);
-              this.volumes[i].set({"mute":true});
-              this.volumes[i].mute=true;
+            this.synths[i].connect(this.panners[i]);
+              // console.log(this.volumes[i]);
+              // this.volumes[i].set({"mute":true});
+              // this.volumes[i].mute=true;
               console.log(this.volumes[i]);
 
         })
@@ -58,34 +53,44 @@ export class ThreeDimensionAuidoCore {
     }
 
     updatePan(index, timer_status, panX, panY, panZ){
-      // console.log("update pan");
-      // console.log(index,panX,panY,panZ);
-      this.panners[index].setPosition(panX, panY, panZ);
-      
-
+       console.log("update pan");
+       console.log(index,panX,panY,panZ);
+       //this.panners[index].set(panX, 0,0 );
     }
 
     playSpatialSound(index, uniform_data_height, panX, panY, panZ) {
       // first mode
-      if (this.audio_config.audio_channels[index].mute==false){
         this.synths[index].triggerAttack(this.caculate_freq(uniform_data_height),Tone.now());
-        this.panners[index].setPosition(panX, panY, panZ);
-      }else{
-        this.volumes[index].set({"mute":true});
-      }
+        //this.panners[index].setPosition(panY, panX,panZ);
   }
+
   playPitchPanSound(index, timer_status, panX, panY, panZ) {
-    var now  = Tone.now();
+
     var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);
-    console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
-    if (this.audio_config.audio_channels[index].mute==false){
+    //console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
+    
+    this.notes_buff.push({time:index*interval,note:this.caculate_freq(timer_status),curr_index:index});
       console.log(index);
-      this.synths[index].triggerAttack(this.caculate_freq(timer_status), now+index*interval);
-      this.synths[index].triggerRelease(now+interval*(index+1));
-      this.panners[index].setPosition(panX, panY, panZ);
-    }else{
-      this.volumes[index].set({"mute":true});
-    }
+      this.panners[index].set(5,5,5);
+      console.log(this.panners[index]);
+
+
+      //this.synths[index].triggerAttack(this.caculate_freq(uniform_data_height),Tone.now());
+
+      //this.synths[index].triggerAttack(this.caculate_freq(timer_status), now);
+      //this.synths[index].triggerRelease(now+interval);
+  }
+
+  play_all_notes_buffer(){
+    var the_note_in_notes =this.notes_buff.map((note)=>note);
+    console.log(the_note_in_notes);
+    this.notes_buff.forEach((note)=>{
+      //this.synths[0].play(note, velocity, time, dur);
+      console.log(this.synths);
+      this.synths[note.curr_index].play(note.note, 1,0+note.curr_index,0.5);
+       //this.synths[note.curr_index].triggerRelease(note.time+this.audio_config.pitchnpan_interval/(this.num_of_sources+1));
+    })
+    this.notes_buff = [];
   }
 
     stopAllSound(){

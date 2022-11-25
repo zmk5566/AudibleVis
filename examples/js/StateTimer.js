@@ -3,8 +3,8 @@ import { ThreeDimensionAuidoCore } from './3DMusicCore.js';
 import {Simple3Dvis} from './Simple3Dvis.js';
 
 export class StateTimer {
-    constructor(audioctx,config) {
-        this.audioctx = audioctx;
+    constructor(config) {
+        this.current_time = new Date();
         this.timer = 0;
         this.time_consume = config.time_duration;
         this.config = config;
@@ -17,6 +17,20 @@ export class StateTimer {
         this.music_core;
         this.totalData = [];
     }
+
+    get_time_passed(){
+        var endTime = new Date();
+        //console.log(endTime.getTime() - this.current_time.getTime());
+        var timeDiff = endTime - this.current_time; //in ms
+        // strip the ms
+        timeDiff = timeDiff / 1000;
+        //console.log(timeDiff);
+      
+        // get seconds 
+        return timeDiff;
+    }
+
+    
 
     init(){
         this.chart.drawChart();
@@ -55,9 +69,6 @@ export class StateTimer {
 
     update_loop(){
 
- 
-
-
         if (this.config.audio_config.mode === "spatial"){
 
         this.totalData = this.chart.trigger_line_movement(this.timer);
@@ -72,12 +83,13 @@ export class StateTimer {
 
     }else if(this.config.audio_config.mode === "pitchnpan"){
         //update only the passed time is over a threashold
-        if (this.audioctx.now() - this.previousRef > this.config.audio_config.pitchnpan_interval){
-            this.previousRef = this.audioctx.now();
+        if (this.get_time_passed() - this.previousRef > this.config.audio_config.pitchnpan_interval){
+            this.previousRef = this.get_time_passed();
             this.totalData = this.chart.trigger_line_movement(this.timer);
             this.totalData.forEach((d,i)=>{
                 this.process_each_data_point(d,i);
             })
+            this.music_core.play_all_notes_buffer();
 
         }
         this.totalData.forEach((d,i)=>{
@@ -111,10 +123,10 @@ export class StateTimer {
     process_each_pan_data_point(data_point,index){
         var [x_cord,y_cord,z_cord]= 
         value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
-        console.log(data_point);
+        //console.log(data_point);
         var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
-        console.log(temp_coord)
-        this.music_core.updatePan(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);       
+        //console.log(temp_coord)
+        //this.music_core.updatePan(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);       
     }
 
 
@@ -132,8 +144,8 @@ export class StateTimer {
             var [x_cord,y_cord,z_cord]= 
             value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
             var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
-            console.log(x_cord,y_cord,z_cord);
-            console.log(temp_coord);
+            //console.log(x_cord,y_cord,z_cord);
+            //console.log(temp_coord);
             this.music_core.playPitchPanSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
             this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
         }
@@ -142,7 +154,7 @@ export class StateTimer {
     start(){
  
         console.log("started");
-        console.log(this.audioctx.now());
+        console.log(this.get_time_passed());
 
         this.totalData = this.chart.gettotalData();
         this.music_core = new ThreeDimensionAuidoCore(this.totalData.length,this.config.audio_config);
@@ -152,7 +164,7 @@ export class StateTimer {
         this.timer = 0;
         this.refTime = 0;
         this.stopped = false;
-        this.refTime = this.audioctx.now();
+        this.refTime = this.get_time_passed();
 
         this.chart.trigger_display_lines();
         window.requestAnimationFrame(this.startAnim.bind(this));
@@ -162,7 +174,7 @@ export class StateTimer {
     }
 
     get_uniformed_time_elapse(){
-        return (1-((this.time_consume-(this.audioctx.now() - this.refTime))/this.time_consume));
+        return (1-((this.time_consume-(this.get_time_passed() - this.refTime))/this.time_consume));
     }
 
     stop() {
