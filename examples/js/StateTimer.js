@@ -63,6 +63,9 @@ export class StateTimer {
         if (this.config.audio_config.mode === "spatial" || this.config.audio_config.mode === "pitchpoly"){
 
         this.totalData = this.chart.trigger_line_movement(this.timer);
+
+    
+
         this.totalData.forEach((d,i)=>{
             this.process_each_data_point(d,i);
         });
@@ -72,11 +75,28 @@ export class StateTimer {
         // })
 
 
-    }else if(this.config.audio_config.mode === "pitchnpan" ){
+    }else if(this.config.audio_config.mode === "pitchnpan" || this.config.audio_config.mode === "percnpan"){
         //update only the passed time is over a threashold
+
         if (this.audioctx.now() - this.previousRef > this.config.audio_config.pitchnpan_interval){
-            this.previousRef = this.audioctx.now();
+            var additional_time = 0;
+            if (this.config.audio_config.voice_over === true){
+                var utterance = new SpeechSynthesisUtterance(parseInt(this.timer*100));
+                console.log("utterance");
+                speechSynthesis.speak(utterance);
+                additional_time =this.config.audio_config.voice_over_time;
+            }
+
+            if (this.config.audio_config.reference_timeline === true){
+                            this.previousRef = this.audioctx.now()+additional_time;
+                            this.music_core.play_timeline_ref(this.timer);
+            }
+
+
+            this.previousRef = this.audioctx.now()+additional_time;
             this.totalData = this.chart.trigger_line_movement(this.timer);
+
+
             this.totalData.forEach((d,i)=>{
                 this.process_each_data_point(d,i);
             })
@@ -85,6 +105,13 @@ export class StateTimer {
         this.totalData.forEach((d,i)=>{
             this.process_each_pan_data_point(d,i);
         })
+
+
+
+    console.log(speechSynthesis.paused);
+
+
+
     }
 
         
@@ -105,6 +132,7 @@ export class StateTimer {
         this.config = config;
         this.time_consume = config.time_duration;
         this.music_core.dynamic_update_config(config.audio_config);
+        this.music_core.init();
         this.vis3d.setConfig(config);
     }
 
@@ -143,14 +171,22 @@ export class StateTimer {
             this.music_core.playPitchPanSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
             this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
        }else if(this.config.audio_config.mode === "pitchpoly"){
-            console.log("pitchpoly");
+            //console.log("pitchpoly");
+            var [x_cord,y_cord,z_cord]= 
+            value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
+            var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
+            
+            this.music_core.playPitchPolySound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+        }else if (this.config.audio_config.mode === "percnpan"){
             var [x_cord,y_cord,z_cord]= 
             value2DtoCartersian(this.config.radius,data_point.uniform_value,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
             var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
             console.log(x_cord,y_cord,z_cord);
             console.log(temp_coord);
-            this.music_core.playPitchPolySound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
+            this.music_core.playPercuPanSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
             this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+
         }
     }
 

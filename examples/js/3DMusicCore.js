@@ -8,6 +8,7 @@ export class ThreeDimensionAuidoCore {
         this.pitch_range = 12;
         this.pitch_start = 0;
         this.audio_config =audio_config;
+        this.players=[];
         this.init();
     }
 
@@ -19,6 +20,9 @@ export class ThreeDimensionAuidoCore {
             this.volumes[i] = new Tone.Volume(0).toDestination();
             this.panners[i] = new Tone.Panner3D({panningModel:"HRTF"}).connect(this.volumes[i]);
             this.tremolo[i] = new Tone.Tremolo({frequency:2^(config.tremolo_effect.frequency),depth:config.tremolo_effect.depth}).connect(this.panners[i]).start();
+            this.players[i] = new Tone.Player("samples/"+i+".WAV").connect(this.panners[i]);
+            this.ref_synth = new Tone.Synth().toDestination();
+            this.ref_synth.volume.value = -10;
             this.synths[i] = new Tone.Synth({
                 oscillator: {
                   type: config.synth.oscillator.type
@@ -72,10 +76,49 @@ export class ThreeDimensionAuidoCore {
         this.volumes[index].set({"mute":true});
       }
   }
+  
+  play_timeline_ref(timer_status){
+    if (this.audio_config.reference_timeline==true){
+      this.ref_synth.triggerAttack(this.caculate_freq(timer_status-1),Tone.now());
+    }
+  }
+
+  playPercuPanSound(index, timer_status, panX, panY, panZ) {
+
+    var now  = Tone.now();
+    var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);
+    var time_balance = 0 ;
+
+    if (this.audio_config.voice_over==true){
+      time_balance = this.audio_config.voice_over_time;
+    }
+
+
+    //console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
+    if (this.audio_config.audio_channels[index].mute==false){
+      console.log(index);
+
+
+      var bufferTime = 0;
+      this.players[index].start(now+index*interval+time_balance);
+      this.panners[index].setPosition(panX, panY, panZ);
+      
+  
+
+
+
+
+    }else{
+      this.volumes[index].set({"mute":true});
+    }
+
+
+
+  }
   playPitchPanSound(index, timer_status, panX, panY, panZ) {
     var now  = Tone.now();
     var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);
-    console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
+    //console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
     if (this.audio_config.audio_channels[index].mute==false){
       console.log(index);
       this.synths[index].triggerAttack(this.caculate_freq(timer_status), now+index*interval);
@@ -96,8 +139,11 @@ export class ThreeDimensionAuidoCore {
     }
   }
 
+  
+
     stopAllSound(){
         this.synths.forEach(function(element) { element.triggerRelease() })
+        this.ref_synth.triggerRelease();
     }
 
     caculate_freq(input_index){
