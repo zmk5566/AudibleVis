@@ -103,18 +103,49 @@ export class ThreeDimensionAuidoCore {
       this.players[index].start(now+index*interval+time_balance);
       this.panners[index].setPosition(panX, panY, panZ);
       
-  
-
-
-
-
     }else{
       this.volumes[index].set({"mute":true});
     }
-
-
-
   }
+
+
+
+  playPercuRepSound(index, timer_status, panX, panY, panZ) {
+
+    console.log("play percu rep sound");
+    var now  = Tone.now();
+    var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);
+    var time_balance = 0 ;
+
+    if (this.audio_config.voice_over==true){
+      time_balance = this.audio_config.voice_over_time;
+    }
+
+
+    //console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
+    if (this.audio_config.audio_channels[index].mute==false){
+
+      var bufferTime = 0;
+      this.players[index].loop=false;
+
+      var small_interval = (interval/timer_status)*0.85;
+
+      console.log("small interval" , small_interval);
+
+      for (var i=0;i<this.audio_config.pitchnpan_interval;i= i + small_interval){
+        this.players[index].start(now+time_balance+i*small_interval);
+        this.players[index].stop(now+time_balance+(i+1)*small_interval);
+
+      }
+      
+    }else{
+      this.volumes[index].set({"mute":true});
+    }
+  }
+
+
+
+
   playPitchPanSound(index, timer_status, panX, panY, panZ) {
     var now  = Tone.now();
     var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);

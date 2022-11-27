@@ -35,10 +35,6 @@ folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05,2).step(0.1).
     state_timer.update_config(global_config);
 } );
 
-folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05,2).step(0.1).name('Ref_synth').onFinishChange( value => {
-    state_timer.update_config(global_config);
-} );
-
 folder1.add(global_config.audio_config, 'voice_over', 'voice_over').onFinishChange( value => {
     state_timer.update_config(global_config);
 })
