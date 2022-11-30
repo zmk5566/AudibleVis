@@ -11,7 +11,7 @@ var gui = new GUI();
 var folder1 = gui.addFolder('General');
 console.log(global_config);
 
-folder1.add(global_config.audio_config, 'mode',  ['pitchpoly','pitchnpan', 'spatial','percnpan','spatial_simple','spatial_explore']).name('Mode').onChange( value => {
+folder1.add(global_config.audio_config, 'mode',  ['percnrepeat','pitchpoly','pitchnpan', 'spatial','percnpan','spatial_simple','spatial_explore']).name('Mode').onChange( value => {
     state_timer.update_config(global_config);
 } );
 
@@ -39,6 +39,10 @@ folder1.add(global_config.audio_config, 'voice_over', 'voice_over').onFinishChan
     state_timer.update_config(global_config);
 })
 
+
+folder1.add(global_config.audio_config, 'switch_real_samples', 'switch_real_samples').onFinishChange( value => {
+    state_timer.update_config(global_config);
+})
 
 folder1.add(global_config.audio_config, 'reference_timeline', 'reference_timeline').onFinishChange( value => {
     state_timer.update_config(global_config);

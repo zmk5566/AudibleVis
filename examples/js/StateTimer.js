@@ -76,7 +76,8 @@ export class StateTimer {
 
     }else if(this.config.audio_config.mode === "pitchnpan" ||
              this.config.audio_config.mode === "percnpan"||
-             this.config.audio_config.mode === "percnrepeat"){
+             this.config.audio_config.mode === "percnrepeat"||
+             this.config.audio_config.mode === "spatial_simple"){
         //update only the passed time is over a threashold
 
         if (this.audioctx.now() - this.previousRef > this.config.audio_config.pitchnpan_interval){
@@ -222,6 +223,17 @@ export class StateTimer {
             //console.log(temp_coord);
 
             this.music_core.playPercuRepSound(index,data_point.uniform_value,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+        }else if (this.config.audio_config.mode === "spatial_simple"){
+            var temp_index_position = 1/(this.totalData.length-1)*index;
+
+            var [x_cord,y_cord,z_cord]= 
+            value2DtoCartersian(this.config.radius,temp_index_position,this.timer,0,1,-this.config.theta/2,+this.config.theta/2,0,1,-0.5,+0.5);
+            var temp_coord = this.vis3d.get_localPoints(x_cord,y_cord,z_cord);
+            //console.log(x_cord,y_cord,z_cord);
+            //console.log(temp_coord);
+
+            this.music_core.playSimpleSynth(index,data_point.uniform_value,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
             this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
         }
     }

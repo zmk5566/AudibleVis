@@ -9,6 +9,8 @@ export class ThreeDimensionAuidoCore {
         this.pitch_start = 0;
         this.audio_config =audio_config;
         this.players=[];
+        this.sampler =[];
+        this.sampler_keywords = ["casio","salamander","salamander"];
         this.init();
     }
 
@@ -34,7 +36,26 @@ export class ThreeDimensionAuidoCore {
                   release: config.synth.envelope.release
                 }
               }).connect(this.tremolo[i])
+
+            this.sampler[i] = this.initializeSampler(i,this.sampler_keywords[i]);
+
+
+
         }) 
+    }
+
+
+    initializeSampler(index,input_keyword){
+
+      const sampler = new Tone.Sampler({
+        urls: {
+          A1: "A1.mp3",
+          A2: "A2.mp3",
+        },
+        baseUrl: "https://tonejs.github.io/audio/"+input_keyword+"/"
+      }).connect(this.panners[index]);
+
+      return sampler;
     }
 
     setConfig(audio_config){
@@ -137,6 +158,41 @@ export class ThreeDimensionAuidoCore {
         this.players[index].stop(now+time_balance+(i+1)*small_interval);
 
       }
+      
+    }else{
+      this.volumes[index].set({"mute":true});
+    }
+  }
+
+
+  playSimpleSynth(index, timer_status, panX, panY, panZ) {
+
+    console.log("play simple synth sound");
+    var now  = Tone.now();
+    var interval = this.audio_config.pitchnpan_interval/(this.num_of_sources+1);
+    var time_balance = 0 ;
+
+    if (this.audio_config.voice_over==true){
+      time_balance = this.audio_config.voice_over_time;
+    }
+
+    this.panners[index].setPosition(panX, panY, panZ);
+
+    //console.log(now+index*this.audio_config.pitchnpan_interval/(this.num_of_sources+1),now+(index+1)*this.audio_config.pitchnpan_interval/(this.num_of_sources+1))
+    if (this.audio_config.audio_channels[index].mute==false){
+
+        // var bufferTime = 0;
+        // this.synths[index].triggerAttack(this.caculate_freq(timer_status), now+time_balance);
+        // this.synths[index].triggerRelease(now+time_balance+interval+1);
+       if (this.audio_config.switch_real_samples ==false){
+        this.synths[index].triggerAttack(this.caculate_freq(timer_status), now+time_balance);
+        this.synths[index].triggerRelease(now+time_balance+interval);
+       }else{
+        this.sampler[index].triggerAttack(this.caculate_freq(timer_status), now+time_balance);
+        this.sampler[index].triggerRelease(now+time_balance+interval);
+      }
+        // this.players[index].start(now+time_balance+i*small_interval);
+        // this.players[index].stop(now+time_balance+(i+1)*small_interval);
       
     }else{
       this.volumes[index].set({"mute":true});
