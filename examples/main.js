@@ -31,7 +31,7 @@ folder1.add(global_config, 'theta', Math.PI/6, 2*Math.PI).step(0.01).name('Theta
     state_timer.update_config(global_config);
 } );
 
-folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05,2).step(0.1).name('Interval').onFinishChange( value => {
+folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05,8).step(0.1).name('Interval').onFinishChange( value => {
     state_timer.update_config(global_config);
 } );
 
