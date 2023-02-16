@@ -2,9 +2,15 @@
     left: calc(10% - 50px);
   }
   body {
-    font: 10px sans-serif;
+    font: 6.5px sans-serif;
   }
   
+
+ 
+  .lil-gui.autoPlace {
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
   .axis path,
   .axis line {
     fill: none;
