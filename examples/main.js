@@ -8,8 +8,14 @@ state_timer.init();
 
 var gui = new GUI();
 
+gui.close();
+
 var folder1 = gui.addFolder('General');
 console.log(global_config);
+
+// initially folder is closed
+
+folder1.close();
 
 folder1.add(global_config.audio_config, 'mode',  ['percnrepeat','pitchpoly','pitchnpan', 'spatial','percnpan','spatial_simple','spatial_explore']).name('Mode').onChange( value => {
     state_timer.update_config(global_config);
