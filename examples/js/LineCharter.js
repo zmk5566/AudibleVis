@@ -4,8 +4,8 @@
 
       constructor(){
           this.margin = {top: 20, right: 80, bottom: 30, left: 50};
-          this.width = 640 - this.margin.left - this.margin.right;
-          this.height = 400 - this.margin.top - this.margin.bottom;
+          this.width = 420 - this.margin.left - this.margin.right;
+          this.height = 250 - this.margin.top - this.margin.bottom;
           this.x = d3.time.scale().range([0, this.width]);
           this.y = d3.scale.linear().range([this.height, 0]);
           this.xAxis = d3.svg.axis().scale(this.x).orient("bottom");

@@ -20,8 +20,8 @@ export class Simple3Dvis {
         this.scene;
         this.renderer;
         this.stats;
-        this.windowsSizeX = 640;
-        this.windowsSizeY= 400;
+        this.windowsSizeX = 390;
+        this.windowsSizeY= 250;
         this.frustumSize = 400;
         this.screen_cylinder;
         this.points = []

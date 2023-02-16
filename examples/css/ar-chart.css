@@ -28,6 +28,7 @@
   }
   
   .flex-container {
+    margin-top:120px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
