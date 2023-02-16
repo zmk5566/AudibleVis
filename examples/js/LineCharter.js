@@ -6,7 +6,7 @@
           this.margin = {top: 20, right: 80, bottom: 30, left: 50};
           this.width = 420 - this.margin.left - this.margin.right;
           this.height = 250 - this.margin.top - this.margin.bottom;
-          this.x = d3.time.scale().range([0, this.width]);
+          this.x = d3.scale.linear().range([0, this.width]);
           this.y = d3.scale.linear().range([this.height, 0]);
           this.xAxis = d3.svg.axis().scale(this.x).orient("bottom");
           this.yAxis = d3.svg.axis().scale(this.y).orient("left");
@@ -24,21 +24,24 @@
               return this.y(d.temperature);
             });
           }
-      
-          
 
-        drawChart(){
 
+        drawChart(input_database){
+          //clear the graph first 
+          document.getElementById("main_graph").innerHTML = "";
           var svg = d3.select("#main_graph").append("svg")
               .attr("width", this.width + this.margin.left + this.margin.right)
               .attr("height", this.height + this.margin.top + this.margin.bottom)
               .append("g")
               .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
           var color = d3.scale.category10();
-          var parseDate = d3.time.format("%Y%m%d").parse;
+          //add the x axis scaling method
+          //remmap the data to the x axis
+          
+          //var parseDate = d3.time.format("%Y%m%d").parse;
 
 
-          d3.csv("./res/data.csv", function(error, data) {
+          d3.csv("./res/"+input_database+".csv", function(error, data) {
              //console.log(data);
               if (error) throw error;
               color.domain(d3.keys(data[0]).filter(function(key) {
@@ -46,7 +49,7 @@
               }));
 
               data.forEach(function(d) {
-                  d.date = parseDate(d.date);
+                  d.date = d.date;
               });
 
               var cities = color.domain().map(function(name) {
@@ -69,9 +72,7 @@
                 this.total_data[i].color = color(d.name);
               }.bind(this));
               
-            this.x.domain(d3.extent(data, function(d) {
-              return d.date;
-            }));
+            this.x.domain([0, data.length]);
 
             this.y.domain([
               d3.min(cities, function(c) {
@@ -125,7 +126,7 @@
             .attr("y", 6)
             .attr("dy", ".71em")
             .style("text-anchor", "end")
-            .text("Temperature (ºF)");
+            .text("Y Axis");
       
           var city = svg.selectAll(".city")
             .data(cities)

@@ -10,6 +10,13 @@ var gui = new GUI();
 
 gui.close();
 
+var folder0 = gui.addFolder('Dataset');
+
+folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('dataset').onChange( value => {
+    console.log("current dataset", value);
+    state_timer.update_database(value);
+} );
+
 var folder1 = gui.addFolder('General');
 console.log(global_config);
 

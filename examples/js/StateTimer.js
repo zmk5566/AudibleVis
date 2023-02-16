@@ -20,7 +20,7 @@ export class StateTimer {
     }
 
     init(){
-        this.chart.drawChart();
+        this.chart.drawChart("default");
         this.vis3d.init();
         this.vis3d.animate()
     }
@@ -33,6 +33,10 @@ export class StateTimer {
         console.log("triggered xr input");
         this.start();
 
+    }
+
+    update_database(data_input){
+        this.chart.drawChart(data_input);
     }
 
 
