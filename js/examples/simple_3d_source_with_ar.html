@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js ar - cones</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<link type="text/css" rel="stylesheet" href="./css/main.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
+		<script src=" ./utils/tranformHelper.js"></script>
+	</head>
+	<body>
+
+		<div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> ar - cones<br/>(Chrome Android 81+)
+		</div>
+
+		<script type="text/javascript">
+			
+		var mesh,camera,temp_obj;
+
+		</script>
+		<script type="module">
+
+			import * as THREE from '../lib/three.module.js';
+			import { ARButton } from '../lib/addons/webxr/ARButton.js';
+
+			let scene, renderer,panner3D,synth,temp_vec;
+			let controller;
+			let isTriggered=false;
+
+
+			init();
+			animate();
+
+			function init() {
+
+				const container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				scene = new THREE.Scene();
+
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 20 );
+
+				const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
+				light.position.set( 0.5, 1, 0.25 );
+				scene.add( light );
+
+				panner3D = new Tone.Panner3D({panningModel:"HRTF"}).toDestination();
+				synth = new Tone.Synth().connect(panner3D);
+
+
+				//
+
+				renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.xr.enabled = true;
+				container.appendChild( renderer.domElement );
+
+				//
+
+				document.body.appendChild( ARButton.createButton( renderer ) );
+
+				//
+
+				const geometry = new THREE.CylinderGeometry( 0, 0.05, 0.2, 32 ).rotateX( -Math.PI / 2 );
+				const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+			    mesh = new THREE.Mesh( geometry, material );
+
+				const box_geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			    temp_obj = new THREE.Mesh( box_geometry, material );
+
+
+				function onSelect() {
+				   // trigger the attack immediately
+				    if (isTriggered==false){
+				    const now = Tone.now()
+				    synth.triggerAttack("C4", now)
+					mesh.position.set( 0, 0, - 0.3 ).applyMatrix4( controller.matrixWorld );
+					mesh.quaternion.setFromRotationMatrix( controller.matrixWorld );
+					isTriggered=true; 
+					scene.add( mesh );
+
+					camera.add( temp_obj );
+
+
+				}else{
+					let cameraWorldPosition = new THREE.Vector3( );
+					cameraWorldPosition.setFromMatrixPosition( camera.matrixWorld );
+					console.log("-----camera position:-----" );
+					console.log(cameraWorldPosition);
+					console.log("-----temp_obj position:-----" );
+					console.log(temp_obj.position);
+					console.log("-----mesh position:-----" );
+					console.log(mesh.position);
+					console.log("-----location coordinates:-----" );
+					temp_vec = new THREE.Vector3(mesh.position.x,mesh.position.y,mesh.position.z)
+
+					let new_loc = temp_obj.worldToLocal(temp_vec);
+					console.log(new_loc);
+					}
+					//sprite.text = new_loc.x + " " + new_loc.y + " " + new_loc.z ;
+
+
+				}
+
+				controller = renderer.xr.getController( 0 );
+				controller.addEventListener( 'select', onSelect );
+				scene.add( controller );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize );
+
+			}
+
+			function onWindowResize() {
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function animate() {
+
+				renderer.setAnimationLoop( render );
+
+			}
+
+			function render() {
+				if (isTriggered)
+				{
+					let cameraWorldPosition = new THREE.Vector3( );
+					cameraWorldPosition.setFromMatrixPosition( camera.matrixWorld );
+					let new_loc = temp_obj.worldToLocal(new THREE.Vector3(mesh.position.x,mesh.position.y,mesh.position.z));
+					panner3D.setPosition(new_loc.x,new_loc.y,new_loc.z);
+					console.log(new_loc.x,new_loc.y,new_loc.z);
+				}
+				renderer.render( scene, camera );
+			}
+
+		</script>
+	</body>
+</html>

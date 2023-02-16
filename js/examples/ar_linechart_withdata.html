@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
+  <script src="./utils/transformHelper.js"></script> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
+  <script>
+    var global_config = 
+                  {'time_duration':10,
+                   'spectrum_display':false,
+                   "data_types_num":3,
+                   "dynamic_scale" : 2, 
+                   "radius":1,
+                   "theta":Math.PI/3*2,
+                   'audio_config':{
+                   "audience_location":{"x":0,"y":0,"z":0},
+                   "audio_channels":
+                   [  {
+                                "synth_index":0,
+                                "synth":{"oscillator":{"type":"square"},"envelope":{"attack":0.,"decay":0,"sustain":0.01,"release":0.1}},
+                                "tremolo_effect":{"frequency":5,"depth":0.5}
+                      },
+                      {
+                                "synth_index":1,
+                                "synth":{"oscillator":{"type":"sawtooth"},"envelope":{"attack":0.,"decay":0,"sustain":0.01,"release":0.1}},
+                                "tremolo_effect":{"frequency":0,"depth":0}
+                      },
+                      {
+                                "synth_index":2,
+                                "synth":{"oscillator":{"type":"sine"},"envelope":{"attack":0.,"decay":0,"sustain":0.01,"release":0.1}},
+                                "tremolo_effect":{"frequency":0,"depth":0}
+                      }
+                  ]
+                  }
+
+                  };
+
+  </script>
+</head>
+
+<body>
+  
+<button id="start" >start</button>
+<button id="stop"">stop</button>
+<div class="flex-container">
+
+  <div id="main_graph">
+    <script type="module" src="./main.js" ></script>
+  </div>
+  <div id="vis_3d">
+  </div>
+</div>
+
+  <div id='container'></div>
+</body>
+
+<footer>
+</footer>
+
+</html>

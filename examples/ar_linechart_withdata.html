@@ -4,76 +4,63 @@
 <head>
   <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
-  <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
-  <script src="./utils/transformHelper.js"></script> </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
-  <script>
-    var global_config = 
-                  {'time_duration':20,
-                   'spectrum_display':false,
-                   "data_types_num":3,
-                   "dynamic_scale" : 2, 
-                   "radius":1,
-                   "theta":Math.PI/3*2,
-                   'audio_config':{
-                   "audience_location":{"pitch":0,"yaw":0,"roll":0},
-                   "mode":"running_pitch_pan",
-                   "pitchnpan_interval" :4,
-                   "audio_channels":
-                   [  {
-                                "synth_index":0,
-                                "mute":false,
-                                "synth":{"oscillator":{"type":"square"},"envelope":{"attack":0.,"decay":0,"sustain":0.01,"release":0.1}},
-                                "tremolo_effect":{"frequency":0,"depth":0}
-                      },
-                      {
-                                "synth_index":1,
-                                "mute":false,
-                                "synth":{"oscillator":{"type":"sawtooth"},"envelope":{"attack":0.,"decay":0,"sustain":0.01,"release":0.1}},
-                                "tremolo_effect":{"frequency":0,"depth":0}
-                      },
-                      {
-                                "synth_index":2,
-                                "mute":false,
-                                "synth":{"oscillator":{"type":"sine"},"envelope":{"attack":0.,"decay":0,"sustain":0.01,"release":0.1}},
-                                "tremolo_effect":{"frequency":0,"depth":0}
-                      }
-                  ]
-                  }
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/quicksettings/latest/quicksettings.min.js"></script>
+  <script src="../js/log_scale_helper.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+  <script src="../lib/p5.gui.js"></script>
 
-                  };
-
-        var update_global_config = [];
-
-
-  </script>
+  <style>
+    .ARButton{
+      left: calc(10% - 50px);
+    }
+    body {
+      font: 10px sans-serif;
+    }
+    
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+    
+    .x.axis path {
+      display: none;
+    }
+    
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
+  </style>
 </head>
 
 <body>
-  
-<div class="flex-container">
-
   <div id="main_graph">
-    <script type="module" src="./main.js" ></script>
-  </div>
-  <div id="vis_3d">
-  </div>
-  <div id="main_control_pannel">
-  <button id="start" class = "button">start</button>
-  <button id="stop" class ="button">stop</button>
-  <button id="init" class ="button">Init</button>
+  <script src="../js/d3_line_chart.js"> </script>
+<div>
 
-  <div id="pitch"></div>
-  <div id="yaw"></div>
-  <div id="roll"></div>
+<button id="start" onclick="start()">start</button>
+<button id="stop" onclick="stop_play()">stop</button>
 
-  </div>
+
 </div>
-
   <div id='container'></div>
+  <script type="module" src="../js/main.js" ></script>
+
 </body>
 
 <footer>
+  
+<script type="text/javascript">
+ 
+ window.addEventListener('load', (event) => {
+  console.log('page is fully loaded');
+}); 
+
+</script>
+
 </footer>
 
 </html>
