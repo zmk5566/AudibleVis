@@ -1,6 +1,6 @@
 [
     {
-      "name": "TIME-PAN-(PITCH-T)",
+      "name": "TIME-PAN-(PITCH-SEQ)",
       "description": "encode the data with the position of the sound source in the horizontal plane",
       "data": {
         "time_duration": 20,
@@ -85,7 +85,7 @@
       }
     },
     {
-        "name": "TIME-PAN-(PERC-T)",
+        "name": "TIME-PAN-(PERC-SEQ",
         "description": "encode the data with the position of the sound source in the horizontal plane",
         "data": {
           "time_duration": 20,
@@ -95,7 +95,7 @@
           "radius": 1,
           "theta": 2.09439510239,
           "audio_config": {
-            "voice_over": true,
+            "voice_over": false,
             "audience_location": {
               "pitch": 0,
               "yaw": 0,
