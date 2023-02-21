@@ -1,0 +1,428 @@
+[
+    {
+      "name": "TIME-PAN-(PITCH-T)",
+      "description": "encode the data with the position of the sound source in the horizontal plane",
+      "data": {
+        "time_duration": 20,
+        "spectrum_display": false,
+        "data_types_num": 3,
+        "dynamic_scale": 2,
+        "radius": 1,
+        "theta": 2.09439510239,
+        "audio_config": {
+          "voice_over": false,
+          "audience_location": {
+            "pitch": 0,
+            "yaw": 0,
+            "roll": 0
+          },
+          "mode": "pitchnpan",
+          "dataset": "default",
+          "voice_over_time": 1,
+          "pitchnpan_interval": 1,
+          "reference_timeline": true,
+          "switch_real_samples": false,
+          "audio_channels": [
+            {
+              "synth_index": 0,
+              "mute": false,
+              "synth": {
+                "oscillator": {
+                  "type": "square"
+                },
+                "envelope": {
+                  "attack": 0,
+                  "decay": 0,
+                  "sustain": 0.01,
+                  "release": 0.1
+                }
+              },
+              "tremolo_effect": {
+                "frequency": 0,
+                "depth": 0
+              }
+            },
+            {
+              "synth_index": 1,
+              "mute": false,
+              "synth": {
+                "oscillator": {
+                  "type": "sawtooth"
+                },
+                "envelope": {
+                  "attack": 0,
+                  "decay": 0,
+                  "sustain": 0.01,
+                  "release": 0.1
+                }
+              },
+              "tremolo_effect": {
+                "frequency": 0,
+                "depth": 0
+              }
+            },
+            {
+              "synth_index": 2,
+              "mute": false,
+              "synth": {
+                "oscillator": {
+                  "type": "sine"
+                },
+                "envelope": {
+                  "attack": 0,
+                  "decay": 0,
+                  "sustain": 0.01,
+                  "release": 0.1
+                }
+              },
+              "tremolo_effect": {
+                "frequency": 0,
+                "depth": 0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+        "name": "TIME-PAN-(PERC-T)",
+        "description": "encode the data with the position of the sound source in the horizontal plane",
+        "data": {
+          "time_duration": 20,
+          "spectrum_display": false,
+          "data_types_num": 3,
+          "dynamic_scale": 2,
+          "radius": 1,
+          "theta": 2.09439510239,
+          "audio_config": {
+            "voice_over": true,
+            "audience_location": {
+              "pitch": 0,
+              "yaw": 0,
+              "roll": 0
+            },
+            "mode": "percnpan",
+            "dataset": "default",
+            "voice_over_time": 1,
+            "pitchnpan_interval": 1,
+            "reference_timeline": true,
+            "switch_real_samples": false,
+            "audio_channels": [
+              {
+                "synth_index": 0,
+                "mute": false,
+                "synth": {
+                  "oscillator": {
+                    "type": "square"
+                  },
+                  "envelope": {
+                    "attack": 0,
+                    "decay": 0,
+                    "sustain": 0.01,
+                    "release": 0.1
+                  }
+                },
+                "tremolo_effect": {
+                  "frequency": 0,
+                  "depth": 0
+                }
+              },
+              {
+                "synth_index": 1,
+                "mute": false,
+                "synth": {
+                  "oscillator": {
+                    "type": "sawtooth"
+                  },
+                  "envelope": {
+                    "attack": 0,
+                    "decay": 0,
+                    "sustain": 0.01,
+                    "release": 0.1
+                  }
+                },
+                "tremolo_effect": {
+                  "frequency": 0,
+                  "depth": 0
+                }
+              },
+              {
+                "synth_index": 2,
+                "mute": false,
+                "synth": {
+                  "oscillator": {
+                    "type": "sine"
+                  },
+                  "envelope": {
+                    "attack": 0,
+                    "decay": 0,
+                    "sustain": 0.01,
+                    "release": 0.1
+                  }
+                },
+                "tremolo_effect": {
+                  "frequency": 0,
+                  "depth": 0
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+          "name": "TIME-PITCH-OSC",
+          "description": "encode the data with the position of the sound source in the horizontal plane",
+          "data": {
+            "time_duration": 20,
+            "spectrum_display": false,
+            "data_types_num": 3,
+            "dynamic_scale": 2,
+            "radius": 1,
+            "theta": 2.09439510239,
+            "audio_config": {
+              "voice_over": true,
+              "audience_location": {
+                "pitch": 0,
+                "yaw": 0,
+                "roll": 0
+              },
+              "mode": "pitchpoly",
+              "dataset": "default",
+              "voice_over_time": 1,
+              "pitchnpan_interval": 1,
+              "reference_timeline": true,
+              "switch_real_samples": false,
+              "audio_channels": [
+                {
+                  "synth_index": 0,
+                  "mute": false,
+                  "synth": {
+                    "oscillator": {
+                      "type": "square"
+                    },
+                    "envelope": {
+                      "attack": 0,
+                      "decay": 0,
+                      "sustain": 0.01,
+                      "release": 0.1
+                    }
+                  },
+                  "tremolo_effect": {
+                    "frequency": 0,
+                    "depth": 0
+                  }
+                },
+                {
+                  "synth_index": 1,
+                  "mute": false,
+                  "synth": {
+                    "oscillator": {
+                      "type": "sawtooth"
+                    },
+                    "envelope": {
+                      "attack": 0,
+                      "decay": 0,
+                      "sustain": 0.01,
+                      "release": 0.1
+                    }
+                  },
+                  "tremolo_effect": {
+                    "frequency": 0,
+                    "depth": 0
+                  }
+                },
+                {
+                  "synth_index": 2,
+                  "mute": false,
+                  "synth": {
+                    "oscillator": {
+                      "type": "sine"
+                    },
+                    "envelope": {
+                      "attack": 0,
+                      "decay": 0,
+                      "sustain": 0.01,
+                      "release": 0.1
+                    }
+                  },
+                  "tremolo_effect": {
+                    "frequency": 0,
+                    "depth": 0
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+            "name": "TIME-PITCH-(FIXED-PAN)",
+            "description": "encode the data with the position of the sound source in the horizontal plane",
+            "data": {
+              "time_duration": 20,
+              "spectrum_display": false,
+              "data_types_num": 3,
+              "dynamic_scale": 2,
+              "radius": 1,
+              "theta": 2.09439510239,
+              "audio_config": {
+                "voice_over": true,
+                "audience_location": {
+                  "pitch": 0,
+                  "yaw": 0,
+                  "roll": 0
+                },
+                "mode": "pitchpoly",
+                "dataset": "default",
+                "voice_over_time": 1,
+                "pitchnpan_interval": 1,
+                "reference_timeline": true,
+                "switch_real_samples": false,
+                "audio_channels": [
+                  {
+                    "synth_index": 0,
+                    "mute": false,
+                    "synth": {
+                      "oscillator": {
+                        "type": "square"
+                      },
+                      "envelope": {
+                        "attack": 0,
+                        "decay": 0,
+                        "sustain": 0.01,
+                        "release": 0.1
+                      }
+                    },
+                    "tremolo_effect": {
+                      "frequency": 0,
+                      "depth": 0
+                    }
+                  },
+                  {
+                    "synth_index": 1,
+                    "mute": false,
+                    "synth": {
+                      "oscillator": {
+                        "type": "sawtooth"
+                      },
+                      "envelope": {
+                        "attack": 0,
+                        "decay": 0,
+                        "sustain": 0.01,
+                        "release": 0.1
+                      }
+                    },
+                    "tremolo_effect": {
+                      "frequency": 0,
+                      "depth": 0
+                    }
+                  },
+                  {
+                    "synth_index": 2,
+                    "mute": false,
+                    "synth": {
+                      "oscillator": {
+                        "type": "sine"
+                      },
+                      "envelope": {
+                        "attack": 0,
+                        "decay": 0,
+                        "sustain": 0.01,
+                        "release": 0.1
+                      }
+                    },
+                    "tremolo_effect": {
+                      "frequency": 0,
+                      "depth": 0
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+              "name": "TIME-(REPEAT-PAN)-PERC",
+              "description": "encode the data with the position of the sound source in the horizontal plane",
+              "data": {
+                "time_duration": 20,
+                "spectrum_display": false,
+                "data_types_num": 3,
+                "dynamic_scale": 2,
+                "radius": 1,
+                "theta": 2.09439510239,
+                "audio_config": {
+                  "voice_over": true,
+                  "audience_location": {
+                    "pitch": 0,
+                    "yaw": 0,
+                    "roll": 0
+                  },
+                  "mode": "percnrepeat",
+                  "dataset": "default",
+                  "voice_over_time": 1,
+                  "pitchnpan_interval": 1,
+                  "reference_timeline": true,
+                  "switch_real_samples": false,
+                  "audio_channels": [
+                    {
+                      "synth_index": 0,
+                      "mute": false,
+                      "synth": {
+                        "oscillator": {
+                          "type": "square"
+                        },
+                        "envelope": {
+                          "attack": 0,
+                          "decay": 0,
+                          "sustain": 0.01,
+                          "release": 0.1
+                        }
+                      },
+                      "tremolo_effect": {
+                        "frequency": 0,
+                        "depth": 0
+                      }
+                    },
+                    {
+                      "synth_index": 1,
+                      "mute": false,
+                      "synth": {
+                        "oscillator": {
+                          "type": "sawtooth"
+                        },
+                        "envelope": {
+                          "attack": 0,
+                          "decay": 0,
+                          "sustain": 0.01,
+                          "release": 0.1
+                        }
+                      },
+                      "tremolo_effect": {
+                        "frequency": 0,
+                        "depth": 0
+                      }
+                    },
+                    {
+                      "synth_index": 2,
+                      "mute": false,
+                      "synth": {
+                        "oscillator": {
+                          "type": "sine"
+                        },
+                        "envelope": {
+                          "attack": 0,
+                          "decay": 0,
+                          "sustain": 0.01,
+                          "release": 0.1
+                        }
+                      },
+                      "tremolo_effect": {
+                        "frequency": 0,
+                        "depth": 0
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+
+  ]

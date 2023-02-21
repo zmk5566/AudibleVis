@@ -8,16 +8,40 @@ state_timer.init();
 
 var gui = new GUI();
 
-gui.close();
+var folder0 = gui.addFolder('Basic Setting');
 
-var folder0 = gui.addFolder('Dataset');
 
-folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('dataset').onChange( value => {
+folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('Dataset').onChange( value => {
     console.log("current dataset", value);
     state_timer.update_database(value);
 } );
 
-var folder1 = gui.addFolder('General');
+
+
+fetch('./res/configs.json')
+  .then((response) => response.json())
+  .then((data) => {
+  var config_name_list = [];
+  for (var i = 0; i < data.length; i++) {
+    config_name_list.push(data[i].name);
+  }
+  folder0.add(global_config.audio_config, 'encoding_method',  config_name_list).name('Encoding Method').onChange( value => {
+    
+    var index = data.findIndex(p => p.name == value);
+    console.log("update data", data[index].data);
+    state_timer.update_config(data[index].data);
+
+    //state_timer.update_database(value);
+} );
+
+
+});
+
+
+var advanced_folder = gui.addFolder('Advanced Setting');
+
+var folder1 = advanced_folder.addFolder('General');
+advanced_folder.close();
 console.log(global_config);
 
 // initially folder is closed
@@ -64,7 +88,7 @@ folder1.add(global_config.audio_config, 'reference_timeline', 'reference_timelin
 
 //var spectrum_display = folder1.add(global_config, 'spectrum_display').name('Spectrum Display');
 
-var audio_config_folder = gui.addFolder('Audio Config');
+var audio_config_folder = advanced_folder.addFolder('Audio Config');
 audio_config_folder.close();
 //var location_config = audio_config_folder.addFolder('Location');
 var synths_folder = audio_config_folder.addFolder('Synths');

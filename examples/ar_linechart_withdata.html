@@ -8,6 +8,7 @@
   <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
   <script src="./utils/transformHelper.js"></script> </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
+  
   <script>
     var global_config = 
                   {'time_duration':20,
@@ -17,10 +18,11 @@
                    "radius":1,
                    "theta":Math.PI/3*2,
                    "audio_config":{
-                   "voice_over":true,
+                   "voice_over":false,
                    "audience_location":{"pitch":0,"yaw":0,"roll":0},
-                   "mode":"percnrepeat",
+                   "mode":"pitchnpan",
                    "dataset":"default",
+                   "encoding_method":"---Please Select---",
                    "voice_over_time":1,
                    "pitchnpan_interval" :1,
                    "reference_timeline":true,
