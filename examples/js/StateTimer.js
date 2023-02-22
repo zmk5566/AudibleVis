@@ -199,7 +199,7 @@ export class StateTimer {
             //console.log(x_cord,y_cord,z_cord);
             //console.log(temp_coord);
             this.music_core.playPitchPanSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
-            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,0*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
        }else if(this.config.audio_config.mode === "pitchpoly"){
             //console.log("pitchpoly");
             var [x_cord,y_cord,z_cord]= 
@@ -215,7 +215,7 @@ export class StateTimer {
             //console.log(x_cord,y_cord,z_cord);
             //console.log(temp_coord);
             this.music_core.playPercuPanSound(index,this.timer,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
-            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,0*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
 
         }else if (this.config.audio_config.mode === "percnrepeat"){
             var temp_index_position = 1/(this.totalData.length-1)*index;
@@ -227,7 +227,7 @@ export class StateTimer {
             //console.log(temp_coord);
 
             this.music_core.playPercuRepSound(index,data_point.uniform_value,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
-            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,0*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
         }else if (this.config.audio_config.mode === "spatial_simple"){
             var temp_index_position = 1/(this.totalData.length-1)*index;
 
@@ -238,7 +238,7 @@ export class StateTimer {
             //console.log(temp_coord);
 
             this.music_core.playSimpleSynth(index,data_point.uniform_value,temp_coord[1]*this.config.dynamic_scale,temp_coord[0]*this.config.dynamic_scale,temp_coord[2]*this.config.dynamic_scale);
-            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,z_cord*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
+            this.vis3d.update_point(index,y_cord*this.config.dynamic_scale,0*this.config.dynamic_scale,-x_cord*this.config.dynamic_scale,data_point.color);
         }
     }
 
