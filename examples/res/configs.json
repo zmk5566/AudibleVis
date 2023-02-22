@@ -3,7 +3,7 @@
       "name": "TIME-PAN-(PITCH-SEQ)",
       "description": "encode the data with the position of the sound source in the horizontal plane",
       "data": {
-        "time_duration": 20,
+        "time_duration": 45,
         "spectrum_display": false,
         "data_types_num": 3,
         "dynamic_scale": 2,
@@ -85,10 +85,10 @@
       }
     },
     {
-        "name": "TIME-PAN-(PERC-SEQ",
+        "name": "TIME-PAN-(PERC-SEQ)",
         "description": "encode the data with the position of the sound source in the horizontal plane",
         "data": {
-          "time_duration": 20,
+          "time_duration": 45,
           "spectrum_display": false,
           "data_types_num": 3,
           "dynamic_scale": 2,
@@ -173,7 +173,7 @@
           "name": "TIME-PITCH-OSC",
           "description": "encode the data with the position of the sound source in the horizontal plane",
           "data": {
-            "time_duration": 20,
+            "time_duration": 45,
             "spectrum_display": false,
             "data_types_num": 3,
             "dynamic_scale": 2,
@@ -258,7 +258,7 @@
             "name": "TIME-PITCH-(FIXED-PAN)",
             "description": "encode the data with the position of the sound source in the horizontal plane",
             "data": {
-              "time_duration": 20,
+              "time_duration": 45,
               "spectrum_display": false,
               "data_types_num": 3,
               "dynamic_scale": 2,
@@ -343,7 +343,7 @@
               "name": "TIME-(REPEAT-PAN)-PERC",
               "description": "encode the data with the position of the sound source in the horizontal plane",
               "data": {
-                "time_duration": 20,
+                "time_duration": 45,
                 "spectrum_display": false,
                 "data_types_num": 3,
                 "dynamic_scale": 2,
@@ -360,7 +360,7 @@
                   "dataset": "default",
                   "voice_over_time": 1,
                   "pitchnpan_interval": 1,
-                  "reference_timeline": false,
+                  "reference_timeline": true,
                   "switch_real_samples": false,
                   "audio_channels": [
                     {

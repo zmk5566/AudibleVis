@@ -25,7 +25,7 @@ fetch('./res/configs.json')
   for (var i = 0; i < data.length; i++) {
     config_name_list.push(data[i].name);
   }
-  folder0.add(global_config.audio_config, 'encoding_method',  config_name_list).name('Encoding Method').onChange( value => {
+  folder0.add(global_config, 'encoding_method',  config_name_list).name('Encoding Method').onChange( value => {
     
     
     var index = data.findIndex(p => p.name == value);
