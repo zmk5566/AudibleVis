@@ -17,6 +17,16 @@ folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_
 } );
 
 
+folder0.add(global_config, 'time_duration', 10, 120).step(1).name('SCALE DETAILS').onFinishChange( value => {
+    global_config.time_duration = value;
+    state_timer.update_config(global_config);
+} );
+
+folder0.add(global_config.audio_config, 'pitchnpan_interval', 0.05,8).step(0.1).name('SAMPLE ALLOW TIME').onFinishChange( value => {
+    global_config.audio_config.pitchnpan_interval = value;
+    state_timer.update_config(global_config);
+} );
+
 
 fetch('./res/configs.json')
   .then((response) => response.json())
