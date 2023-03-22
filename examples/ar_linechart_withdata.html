@@ -18,6 +18,7 @@
           "spectrum_display": false,
           "data_types_num": 3,
           "dynamic_scale": 2,
+          "value_mode":false,
           "radius": 1,
           "theta": 2.09439510239,
           "unit_based_sample_play":true,
@@ -107,12 +108,12 @@
 <body style="width: 100vw;">
   
 <div class="flex-container">
-
+  <div id="vis_3d">
+  </div>
   <div id="main_graph">
     <script type="module" src="./main.js" ></script>
   </div>
-  <div id="vis_3d">
-  </div>
+
   <div id="main_control_pannel">
   <button id="start" class = "button">start</button>
   <button id="stop" class ="button">stop</button>

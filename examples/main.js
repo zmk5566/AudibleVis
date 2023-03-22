@@ -58,6 +58,19 @@ mode_folder.add(global_config, 'unit_based_sample_play').name('unit_based_sample
     state_timer.update_config(global_config);
 })
 
+
+
+mode_folder.add(global_config, 'value_mode').name('value_mode').onFinishChange( value => {
+    if (value){
+        
+        //global_config.unit_based_sample_play = false;
+        console.log("unit_based_sample_play changed",false);
+        global_config.audio_config.pitchnpan_interval  = 5;
+    }
+    state_timer.update_config(global_config);
+})
+
+
 mode_folder.add( { add:get_random_value_function},'add').name('Get Random New Value');
 
 

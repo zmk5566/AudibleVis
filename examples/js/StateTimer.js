@@ -153,7 +153,7 @@ export class StateTimer {
         var phase = Math.random()*Math.PI*2;
 
         if (!double){
-            temp_list = process_list_to_json(generate_sinwave(amplitude, frequency, phase , 0, 16),generate_sinwave(amplitude, frequency, phase , 0, 16),this.config.noise_level);
+            temp_list = process_list_to_json(generate_sinwave(amplitude, frequency, phase , 0, 16),this.config.noise_level);
         }else{
 
             var amplitude2 = Math.random()*0.75+0.25;
