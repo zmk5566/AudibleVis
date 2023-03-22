@@ -17,6 +17,7 @@ export class StateTimer {
         //hard coded here for now
         this.music_core= new ThreeDimensionAuidoCore(3,this.config.audio_config);
         this.totalData = [];
+        this.current_counter = 0;
     }
 
     init(){
@@ -44,10 +45,14 @@ export class StateTimer {
     
 
     startAnim(time) {
-  
         // Set left style to a function of time if it is not stopped
         if (!this.stopped) {
-            this.timer = this.get_uniformed_time_elapse();
+            //this.timer = this.get_uniformed_time_elapse();
+            if (this.config.unit_based_sample_play === true){
+                this.timer = this.get_time_elapse();
+            }else{
+                this.timer = this.get_uniformed_time_elapse();
+            }
             if (this.timer>=1){
                 console.log("ready to stop , current time elapse： " + this.timer);
                 this.stop();
@@ -59,8 +64,6 @@ export class StateTimer {
     }
 
     update_loop(){
-
- 
 
 
         if (this.config.audio_config.mode === "spatial" || this.config.audio_config.mode === "pitchpoly"){
@@ -100,11 +103,18 @@ export class StateTimer {
 
 
             this.previousRef = this.audioctx.now()+additional_time;
+            console.log(this.timer);
+
+            if (this.config.unit_based_sample_play === true){
+            this.totalData = this.chart.trigger_line_movement(Math.floor(this.timer*16)/16);
+            }else{
             this.totalData = this.chart.trigger_line_movement(this.timer);
+            }
 
 
 
             this.totalData.forEach((d,i)=>{
+                this.current_counter = this.current_counter+1;
                 this.process_each_data_point(d,i);
             })
 
@@ -120,15 +130,184 @@ export class StateTimer {
 
 
 
-    console.log(speechSynthesis.paused);
+    //console.log(speechSynthesis.paused);
 
 
 
     }
+    
 
         
         
         //console.log(this.chart.gettotalData()[2]);
+    }
+
+
+    trigger_cycle_random_generate(double=false){
+        var temp_list = [];
+
+        
+        // the input list should be :amp frequency, phase, offset, total_number
+        var amplitude = Math.random()*0.75+0.25;
+        var frequency = Math.random()*4+1;
+        var phase = Math.random()*Math.PI*2;
+
+        if (!double){
+            temp_list = process_list_to_json(generate_sinwave(amplitude, frequency, phase , 0, 16),generate_sinwave(amplitude, frequency, phase , 0, 16),this.config.noise_level);
+        }else{
+
+            var amplitude2 = Math.random()*0.75+0.25;
+            var frequency2 = Math.random()*4+1;
+            var phase2 = Math.random()*Math.PI*2;
+
+            temp_list = process_list_to_json_two_dataset(generate_sinwave(amplitude, frequency, phase , 0, 16),generate_sinwave(amplitude2, frequency2, phase2 , 0, 16),this.config.noise_level);
+        }
+
+        this.chart.process_the_data_draw(temp_list);
+    }
+
+    trigger_pulse_random_generate(double=false){
+        var temp_list = [];
+
+        
+        // the input list should be :amp frequency, phase, offset, total_number
+        var amplitude = Math.random()*0.75+0.25;
+        var frequency = Math.random()*1+0.5;
+        var phase = Math.random()*Math.PI*2;
+        if (!double){
+            temp_list = process_list_to_json(generate_pulse_wave(amplitude, frequency, phase , 0, 16),this.config.noise_level);
+        }else{
+            var amplitude2 = Math.random()*0.75+0.25;
+            var frequency2 = Math.random()*1+0.5;
+            var phase2 = Math.random()*Math.PI*2;
+            temp_list = process_list_to_json_two_dataset(generate_pulse_wave(amplitude, frequency, phase , 0, 16),generate_pulse_wave(amplitude2, frequency2, phase2 , 0, 16),this.config.noise_level);
+        }
+
+        this.chart.process_the_data_draw(temp_list);
+
+
+    }
+
+    trigger_linear_random_generate(double = false){
+                // do the random graph trick
+                var list_of_possibilities = ["up_up","up_down","down_up","down_down"];
+                //get a random possibility
+                var type = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
+                //type = "up_down";
+                var noise = Math.random()*0.05;
+                //var temp_list = generate_trend_data_by_serveral_key_point([-0.3,0.2,0.5],[5,11],0.05);
+                var random_value_start =0;
+                var get_second_value = 0;
+                var get_final_result=0;
+                var random_index = 0;
+                var random_index2 = 0;
+        
+
+                if (!double){
+                var temp_list = process_list_to_json(this.retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type));
+            }else{
+
+
+                var type2 = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
+
+                
+                var temp_list = process_list_to_json_two_dataset(this.retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type),this.retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type2));
+            }
+
+                this.chart.process_the_data_draw(temp_list);
+
+        
+                // call the random graph function
+                return type;
+;
+
+    }
+
+
+    retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type){
+        var temp_list = [];
+        switch (type) {
+            case 'up_up':
+                //get first random value 
+                random_value_start =getRandomArbitrary(-1,0.25);
+                get_second_value = getRandomArbitrary(random_value_start,0.75);
+                get_final_result= getRandomArbitrary(get_second_value,1);
+
+                // get random index
+                random_index = getRandomInt(2,14);
+                random_index2 = 16-random_index;
+
+                break;
+            case 'up_down':
+              
+                random_value_start =getRandomArbitrary(-1,0.75);
+                get_second_value = getRandomArbitrary(random_value_start,1);
+                get_final_result= getRandomArbitrary(get_second_value,-1);
+
+                // get random index
+                random_index = getRandomInt(2,14);
+                random_index2 = 16-random_index;
+
+                break;
+            case 'down_up':
+                
+                random_value_start =getRandomArbitrary(0.75,0.1);
+                get_second_value = getRandomArbitrary(-1,random_value_start);
+                get_final_result= getRandomArbitrary(get_second_value,1);
+
+                // get random index
+                random_index = getRandomInt(2,14);
+                random_index2 = 16-random_index;
+
+            break;
+            case 'down_down':
+                    
+                random_value_start =getRandomArbitrary(0.75,0.1);
+                get_second_value = getRandomArbitrary(-0.65,random_value_start);
+                get_final_result= getRandomArbitrary(get_second_value,-1);
+
+                // get random index
+                random_index = getRandomInt(2,14);
+                random_index2 = 16-random_index;
+
+                break;
+        }
+        temp_list = generate_trend_data_by_serveral_key_point([random_value_start,get_second_value,get_final_result],[random_index,random_index2],0);
+        return temp_list;
+    }
+
+    
+    random_graph(){
+        switch (this.config.test_type) {
+            case 'single_linear':
+                console.log("single_linear");
+                console.log("start to be random");
+                this.trigger_linear_random_generate();
+                break;
+            case 'single_cycle':
+                    console.log("single_cycle");
+                    console.log("start to be random");
+                    this.trigger_cycle_random_generate();
+                    break;
+            case 'single_pulse':
+                    console.log("single_pulse");
+                    console.log("start to be random");
+                    this.trigger_pulse_random_generate();
+                    break;
+            case 'double_linear':
+                    this.trigger_linear_random_generate(true);
+                    console.log("double_linear");
+                    break;
+            case 'double_cycle':
+                this.trigger_cycle_random_generate(true);
+                break;
+            case 'double_pulse':
+                this.trigger_pulse_random_generate(true);
+                break;
+
+
+        }
+        
     }
 
     update_config(config){
@@ -264,8 +443,18 @@ export class StateTimer {
         
     }
 
+
+    // this is where TODO is having
     get_uniformed_time_elapse(){
         return (1-((this.time_consume-(this.audioctx.now() - this.refTime))/this.time_consume));
+    }
+
+
+    get_time_elapse(){
+        //console.log(this.totalData.length);
+        this.time_consume =  this.config.audio_config.pitchnpan_interval*16;
+        return this.get_uniformed_time_elapse();
+
     }
 
     stop() {

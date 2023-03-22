@@ -21,3 +21,4 @@ function process_display_frequency(input_spectrum){
     freq_vis.rect(x, freq_vis.height, freq_vis.width / input_spectrum.length, h )
   }
 }
+

@@ -13,11 +13,15 @@
     var global_config = 
     {
           "time_duration": 30,
+          "test_type": "standby",
+          "noise_level": 0,
           "spectrum_display": false,
           "data_types_num": 3,
           "dynamic_scale": 2,
           "radius": 1,
           "theta": 2.09439510239,
+          "unit_based_sample_play":true,
+
           "encoding_method":"TIME-PAN-(PERC-SEQ)",
           "audio_config": {
             "voice_over": false,
@@ -112,6 +116,8 @@
   <div id="main_control_pannel">
   <button id="start" class = "button">start</button>
   <button id="stop" class ="button">stop</button>
+  <button id="single_value" class ="button">Get Single Value</button>
+
   <div id="pitch"></div>
   <div id="yaw"></div>
   <div id="roll"></div>

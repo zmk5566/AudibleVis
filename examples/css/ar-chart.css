@@ -18,6 +18,10 @@
     stroke: #000;
     shape-rendering: crispEdges;
   }
+
+  .display{
+    width:100% ;
+  }
   
   .x.axis path {
     display: none;

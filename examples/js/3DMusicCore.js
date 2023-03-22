@@ -121,6 +121,8 @@ export class ThreeDimensionAuidoCore {
 
 
       var bufferTime = 0;
+
+      var over_past_time = 0.5;
       this.players[index].start(now+index*interval+time_balance);
       this.panners[index].setPosition(panX, panY, panZ);
       

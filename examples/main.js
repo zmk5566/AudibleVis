@@ -6,15 +6,78 @@ console.log(global_config);
 var state_timer = new StateTimer(Tone.context,global_config);
 state_timer.init();
 
+
+  
+
+
+
+
+
+
 var gui = new GUI();
 
 var folder0 = gui.addFolder('Basic Setting');
 
+var mode_folder = gui.addFolder('Mode Setting');
+
+var get_random_value_function = state_timer.random_graph.bind(state_timer);
+
 
 folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('Dataset').onChange( value => {
+    global_config.test_type = value;
     console.log("current dataset", value);
     state_timer.update_database(value);
 } );
+
+
+
+
+mode_folder.add(global_config, 'test_type',  ['default','single_linear','single_cycle','single_pulse','double_linear','double_cycle','double_pulse']).name('Dataset').onChange( value => {
+    console.log("current dataset", value);
+    state_timer.update_config(global_config);
+
+    state_timer.random_graph();
+
+
+} );
+
+
+
+
+
+mode_folder.add(global_config, 'noise_level', 0, 0.2).step(0.05).name('NOISE LEVEL').onFinishChange( value => {
+    global_config.noise_level = value;
+    state_timer.update_config(global_config);
+    state_timer.random_graph();
+} );
+
+
+mode_folder.add(global_config, 'unit_based_sample_play').name('unit_based_sample_play').onFinishChange( value => {
+    global_config.unit_based_sample_play = value;
+    console.log("unit_based_sample_play changed",value);
+    state_timer.update_config(global_config);
+})
+
+mode_folder.add( { add:get_random_value_function},'add').name('Get Random New Value');
+
+
+
+folder0.close();
+
+// add a button to the folder 
+
+
+
+folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('Dataset').onChange( value => {
+    console.log("current dataset", value);
+    state_timer.update_config(global_config);
+    state_timer.update_database(value);
+} );
+
+
+//create a function to randomly retrive a function 
+
+
 
 
 folder0.add(global_config, 'time_duration', 10, 120).step(1).name('SCALE DETAILS').onFinishChange( value => {
@@ -22,7 +85,7 @@ folder0.add(global_config, 'time_duration', 10, 120).step(1).name('SCALE DETAILS
     state_timer.update_config(global_config);
 } );
 
-folder0.add(global_config.audio_config, 'pitchnpan_interval', 0.05,8).step(0.1).name('SAMPLE ALLOW TIME').onFinishChange( value => {
+folder0.add(global_config.audio_config, 'pitchnpan_interval', 0.125,8).step(0.1).name('SAMPLE ALLOW TIME').onFinishChange( value => {
     global_config.audio_config.pitchnpan_interval = value;
     state_timer.update_config(global_config);
 } );
@@ -174,8 +237,8 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
 })
 
 function global_update_config(){
-console.log("global update config");
-state_timer.update_pan(global_config);
+    console.log("global update config");
+    state_timer.update_pan(global_config);
 
 }
 
@@ -187,3 +250,7 @@ document.getElementById("pitch").onchange = () => {
     console.log('it changed'); // Do something
   }
 document.getElementById("stop").onclick = state_timer.stop.bind(state_timer);
+document.getElementById("single_value").onclick = state_timer.random_graph.bind(state_timer);
+
+
+
