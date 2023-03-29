@@ -194,37 +194,104 @@ export class StateTimer {
                 //get a random possibility
                 var type = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
                 //type = "up_down";
-                var noise = Math.random()*0.05;
-                //var temp_list = generate_trend_data_by_serveral_key_point([-0.3,0.2,0.5],[5,11],0.05);
-                var random_value_start =0;
-                var get_second_value = 0;
-                var get_final_result=0;
-                var random_index = 0;
-                var random_index2 = 0;
-        
-
                 if (!double){
-                var temp_list = process_list_to_json(this.retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type));
+                var temp_list = process_list_to_json(this.retrive_linear_list_based_on_type(type));
             }else{
 
 
                 var type2 = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
 
                 
-                var temp_list = process_list_to_json_two_dataset(this.retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type),this.retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type2));
+                var temp_list = process_list_to_json_two_dataset(this.retrive_linear_list_based_on_type(type),this.retrive_linear_list_based_on_type(type2));
             }
 
                 this.chart.process_the_data_draw(temp_list);
 
         
                 // call the random graph function
+                console.log("type is ",type);
+                console.log("type data is ",temp_list);
                 return type;
 ;
 
     }
 
+    load_value_of_index(index,method){
+        this.chart.drawChart_by_index(index,method);
+    }
 
-    retrive_linear_list_based_on_type(random_value_start,get_second_value,get_final_result,random_index,random_index2,type){
+    async  send_few_value_to_server(index,methods){
+        if (index!=0){
+            
+            switch (methods) {
+                case 'single_linear':
+                    
+                    var list_of_possibilities = ["up_up","up_down","down_up","down_down"];
+                    //get a random possibility
+                    var type = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
+                    var data = process_list_to_json(this.retrive_linear_list_based_on_type(type));
+                    sendData(methods,data);
+                    break;
+                case 'double_linear':
+
+
+                    var list_of_possibilities = ["up_up","up_down","down_up","down_down"];
+                    //get a random possibility
+                    var type = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
+                    var type2 = list_of_possibilities[Math.floor(Math.random()*list_of_possibilities.length)];
+
+                    var data = process_list_to_json_two_dataset(this.retrive_linear_list_based_on_type(type),this.retrive_linear_list_based_on_type(type2));
+                    sendData(methods,data);
+                    break;
+                case 'single_cycle':
+                    var amplitude = Math.random()*0.75+0.25;
+                    var frequency = Math.random()*4+1;
+                    var phase = Math.random()*Math.PI*2;
+
+                    var data = process_list_to_json(generate_sinwave(amplitude, frequency, phase , 0, 16),this.config.noise_level);
+                    sendData(methods,data);
+                    break;
+                case 'double_cycle':
+                    var amplitude = Math.random()*0.75+0.25;
+                    var frequency = Math.random()*4+1;
+                    var phase = Math.random()*Math.PI*2;
+
+                    var amplitude2 = Math.random()*0.75+0.25;
+                    var frequency2 = Math.random()*4+1;
+                    var phase2 = Math.random()*Math.PI*2;
+
+                    var data = process_list_to_json_two_dataset(generate_sinwave(amplitude, frequency, phase , 0, 16),generate_sinwave(amplitude2, frequency2, phase2 , 0, 16),this.config.noise_level);
+                    sendData(methods,data);
+                    break;
+                case 'single_pulse':
+                    var amplitude = Math.random()*0.75+0.25;
+                    var frequency = Math.random()*1+0.5;
+                    var phase = Math.random()*Math.PI*2;
+
+                    var data = process_list_to_json(generate_pulse_wave(amplitude, frequency, phase , 0, 16),this.config.noise_level);
+                    sendData(methods,data);
+                    break;
+                case 'double_pulse':
+                    var amplitude = Math.random()*0.75+0.25;
+                    var frequency = Math.random()*1+0.5;
+                    var phase = Math.random()*Math.PI*2;
+
+                    var data = process_list_to_json_two_dataset(generate_pulse_wave(amplitude, frequency, phase , 0, 16),generate_pulse_wave(amplitude2, frequency2, phase2 , 0, 16),this.config.noise_level);
+                    sendData(methods,data);
+                    break;
+            }
+            await new Promise(r => setTimeout(r, 500));
+            this.send_few_value_to_server(index-1,methods);
+        }
+        
+
+    }
+
+
+
+
+    retrive_linear_list_based_on_type(type){
+        var random_value_start,get_second_value,get_final_result,random_index,random_index2;
         var temp_list = [];
         switch (type) {
             case 'up_up':

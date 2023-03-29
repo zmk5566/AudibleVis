@@ -20,9 +20,10 @@
           "dynamic_scale": 2,
           "value_mode":false,
           "radius": 1,
+          "current_test":"no-test",
           "theta": 2.09439510239,
           "unit_based_sample_play":true,
-
+          "test_mode": "test_mode",
           "encoding_method":"TIME-PAN-(PERC-SEQ)",
           "audio_config": {
             "voice_over": false,
@@ -115,18 +116,35 @@
   </div>
 
   <div id="main_control_pannel">
+  <div>
   <button id="start" class = "button">start</button>
   <button id="stop" class ="button">stop</button>
+</div>
+<div>
   <button id="single_value" class ="button">Get Single Value</button>
 
+</div>
   <div id="pitch"></div>
   <div id="yaw"></div>
   <div id="roll"></div>
 
+
+  <div id='test_mode'>
+    <div id = "current_test_index">
+      <p>Current Test Index: 
+      <a id="test_index">Please Choose the dataset for test</a>
+    </p> Database:<a id="test_method"></a>
+    </div>
+
+
   </div>
 </div>
 
-  <div id='container'></div>
+
+
+
+
+  </div>
 </body>
 
 <footer>

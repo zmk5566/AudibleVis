@@ -140,3 +140,26 @@ function generate_trend_data(range_low,range_high,total_number,random_noise){
 
     return pulsewave_data;
   }
+
+
+
+  
+  function sendData(input_method,data) {
+    //const data = [];
+
+// switch on different metho
+
+    const url = 'http://127.0.0.1:8000/save_csv/'+input_method;
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        const response = JSON.parse(xhr.responseText);
+        console.log(`Saved CSV file ${response.filename} at ${response.filepath}`);
+      }
+    };
+    xhr.send(JSON.stringify(data));
+  }
+
+

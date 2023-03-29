@@ -237,6 +237,18 @@
           }.bind(this));
       }
 
+      drawChart_by_index(index,method){
+        //var parseDate = d3.time.format("%Y%m%d").parse;
+
+
+        d3.csv("./res/"+method+"/"+index+".csv", function(error, data) {
+          if (error) throw error;
+
+          this.process_the_data_draw(data);
+
+        }.bind(this));
+    }
+
 
       
 

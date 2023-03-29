@@ -5,7 +5,9 @@ console.log(Tone.context);
 console.log(global_config);
 var state_timer = new StateTimer(Tone.context,global_config);
 state_timer.init();
-
+var current_index = 0;
+var max_range = 12;
+var current_test = "no-test";
 
   
 
@@ -19,6 +21,38 @@ var gui = new GUI();
 var folder0 = gui.addFolder('Basic Setting');
 
 var mode_folder = gui.addFolder('Mode Setting');
+
+var test_folder = gui.addFolder('Test Setting');
+
+
+function update_test(input_test_name){
+    current_index = 0;
+    current_test = input_test_name;
+    update_gui();
+
+}
+
+function update_gui(){
+    document.getElementById("test_index").innerHTML = current_index;
+
+}
+
+
+test_folder.add(global_config, 'current_test',  ['single_linear','single_cycle','single_pulse','double_linear','double_cycle','double_pulse']).name('Dataset').onChange( value => {
+    console.log("current dataset", value);
+    global_config.test_type = value;
+
+    state_timer.update_config(global_config);
+    state_timer.random_graph();
+
+    update_test(value);
+
+
+})
+
+
+    
+
 
 var get_random_value_function = state_timer.random_graph.bind(state_timer);
 
@@ -71,9 +105,11 @@ mode_folder.add(global_config, 'value_mode').name('value_mode').onFinishChange( 
 })
 
 
+
 mode_folder.add( { add:get_random_value_function},'add').name('Get Random New Value');
 
 
+mode_folder.hide();
 
 folder0.close();
 
@@ -243,11 +279,9 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
             state_timer.update_config(global_config);
         })
     }
-    
-
-
 
 })
+
 
 function global_update_config(){
     console.log("global update config");
@@ -258,12 +292,26 @@ function global_update_config(){
 update_global_config =global_update_config;
 
 
+
+
 document.getElementById("start").onclick = state_timer.start.bind(state_timer);
 document.getElementById("pitch").onchange = () => {
     console.log('it changed'); // Do something
   }
 document.getElementById("stop").onclick = state_timer.stop.bind(state_timer);
-document.getElementById("single_value").onclick = state_timer.random_graph.bind(state_timer);
+document.getElementById("single_value").onclick = load_next_text_graph;
 
+
+
+function load_next_text_graph(){
+    current_index= current_index+1;
+    if (current_index<=max_range){
+        console.log("current index",current_index);
+        state_timer.load_value_of_index(current_index,current_test);
+        document.getElementById("test_index").innerHTML = current_index;
+    }else{
+        console.log("complete_cycle",current_index);
+    }
+}
 
 
