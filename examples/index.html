@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, user-scalable=no" />
   <script src="./utils/transformHelper.js"></script> </script>
   
-  <script data-require="d3@3.5.3" data-semver="3.5.3" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
   <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
 
   <script>
@@ -107,7 +107,7 @@
   </script>
 </head>
 
-<body style="width: 100vw;">
+<body style="width: 100vw;" >
   
 <div class="flex-container">
   <div id="vis_3d">
@@ -122,23 +122,10 @@
   <button id="stop" class ="button">stop</button>
 </div>
 <div>
-  <button id="single_value" class ="button">NEXT QUESTION</button>
+  <button id="single_value" class ="button">next question</button>
 
 </div>
-  <div id="pitch"></div>
-  <div id="yaw"></div>
-  <div id="roll"></div>
 
-
-  <div id='test_mode'>
-    <div id = "current_test_index">
-      <p>Current Test Index: 
-      <a id="test_index">Please Choose the dataset for test</a>
-    </p> Database:<a id="test_method"></a>
-    </div>
-
-
-  </div>
 </div>
 
 
@@ -149,6 +136,22 @@
 </body>
 
 <footer>
+ 
+  
+  
+      <div  class = "footer-flex">Current Test Index: <a id="test_index">-</a></div>
+      
+      <div class = "footer-flex">Database:<a id="test_method">-</a></div>
+      <div class = "footer-flex">
+        Gyro: 
+        x:<a id="pitch">-</a>
+        y:<a id="yaw">-</a>
+        z:<a id="roll">-</a>
+
+
+      </div>
+
+      <div class = "footer-flex">OSC_status:<a id="osc_status">----</a> Port:<a id ="port_num">n/a</a></div>
 </footer>
 
 </html>

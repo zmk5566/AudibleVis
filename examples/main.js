@@ -1,7 +1,8 @@
 import {StateTimer} from './js/StateTimer.js';
 import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
+//import tone.js from the npm library installed locally
 
-console.log(Tone.context);
+
 console.log(global_config);
 var state_timer = new StateTimer(Tone.context,global_config);
 state_timer.init();
@@ -34,6 +35,7 @@ function update_test(input_test_name){
 
 function update_gui(){
     document.getElementById("test_index").innerHTML = current_index;
+    document.getElementById("test_method").innerHTML = current_test;
 
 }
 

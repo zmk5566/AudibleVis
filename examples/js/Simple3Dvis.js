@@ -2,9 +2,7 @@ import * as THREE from '../../lib/three.module.js';
 
 
 import { TrackballControls } from './three-libs/addons/controls/TrackballControls.js';
-import { ARButton } from './ARButton.js';
-
-let perspectiveCamera, orthographicCamera, controls, scene, renderer, stats;
+//import { ARButton } from './ARButton.js';
 
 const params = {
     orthographicCamera: false
@@ -119,8 +117,8 @@ export class Simple3Dvis {
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.setSize( this.windowsSizeX, this.windowsSizeY );
         document.getElementById('vis_3d').appendChild( this.renderer.domElement );
-        this.renderer.xr.enabled = true;
-        document.body.appendChild( ARButton.createButton( this ) );
+        //this.renderer.xr.enabled = true;
+        //document.body.appendChild( ARButton.createButton( this ) );
 
 
     

@@ -1,16 +1,40 @@
-.ARButton{
-    left: calc(10% - 50px);
+
+@media (hover: hover) {
+  body:not(.lil-gui-dragging) .lil-gui .title:hover {
+    background: #facccc;
+    color: #000;
+    opacity: 0.85;
+}
+}
+
+
+.lil-gui.root > .title {
+  -webkit-app-region: drag;
+}
+select{
+  margin: 40px;
+  background:#ffffff;
+  color: #000;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
   }
   body {
     font: 6.5px sans-serif;
+    margin: 0px;
+    -webkit-user-select: none;
   }
   
-
+  .lil-gui {
+    color: #000000;
+    --background-color: #ffffff;
+    --widget-color: #dcfdff;
+    --hover-color: #ffebeb;
+    --focus-color: #f6cdcd;
+  }
  
   .lil-gui.autoPlace {
     left: 50%;
     transform: translate(-50%, 0%);
-    width: 80vw;
+    width: 100vw;
   }
   .axis path,
   .axis line {
@@ -39,7 +63,7 @@
   }
   
   .flex-container {
-    margin-top:120px;
+    margin-top:180px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -73,3 +97,24 @@
     padding: 20px;
     font-size: 30px;
   } */
+
+
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    color: black;
+    font-size: 2em;;
+  }
+  
+  .footer-flex{
+    display: flex;
+    margin-left: 5px;
+  }
+
+  a{
+    margin-left: 5px;
+    margin-right: 5px;
+  }
