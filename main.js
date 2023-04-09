@@ -7,7 +7,7 @@ const createWindow = () => {
       frame: false,
         titleBarStyle: 'hidden',
         webPreferences: {
-        nodeIntegration: false, // is default value after Electron v5
+        nodeIntegration: true, // is default value after Electron v5
         contextIsolation: false, // protect against prototype pollution
         enableRemoteModule: true, // turn off remote
       }
@@ -17,9 +17,6 @@ const createWindow = () => {
     win.setMenuBarVisibility(false)
   }
 
-  app.whenReady().then(() => {
-    createWindow()
-  })
 
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()

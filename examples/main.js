@@ -35,8 +35,9 @@ function update_test(input_test_name){
 
 function update_gui(){
     document.getElementById("test_index").innerHTML = current_index;
+    document.getElementById("test_index").style.color = "green";
     document.getElementById("test_method").innerHTML = current_test;
-
+    document.getElementById("test_method").style.color = "blue";
 }
 
 

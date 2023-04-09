@@ -104,17 +104,25 @@ select{
     left: 0;
     bottom: 0;
     width: 100%;
-    display: flex;
-    color: black;
-    font-size: 2em;;
+
   }
   
   .footer-flex{
     display: flex;
-    margin-left: 5px;
+    margin-left: auto;
   }
 
   a{
     margin-left: 5px;
     margin-right: 5px;
+  }
+
+  .footer-flex-container>:first-child{
+    margin-left: 5px;
+  }
+
+  .footer-flex-container{
+    display: flex;
+    color: black;
+    font-size: 2em;;
   }
