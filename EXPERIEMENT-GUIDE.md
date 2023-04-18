@@ -5,7 +5,7 @@
 
 Over the head earphone
 Google cardboard 
-iPhone (any version) 
+iPhone (IOS 12+) 
 
 ## Software Setup: 
 
