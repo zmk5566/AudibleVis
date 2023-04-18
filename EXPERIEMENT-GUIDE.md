@@ -23,9 +23,9 @@ Then do:
 
 You should able to launch a GUI with UI like this 
 
-  
- <img src="[https://camo.githubusercontent.com/...](https://user-images.githubusercontent.com/98451647/232719074-1752d348-3e8e-4f08-a6ae-93fa6f842e71.png)" data-canonical-src="[https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png](https://user-images.githubusercontent.com/98451647/232719074-1752d348-3e8e-4f08-a6ae-93fa6f842e71.png)" width="200"/> 
+ 
+![ui-1](https://user-images.githubusercontent.com/98451647/232720368-ac53b994-6993-43f8-8802-c05eac2ab98a.png)
+
   
  Then connect the phone gyro to the targeted IP address
-
 
