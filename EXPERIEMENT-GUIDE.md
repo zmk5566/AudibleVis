@@ -41,3 +41,6 @@ The data generation was done by the function defined in utils/transformHelper.js
         generate_sinwave(amplitude, frequency, phase, offset, total_number)
 
         generate_pulse_wave(amplitude, frequency, phase, offset, total_number)
+        
+
+The generated data was stored in the ./res/ folder with the folder name accordingly.  You can generate your own datalist with this functions and save it as a json file using the provided backend fastapi server. 
