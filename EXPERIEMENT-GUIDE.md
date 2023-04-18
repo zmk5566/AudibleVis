@@ -44,3 +44,6 @@ The data generation was done by the function defined in utils/transformHelper.js
         
 
 The generated data was stored in the ./res/ folder with the folder name accordingly.  You can generate your own datalist with this functions and save it as a json file using the provided backend fastapi server. 
+
+Launch fastapi node in the ./backend-server: 
+        uvicorn server:app --reload
