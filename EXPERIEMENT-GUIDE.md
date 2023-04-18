@@ -3,9 +3,9 @@
 
 ## Hardware Setup:
 
-Over the head earphone
-Google cardboard 
-iPhone (IOS 12+) 
+1. Over the head earphone
+2. Google cardboard 
+3. iPhone (IOS 12+) 
 
 ## Software Setup: 
 
