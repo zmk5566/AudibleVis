@@ -23,7 +23,8 @@ Then do:
 
 You should able to launch a GUI with UI like this 
 
-![ui-1](https://user-images.githubusercontent.com/98451647/232719074-1752d348-3e8e-4f08-a6ae-93fa6f842e71.png | width=200)
+  
+ <img src="[https://camo.githubusercontent.com/...](https://user-images.githubusercontent.com/98451647/232719074-1752d348-3e8e-4f08-a6ae-93fa6f842e71.png)" data-canonical-src="[https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png](https://user-images.githubusercontent.com/98451647/232719074-1752d348-3e8e-4f08-a6ae-93fa6f842e71.png)" width="200"/> 
   
  Then connect the phone gyro to the targeted IP address
 
