@@ -20,4 +20,4 @@ Then do:
 
     npm start
   
- Then eonnect the phone gyro to the targeted IP address
+ Then connect the phone gyro to the targeted IP address
