@@ -18,11 +18,17 @@
 
 The training will contains three part : 
 
+![Screenshot 2023-04-19 at 1 01 53 PM](https://user-images.githubusercontent.com/98451647/232971501-03f1ba63-16da-4b2d-abac-87406d1773ca.png)
+
+
+
 ### a. Zero training and the bound training (2min)
 
 ##### This is the help the user understand what is the Cartesian coordinates system in the user's mind. Three values are trained: Zero, Lower bound(-1), upper bound (+1)
 
 ### b. consistent value training training ( from the -1 to 1 )  8 mins
+
+
 
 The user will be informed by the bound of the data from each encoding method. 16 sonified and linear interpolated sample (from -1 to 1) will be played, with voice-over instruction informing the user what the value it is.  The procedure will be proceed twice, with each time from (-1 to 1) and backward (1 to -1)
 
