@@ -5,6 +5,6 @@
 
 |Encoding Method| 
 | ----------- | 
-| Pitch      | 
-| Tempo   | 
-| Spatial(our approach)   | 
+| Pitch| 
+| Tempo| 
+| Spatial(our approach)| 
