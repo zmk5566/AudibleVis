@@ -48,7 +48,6 @@ For one-set data only
 | Value       | 1-1       |
 | Trending   | 1-2        |
 | Data Charastic   | 1-3        |
-| ----------- | ----------- |
 
 
 For two-set data only
