@@ -43,20 +43,20 @@ For each of the method, we will have
 
 For one-set data only
 
-| Test Content      | Ref Test Key |
-| ----------- | ----------- | 
-| Value       | 1-val   |
-| Trending   | 1-trend        |
-| Data Charastic   | 1-character        |
+| Test Content      | Ref Test Key | Num of graphs | Est. Time to Complete|
+| ----------- | ----------- |  ----------- | ----------- | 
+| Value       | 1-val   |10| 15 mins|
+| Trending   | 1-trend        |10| 5 mins|
+| Data Charastic   | 1-character |5 mins|
 
 
 For two-set data only
 
 | Test Content      | Ref Test Number |
-| ----------- | ----------- | 
-| Value       | 2-val      |
-| Trending   | 2-trend     |
-| Data Charastic   | 2-character        |
+| ----------- | ----------- |  ----------- | ----------- | 
+| Value       | 2-val   |10| 20 mins|
+| Trending   | 2-trend        |10| 8 mins|
+| Data Charastic   | 2-character |8 mins|
 
 
 ## Post Experiment Questionaire 
