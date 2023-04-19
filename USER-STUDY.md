@@ -51,9 +51,9 @@ For one-set data only
 
 | Test Content      | Ref Test Key | Num of graphs | Est. Time to Complete|
 | ----------- | ----------- |  ----------- | ----------- | 
-| Data Charastic   | 1-character |10| 5 mins|
-| Value       | 1-val   |10| 15 mins|
-| Trending   | 1-trend        |10| 5 mins|
+| Data Charastic   | 1-character |5| 5 mins|
+| Trending   | 1-trend        |5| 5 mins|
+| Value       | 1-val   |5| 15 mins|
 
 Total time estimation: 25 mins
 
@@ -63,9 +63,9 @@ For two-set data only
 
 | Test Content      | Ref Test Key | Num of graphs | Est. Time to Complete|
 | ----------- | ----------- |  ----------- | ----------- | 
-| Data Charastic   | 2-character |10|8 mins|
-| Value       | 2-val   |10| 20 mins|
-| Trending   | 2-trend        |10| 8 mins|
+| Data Charastic   | 2-character |5|8 mins|
+| Value       | 2-val   |5| 20 mins|
+| Trending   | 2-trend        |5| 8 mins|
 
 Total time estimation 35mins
 
