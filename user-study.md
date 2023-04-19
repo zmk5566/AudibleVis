@@ -35,3 +35,11 @@ The user will be informed by the bound of the data from each encoding method. 16
 ### c. Random value training (3-mins)
 
 Random sonified value will be played. 16 samples will be presented
+
+
+## 
+
+
+## Post Experiment Questionaire 
+
+The questionaire will ask about the cognitive feeling of the users according to the 3 systems, and future suggestions.
