@@ -1,6 +1,6 @@
 # Guidebook for User Study
 
-## Experiment contents
+## Methods
 
 
 |Encoding Method| 
