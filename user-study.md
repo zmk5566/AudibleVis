@@ -43,20 +43,20 @@ For each of the method, we will have
 
 For one-set data only
 
-| Test Content      | Ref Test Number |
+| Test Content      | Ref Test Key |
 | ----------- | ----------- | 
-| Value       | 1-1       |
-| Trending   | 1-2        |
-| Data Charastic   | 1-3        |
+| Value       | 1-val   |
+| Trending   | 1-trend        |
+| Data Charastic   | 1-character        |
 
 
 For two-set data only
 
 | Test Content      | Ref Test Number |
 | ----------- | ----------- | 
-| Value       | 2-1       |
-| Trending   | 2-2        |
-| Data Charastic   | 2-3        |
+| Value       | 2-val      |
+| Trending   | 2-trend     |
+| Data Charastic   | 2-character        |
 
 
 ## Post Experiment Questionaire 
