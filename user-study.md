@@ -58,7 +58,6 @@ For two-set data only
 | Value       | 2-1       |
 | Trending   | 2-2        |
 | Data Charastic   | 2-3        |
-| ----------- | ----------- |
 
 
 ## Post Experiment Questionaire 
