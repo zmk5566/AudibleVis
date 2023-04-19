@@ -37,7 +37,28 @@ The user will be informed by the bound of the data from each encoding method. 16
 Random sonified value will be played. 16 samples will be presented
 
 
-## 
+## Experiments
+
+For each of the method, we will have 
+
+For one-set data only
+
+| Test Content      | Ref Test Number |
+| ----------- | ----------- | 
+| Value       | 1-1       |
+| Trending   | 1-2        |
+| Data Charastic   | 1-3        |
+| ----------- | ----------- |
+
+
+For two-set data only
+
+| Test Content      | Ref Test Number |
+| ----------- | ----------- | 
+| Value       | 2-1       |
+| Trending   | 2-2        |
+| Data Charastic   | 2-3        |
+| ----------- | ----------- |
 
 
 ## Post Experiment Questionaire 
