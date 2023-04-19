@@ -12,6 +12,11 @@
 
 ## Experiment Procedure (with time Estimation)
 
+
+## pre experiment set-up
+
+Before the experiment, the experiment helper will help the user the adjust the user to wear a headset with tracking function. 
+
 ### Training
 
 ##### Before the testing for any of the encoding method, a comsulsery 10 mins training will be provided as it is a common procedure in use such sonification system.
@@ -35,6 +40,7 @@ The user will be informed by the bound of the data from each encoding method. 16
 ### c. Random value training (3-mins)
 
 Random sonified value will be played. 16 samples will be presented
+
 
 
 ## Experiments
