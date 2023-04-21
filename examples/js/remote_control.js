@@ -1,15 +1,30 @@
 const config = overall_test();
 console.log(config);
 
-function play (content) {
-    console.log(content);
+const source = document.getElementById("entry-template").innerHTML;
+const template = Handlebars.compile(source);
+
+let index = 0;
+
+function play () {
+    console.log(config[index]);
+}
+
+function previous () {
+    if (index === 0) {
+        return
+    }
+
+    index--;
+    document.getElementById("main").innerHTML = template({ config: config[index] });
 }
 
 function save () {
-    const answers = document.getElementsByTagName("textarea")
-    Array.prototype.slice.call(answers).forEach(answer => {
-        console.log(answer.value);
-    });
+    const answer = document.getElementById("answer").value
+    console.log(answer, config[index].question_id);
+    index++;
+    // console.log(template({ config: config[index] }));
+    document.getElementById("main").innerHTML = template({ config: config[index] });
 }
 
 Handlebars.registerHelper('json', function(context) {
@@ -20,7 +35,6 @@ Handlebars.registerHelper('breaklines', function(text) {
     text = text.replace(/(\r\n|\n|\r|\/n)/gm, '<br>');
     return new Handlebars.SafeString(text);
 });
-var source = document.getElementById("entry-template").innerHTML;
-var template = Handlebars.compile(source);
-// console.log(template(config));
-document.getElementById("main").innerHTML = template(config);
+
+console.log(template({ config: config[index] }));
+document.getElementById("main").innerHTML = template({ config: config[index] });
