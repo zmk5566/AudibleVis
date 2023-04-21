@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta charset="utf-8">
+
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+    <script src="./utils/control_system.js"></script>
+    <script id="entry-template" type="text/x-handlebars-template">
+        <div class="entry">
+            <div class="list-group">
+                {{#each test_content}}
+                    <li class="list-group-item">
+                        {{this.test_name}}
+                        <ul class="list-group">
+                            {{#each this.test_content}}
+                                <li class="list-group-item">
+                                    {{this.part_name}}
+                                    <ul class="list-group">
+                                        {{#each this.part_content}}
+                                            <ul class="list-group">
+                                                <li class="list-group-item">action: {{this.action}}</li>
+                                                <li class="list-group-item">action_hint: {{this.action_hint}}</li>
+                                                <li class="list-group-item">content: {{breaklines this.content}}</li>
+                                                <li class="list-group-item">data_index: {{this.data_index}}</li>
+                                                <li class="list-group-item">test_content: {{this.test_content}}</li>
+                                                <li class="list-group-item">type: {{this.type}}</li>
+                                                <li class="list-group-item">Answer: <textarea id="{{this.question_index}}"></textarea><button onclick="save({{this.question_index}})">Save</button></li>
+                                                <li class="list-group-item"><button onclick="play({{json this}})">Play</button></li>
+                                            </ul>
+                                        {{/each}}
+                                    </ul>
+                                </li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </script>
+    <div id="main"></div>
+    <script src="./js/remote_control.js"></script>
+</body>
+</html>
