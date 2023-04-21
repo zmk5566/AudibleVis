@@ -46,7 +46,7 @@ function random_value(start_array_index, end_array_index, data_cat_num) {
             "test_content": "random_value_num" + data_cat_num,
             "type": "instruction",
             "action_hint": "[Inform the audience that a random value is comming]",
-            "content": "You will hear" + data_cat_num + "data" + ". You are expected to differentiate the trend of the data after the full play of the data",
+            "content": "You will hear" + data_cat_num + "data" + ". You are expected aswer the value of the data",
             "action": "play_audio"
         }
 
@@ -58,9 +58,11 @@ function random_value(start_array_index, end_array_index, data_cat_num) {
             "action_hint": "[get the answer]",
             "content": "from -10 to 10, what is the valye?"
         }
-        temp_data.push(question_1);
-        temp_data.push(question_2);
-        the_huge_data.push(temp_data);
+        the_huge_data.push(question_1);
+        the_huge_data.push(question_2);
+        // add the data to the huge data
+
+        //the_huge_data.push(temp_data);
 
     }
 
@@ -97,12 +99,12 @@ function random_value_test(start_array_index, end_array_index) {
 
 // should give all a json object to instruct the overall test
 function overall_test(start_array_index, end_array_index) {
+    // join two array together and return
+    var temp_array = [];
 
     return {
         "name": "overall_test",
-        "test_content": [random_value_test(start_array_index, end_array_index), trending_test(start_array_index, end_array_index)]
-
-
+        "test_content": temp_array.concat(trending_test(start_array_index, end_array_index), random_value_test(start_array_index, end_array_index))
     }
 }
 
