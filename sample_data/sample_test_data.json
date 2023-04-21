@@ -1,159 +1,6 @@
 {
     "name": "overall_test",
-    "condition": "spatial",
-    "subject_index": -1,
     "test_content": [
-        {
-            "test_name": "value_test",
-            "test_content": [
-                {
-                    "part_name": "random_single",
-                    "part_content": [
-                        [
-                            {
-                                "data_index": 1,
-                                "test_content": "random_value_num1",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear1data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 1,
-                                "test_content": "random_value_num1",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ],
-                        [
-                            {
-                                "data_index": 2,
-                                "test_content": "random_value_num1",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear1data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 2,
-                                "test_content": "random_value_num1",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ],
-                        [
-                            {
-                                "data_index": 3,
-                                "test_content": "random_value_num1",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear1data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 3,
-                                "test_content": "random_value_num1",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ],
-                        [
-                            {
-                                "data_index": 4,
-                                "test_content": "random_value_num1",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear1data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 4,
-                                "test_content": "random_value_num1",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ]
-                    ]
-                },
-                {
-                    "part_name": "random_double",
-                    "part_content": [
-                        [
-                            {
-                                "data_index": 1,
-                                "test_content": "random_value_num2",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear2data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 1,
-                                "test_content": "random_value_num2",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ],
-                        [
-                            {
-                                "data_index": 2,
-                                "test_content": "random_value_num2",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear2data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 2,
-                                "test_content": "random_value_num2",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ],
-                        [
-                            {
-                                "data_index": 3,
-                                "test_content": "random_value_num2",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear2data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 3,
-                                "test_content": "random_value_num2",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ],
-                        [
-                            {
-                                "data_index": 4,
-                                "test_content": "random_value_num2",
-                                "type": "instruction",
-                                "action_hint": "[Inform the audience that a random value is comming]",
-                                "content": "You will hear2data. You are expected to differentiate the trend of the data after the full play of the data",
-                                "action": "play_audio"
-                            },
-                            {
-                                "data_index": 4,
-                                "test_content": "random_value_num2",
-                                "type": "expect_to_answer",
-                                "action_hint": "[get the answer]",
-                                "content": "from -10 to 10, what is the valye?"
-                            }
-                        ]
-                    ]
-                }
-            ]
-        },
         {
             "test_name": "trending_test",
             "test_content": [
@@ -208,6 +55,141 @@
                             "test_content": "linear_trend5",
                             "action_hint": "[input the answer]",
                             "content": "What is the value range of the data? /n A. All above zero B. All below zero C. It is a mixed Situation D. I can't really know"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "test_name": "value_test",
+            "test_content": [
+                {
+                    "part_name": "random_single",
+                    "part_content": [
+                        {
+                            "data_index": 1,
+                            "test_content": "random_value_num1",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear1data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 1,
+                            "test_content": "random_value_num1",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        },
+                        {
+                            "data_index": 2,
+                            "test_content": "random_value_num1",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear1data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 2,
+                            "test_content": "random_value_num1",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        },
+                        {
+                            "data_index": 3,
+                            "test_content": "random_value_num1",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear1data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 3,
+                            "test_content": "random_value_num1",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        },
+                        {
+                            "data_index": 4,
+                            "test_content": "random_value_num1",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear1data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 4,
+                            "test_content": "random_value_num1",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        }
+                    ]
+                },
+                {
+                    "part_name": "random_double",
+                    "part_content": [
+                        {
+                            "data_index": 1,
+                            "test_content": "random_value_num2",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear2data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 1,
+                            "test_content": "random_value_num2",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        },
+                        {
+                            "data_index": 2,
+                            "test_content": "random_value_num2",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear2data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 2,
+                            "test_content": "random_value_num2",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        },
+                        {
+                            "data_index": 3,
+                            "test_content": "random_value_num2",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear2data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 3,
+                            "test_content": "random_value_num2",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
+                        },
+                        {
+                            "data_index": 4,
+                            "test_content": "random_value_num2",
+                            "type": "instruction",
+                            "action_hint": "[Inform the audience that a random value is comming]",
+                            "content": "You will hear2data. You are expected aswer the value of the data",
+                            "action": "play_audio"
+                        },
+                        {
+                            "data_index": 4,
+                            "test_content": "random_value_num2",
+                            "type": "expect_to_answer",
+                            "action_hint": "[get the answer]",
+                            "content": "from -10 to 10, what is the valye?"
                         }
                     ]
                 }
