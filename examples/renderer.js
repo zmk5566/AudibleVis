@@ -2,7 +2,7 @@
 
 const { Server } = require('node-osc');
 
-var oscServer = new Server(9699, '192.168.50.246', () => {
+var oscServer = new Server(9699, '0.0.0.0', () => {
   console.log('OSC Server is listening');
   document.getElementById('osc_status').innerHTML="ON";
   document.getElementById('osc_status').style.color="green";

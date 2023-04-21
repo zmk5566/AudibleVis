@@ -10,3 +10,13 @@ canvas {
   width:950px;
 
 }
+
+li{
+  height:80px;
+  vertical-align: center;
+}
+
+textarea{
+  height:50px;
+
+}

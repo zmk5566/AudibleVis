@@ -15,15 +15,15 @@
         <div class="entry">
             <ul class="list-group">
                 <li class="list-group-item" style="background-color: aqua;">question_id: {{config.question_id}}</li>
-                <li class="list-group-item">action: {{config.action}}</li>
-                <li class="list-group-item">action_hint: {{config.action_hint}}</li>
-                <li class="list-group-item">content: {{breaklines config.content}}</li>
-                <li class="list-group-item">data_index: {{config.data_index}}</li>
-                <li class="list-group-item">test_content: {{config.test_content}}</li>
-                <li class="list-group-item">type: {{config.type}}</li>
-                <li class="list-group-item">Answer: <textarea id="answer"></textarea></li>
-                <li class="list-group-item"><button onclick="save()">Save</button></li>
+                <li class="list-group-item" style="display: none;">action: {{config.action}}</li>
+                <li class="list-group-item" style="display: none;">action_hint: {{config.action_hint}}</li>
+                <li class="list-group-item" ><button onclick="play()">SPEAK</button> {{breaklines config.content}}</li>
+                <li class="list-group-item" style="display: none;">data_index: {{config.data_index}}</li>
+                <li class="list-group-item">type: {{config.test_content}}</li>
                 <li class="list-group-item"><button onclick="play()">Play</button></li>
+                <li class="list-group-item">Question: {{config.type}}</li>
+                <li class="list-group-item">Answer: <textarea id="answer"></textarea></li>
+                <li class="list-group-item"><button onclick="save()">Save & NEXT</button></li>
                 <li class="list-group-item"><button onclick="previous()">Previous</button></li>
             </ul>
         </div>
