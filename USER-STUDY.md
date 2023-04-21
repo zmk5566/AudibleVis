@@ -72,3 +72,19 @@ Total time estimation 35mins
 ## Post Experiment Questionaire 
 
 The questionaire will ask about the cognitive feeling of the users according to the 3 systems, and future suggestions.
+
+
+3 condition* 8 dataset * 3 questions *2
+
+    for condition in [spatial, pitch, tempo]:
+      practice 10mins
+      for single_dataset in [ds1, ds2, ds3, ..., ds4]:
+        for question in [q1, q2, q3]:
+          0.25mins
+      for multiple_dataset in [ds1, ds2, ds3, ..., ds4]:
+        for question in [q1]:
+          0.25mins
+      cognitive test 1min
+    questionnaire 1min
+
+
