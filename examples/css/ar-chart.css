@@ -29,6 +29,8 @@ select{
     --widget-color: #dcfdff;
     --hover-color: #ffebeb;
     --focus-color: #f6cdcd;
+    --text-color: #000000;
+
   }
  
   .lil-gui.autoPlace {
@@ -133,3 +135,4 @@ li{
   height:75px;
   vertical-align: center;
 }
+

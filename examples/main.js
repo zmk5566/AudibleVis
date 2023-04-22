@@ -80,7 +80,20 @@ actual_test_folder.add(global_config, 'the_test_order',[0,1,2,3,4,5]).name('Test
 
     console.log(config);
 
-    const source = document.getElementById("entry-template").innerHTML;
+
+    
+    // }
+    update_gui();
+
+
+
+
+    })
+    // add a button to the folder actual_test_folder
+    var generate_function = { add:function(){ 
+        
+        console.log("clicked") 
+        const source = document.getElementById("entry-template").innerHTML;
     const template = Handlebars.compile(source);
     document.getElementById("main_control_pannel").style.display = "none";
     
@@ -99,13 +112,9 @@ actual_test_folder.add(global_config, 'the_test_order',[0,1,2,3,4,5]).name('Test
     state_timer.load_value_of_index(current_index,current_test);
     document.getElementById("test_index").innerHTML = current_index;
     
-    // }
-    update_gui();
+    }};
 
-
-
-
-    })
+    actual_test_folder.add(generate_function,'add').name('Press to Load Test');  
 
 
 
