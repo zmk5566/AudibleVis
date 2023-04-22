@@ -3,154 +3,85 @@
 
 <head>
   <meta name="viewport" content="width=device-width, user-scalable=no" />
-  <script src="./utils/transformHelper.js"></script> </script>
+  <script src="./utils/transformHelper.js"></script>
+  </script>
   <script src="./utils/control_system.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
   <link type="text/css" rel="stylesheet" href="./css/ar-chart.css">
 
-  <script>
-    var global_config = 
-    {
-          "time_duration": 30,
-          "test_type": "standby",
-          "noise_level": 0,
-          "spectrum_display": false,
-          "data_types_num": 3,
-          "dynamic_scale": 2,
-          "value_mode":false,
-          "radius": 1,
-          "current_test":"no-test",
-          "theta": 2.09439510239,
-          "unit_based_sample_play":true,
-          "test_mode": "test_mode",
-          "encoding_method":"TIME-PAN-(PERC-SEQ)",
-          "audio_config": {
-            "voice_over": false,
-            "audience_location": {
-              "pitch": 0,
-              "yaw": 0,
-              "roll": 0
-            },
-            "mode": "percnpan",
-            "dataset": "default",
-            "voice_over_time": 1,
-            "pitchnpan_interval": 1,
-            "reference_timeline": false,
-            "switch_real_samples": false,
-            "audio_channels": [
-              {
-                "synth_index": 0,
-                "mute": false,
-                "synth": {
-                  "oscillator": {
-                    "type": "square"
-                  },
-                  "envelope": {
-                    "attack": 0,
-                    "decay": 0,
-                    "sustain": 0.01,
-                    "release": 0.1
-                  }
-                },
-                "tremolo_effect": {
-                  "frequency": 0,
-                  "depth": 0
-                }
-              },
-              {
-                "synth_index": 1,
-                "mute": false,
-                "synth": {
-                  "oscillator": {
-                    "type": "sawtooth"
-                  },
-                  "envelope": {
-                    "attack": 0,
-                    "decay": 0,
-                    "sustain": 0.01,
-                    "release": 0.1
-                  }
-                },
-                "tremolo_effect": {
-                  "frequency": 0,
-                  "depth": 0
-                }
-              },
-              {
-                "synth_index": 2,
-                "mute": false,
-                "synth": {
-                  "oscillator": {
-                    "type": "sine"
-                  },
-                  "envelope": {
-                    "attack": 0,
-                    "decay": 0,
-                    "sustain": 0.01,
-                    "release": 0.1
-                  }
-                },
-                "tremolo_effect": {
-                  "frequency": 0,
-                  "depth": 0
-                }
-              }
-            ]
-          }
-        };
-
-        var update_global_config = [];
-
-
-  </script>
+  <script src="./utils/dataStorage.js"> </script>
 </head>
 
-<body style="width: 100vw;" >
-  
-<div class="flex-container">
-  <div id="vis_3d">
+<body style="width: 100vw;">
+
+  <div class="flex-container" >
+    <div id="vis_3d">
+    </div>
+    <div id="main_graph">
+      <script type="module" src="./main.js"></script>
+    </div>
+
+    <div id="main_control_pannel" style="display:none">
+      <div>
+        <button id="start" class="button">start</button>
+        <button id="stop" class="button">stop</button>
+      </div>
+      <div>
+        <button id="single_value" class="button">next question</button>
+        <a href="./remote_control.html">Remote Control</a>
+      </div>
+
+    </div>
   </div>
-  <div id="main_graph">
-    <script type="module" src="./main.js" ></script>
-  </div>
-
-  <div id="main_control_pannel">
-  <div>
-  <button id="start" class = "button">start</button>
-  <button id="stop" class ="button">stop</button>
-</div>
-<div>
-  <button id="single_value" class ="button">next question</button>
-  <a href="./remote_control.html">Remote Control</a>
-</div>
-
-</div>
-  </div>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+    <script src="./utils/question_sequence.js"></script>
+    <script id="entry-template" type="text/x-handlebars-template">
+        <div class="entry">
+            <ul class="list-group">
+                <li class="list-group-item" id ="title_element" style="background-color: aqua;">Question: {{config.question_id}}</li>
+                <li class="list-group-item" style="display: none;">action: {{config.action}}</li>
+                <li class="list-group-item" style="display: none;">action_hint: {{config.action_hint}}</li>
+                <li class="list-group-item" ><button onclick="play()">SPEAK</button> {{breaklines config.content}}</li>
+                <li class="list-group-item" style="display: none;">data_index: {{config.data_index}}</li>
+                <li class="list-group-item" style="display: none;">type: {{config.test_content}}</li>
+                <li class="list-group-item"><button onclick="play()">Play</button></li>
+                <li class="list-group-item"><button onclick="play()">SPEAK</button>Guide: {{config.type}}</li>
+                <li class="list-group-item">Answer: <textarea id="answer"></textarea></li>
+                <li class="list-group-item"><button onclick="save()">Save & NEXT</button></li>
+                <li class="list-group-item"><button onclick="previous()">Previous</button></li>
+            </ul>
+        </div>
+    </script>
+    <div id="main"></div>
+    <script src="./js/remote_control.js"></script>
 </body>
 
 <footer>
- 
-    <div class = "footer-flex-container">
-    <div class = "footer-flex">Database:<a id="test_method">-</a></div>
 
-      <div  class = "footer-flex">Index: <a id="test_index">-</a></div>
-      
-      <div class = "footer-flex">
-        Gyro: 
-        x:<a id="pitch">-</a>
-        y:<a id="yaw">-</a>
-        z:<a id="roll">-</a>
+  <div class="footer-flex-container">
+    <div class="footer-flex">Database:<a id="test_method">-</a></div>
+
+    <div class="footer-flex">Index: <a id="test_index">-</a></div>
+
+    <div class="footer-flex">
+      Gyro:
+      x:<a id="pitch">-</a>
+      y:<a id="yaw">-</a>
+      z:<a id="roll">-</a>
 
 
-      </div>
-
-      <div class = "footer-flex">OSC_status:<a id="osc_status">----</a> Port:<a id ="port_num">n/a</a></div>
     </div>
+
+    <div class="footer-flex">OSC_status:<a id="osc_status">----</a> Port:<a id="port_num">n/a</a></div>
+  </div>
 </footer>
 <script src="./renderer.js" type="module"></script>
 

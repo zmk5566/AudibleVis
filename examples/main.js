@@ -1,6 +1,5 @@
 import {StateTimer} from './js/StateTimer.js';
 import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
-//import tone.js from the npm library installed locally
 
 
 console.log(global_config);

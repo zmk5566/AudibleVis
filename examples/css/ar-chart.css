@@ -126,3 +126,10 @@ select{
     color: black;
     font-size: 2em;;
   }
+
+
+li{
+  font-size: 3em;
+  height:75px;
+  vertical-align: center;
+}
