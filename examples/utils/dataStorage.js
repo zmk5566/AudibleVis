@@ -4,6 +4,8 @@ var global_config =
       "test_type": "standby",
       "noise_level": 0,
       "subject_index": 0,
+      "test_method":"spatial",
+      "the_test_order":0,
       "spectrum_display": false,
       "data_types_num": 3,
       "dynamic_scale": 2,

@@ -19,6 +19,13 @@ var test_folder = gui.addFolder('Test Setting');
 
 var actual_test_folder = gui.addFolder('Actual Test Setting');
 
+
+const all_conditions = [
+    'pitch',
+    'spatial',
+    'tempo'
+]
+
 test_folder.close();
 
 function update_test(input_test_name){
@@ -54,6 +61,61 @@ actual_test_folder.add(global_config, 'subject_index',[0,1,2,3]).name('Subject I
 console.log(value);
 
 })
+
+actual_test_folder.add(global_config, 'the_test_order',[0,1,2,3,4,5]).name('Test Order').onChange( value => {
+    
+    if (value == 0){
+        config = overall_test( 0,  4, ["pitch","spatial","tempo"]);
+    }else if (value == 1){
+        config = overall_test( 0,  4, ["pitch","tempo","spatial"]);
+    }else if (value == 2){
+        config = overall_test( 0,  4, ["spatial","pitch","tempo"]);
+    }else if (value == 3){
+        config =  overall_test( 0,  4, ["spatial","tempo","pitch"]);
+    }else if (value == 4){
+        config =  overall_test( 0,  4, ["tempo","pitch","spatial"]);
+    }else if (value == 5){
+        config =  overall_test( 0,  4, ["tempo","spatial","pitch"]);
+    }
+
+    console.log(config);
+
+    const source = document.getElementById("entry-template").innerHTML;
+    const template = Handlebars.compile(source);
+    document.getElementById("main_control_pannel").style.display = "none";
+    
+    document.getElementById("main").innerHTML = template({ config: config[index] });
+
+
+
+    var value = config[0].test_content;
+
+    console.log("current dataset", value);
+    global_config.test_type = value;
+
+    current_index = config[0].data_index+1+4*global_config.subject_index;
+    current_test = value;
+
+    state_timer.load_value_of_index(current_index,current_test);
+    document.getElementById("test_index").innerHTML = current_index;
+    
+    // }
+    update_gui();
+
+
+
+
+    })
+
+
+
+test_folder.add(global_config, 'test_method',    ['pitch','spatial','tempo']).name('Test Method').onChange( value => {
+
+    console.log("choose the method");
+    
+})
+
+
     
 
 

@@ -11,9 +11,9 @@ const conditions = [
     'tempo'
 ]
 
-function overall_test (start_index=0, end_index=4) {
+function overall_test (start_index=0, end_index=4,input_conditions=conditions) {
     // return _.flatMap(_.shuffle(conditions), condition => {
-    return _.flatMap(conditions, condition => {
+    return _.flatMap(input_conditions, condition => {
         let questions = []
 
         // questions = questions.concat(['single', 'double'].flatMap(series_type => _.flatMap(_.shuffle(_.range(start_index, end_index)), data_index => {

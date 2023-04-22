@@ -1,4 +1,4 @@
-const config = overall_test();
+var config = overall_test();
 console.log(config);
 
 const source = document.getElementById("entry-template").innerHTML;
@@ -61,8 +61,8 @@ Handlebars.registerHelper('breaklines', function(text) {
     return new Handlebars.SafeString(text);
 });
 
-console.log(template({ config: config[index] }));
-document.getElementById("main").innerHTML = template({ config: config[index] });
+//console.log(template({ config: config[index] }));
+//document.getElementById("main").innerHTML = template({ config: config[index] });
 
 
 function update_title_color(){
