@@ -17,6 +17,9 @@ var mode_folder = gui.addFolder('Mode Setting');
 
 var test_folder = gui.addFolder('Test Setting');
 
+var actual_test_folder = gui.addFolder('Actual Test Setting');
+
+test_folder.close();
 
 function update_test(input_test_name){
     current_index = 0;
@@ -46,6 +49,11 @@ test_folder.add(global_config, 'current_test',  ['single_linear','single_cycle',
 })
 
 
+actual_test_folder.add(global_config, 'subject_index',[0,1,2,3]).name('Subject Index').onChange( value => {
+
+console.log(value);
+
+})
     
 
 
@@ -300,11 +308,12 @@ function update_test_data_selection(training_config_info){
     console.log("current dataset", value);
     global_config.test_type = value;
 
-    current_index = training_config_info.data_index+1;
+    current_index = training_config_info.data_index+1+4*global_config.subject_index;
     current_test = value;
 
-    state_timer.load_value_of_index(training_config_info.data_index+1,value);
+    state_timer.load_value_of_index(current_index,current_test);
     document.getElementById("test_index").innerHTML = current_index;
+    
     // }
     update_gui();
 

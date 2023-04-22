@@ -3,6 +3,7 @@ var global_config =
       "time_duration": 30,
       "test_type": "standby",
       "noise_level": 0,
+      "subject_index": 0,
       "spectrum_display": false,
       "data_types_num": 3,
       "dynamic_scale": 2,
