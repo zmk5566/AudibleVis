@@ -9,13 +9,6 @@ var current_index = 0;
 var max_range = 12;
 var current_test = "no-test";
 
-  
-
-
-
-
-
-
 var gui = new GUI();
 
 var folder0 = gui.addFolder('Basic Setting');
@@ -293,7 +286,34 @@ function global_update_config(){
 
 update_global_config =global_update_config;
 
+play_function = state_timer.start.bind(state_timer);
+stop_function = state_timer.stop.bind(state_timer);
 
+
+function update_test_data_selection(training_config_info){
+    console.log(training_config_info);
+
+    console.log("passed succesful, dataset value is: " , training_config_info.test_content);
+    //split string with _ and get the last element
+    var value = training_config_info.test_content;
+
+    console.log("current dataset", value);
+    global_config.test_type = value;
+
+    current_index = training_config_info.data_index+1;
+    current_test = value;
+
+    state_timer.load_value_of_index(training_config_info.data_index+1,value);
+    document.getElementById("test_index").innerHTML = current_index;
+    // }
+    update_gui();
+
+    // state_timer.update_config(global_config);
+    // state_timer.random_graph();
+
+}
+
+simple_update_test_data_selection =  update_test_data_selection;
 
 
 document.getElementById("start").onclick = state_timer.start.bind(state_timer);

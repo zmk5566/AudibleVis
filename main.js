@@ -2,7 +2,7 @@ const { app, BrowserWindow } = require('electron')
 
 const createWindow = () => {
     const win = new BrowserWindow({
-      width: 600,
+      width: 1200,
       height: 1000,
       frame: false,
         titleBarStyle: 'hidden',

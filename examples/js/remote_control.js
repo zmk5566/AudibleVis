@@ -7,20 +7,18 @@ const template = Handlebars.compile(source);
 
 let index = 0;
 
-function play () {
-    console.log("trying to speak" , config[index]);
-    let utterance = new SpeechSynthesisUtterance("Hello world!");
+function play_instructions() {
+    console.log("trying to speak" , config[index].content);
+    let utterance = new SpeechSynthesisUtterance(config[index].content);
+    utterance.lang = "en-US";
     speechSynthesis.speak(utterance);
-
-
 }
 
-function speakInstructions () {
-
-}
-
-function speakQuestion () {
-
+function play_content(){
+    console.log("trying to speak" , config[index]);
+    let utterance = new SpeechSynthesisUtterance(config[index].type);
+    utterance.lang = "en-US";
+    speechSynthesis.speak(utterance);
 }
 
 
@@ -32,9 +30,15 @@ function previous () {
     }
 
     index--;
-    document.getElementById("main").innerHTML = template({ config: config[index] });
+    load_new_sample();
     update_title_color();
 
+}
+
+function load_new_sample(){
+    document.getElementById("main").innerHTML = template({ config: config[index] });
+    console.log("sample loaded", config[index]);
+    simple_update_test_data_selection(config[index]);
 }
 
 function save () {
@@ -43,7 +47,7 @@ function save () {
     console.log(answer, config[index].question_id);
     index++;
     // console.log(template({ config: config[index] }));
-    document.getElementById("main").innerHTML = template({ config: config[index] });
+    load_new_sample();
     update_title_color();
 
 }

@@ -49,11 +49,11 @@
                 <li class="list-group-item" id ="title_element" style="background-color: aqua;">Question: {{config.question_id}}</li>
                 <li class="list-group-item" style="display: none;">action: {{config.action}}</li>
                 <li class="list-group-item" style="display: none;">action_hint: {{config.action_hint}}</li>
-                <li class="list-group-item" ><button onclick="play()">SPEAK</button> {{breaklines config.content}}</li>
+                <li class="list-group-item" ><button onclick="play_instructions()">SPEAK</button> {{breaklines config.content}}</li>
                 <li class="list-group-item" style="display: none;">data_index: {{config.data_index}}</li>
                 <li class="list-group-item" style="display: none;">type: {{config.test_content}}</li>
-                <li class="list-group-item"><button onclick="play()">Play</button></li>
-                <li class="list-group-item"><button onclick="play()">SPEAK</button>Guide: {{config.type}}</li>
+                <li class="list-group-item"><button onclick="play_function()">Play</button><button onclick="stop_function()">STOP</button></li>
+                <li class="list-group-item"><button onclick="play_content()">SPEAK</button>Guide: {{config.type}}</li>
                 <li class="list-group-item">Answer: <textarea id="answer"></textarea></li>
                 <li class="list-group-item"><button onclick="save()">Save & NEXT</button></li>
                 <li class="list-group-item"><button onclick="previous()">Previous</button></li>
