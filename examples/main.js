@@ -1,9 +1,9 @@
-import {StateTimer} from './js/StateTimer.js';
+import { StateTimer } from './js/StateTimer.js';
 import GUI from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
 
 
 console.log(global_config);
-var state_timer = new StateTimer(Tone.context,global_config);
+var state_timer = new StateTimer(Tone.context, global_config);
 state_timer.init();
 var current_index = 0;
 var max_range = 12;
@@ -20,6 +20,45 @@ var test_folder = gui.addFolder('Test Setting');
 var actual_test_folder = gui.addFolder('Actual Test Setting');
 
 
+function save_data_to_backend() {
+    // use adjax to construst and send data to backend
+    var current_subject_index = global_config.subject_index;
+    var current_test_type = global_config.test_type;
+    // create an empty array the ready 
+    var data_to_send = [];
+    var subject_identifier = global_config.subject_identifier;
+    console.log(config);
+    // loop through all the answers in the config
+    for (var i = 0; i < config.length; i++) {
+        // get the answer
+        var answer = config[i].answer;
+        var single_data = {
+            "subject_index": current_subject_index,
+            "data_index": config[i].data_index,
+            "question_id":config[i].question_id,
+
+            //"test_type": config[i].type,
+            //"test_content": config[i].content,
+            "answer": config[i].answer
+        }
+        data_to_send.push(single_data);
+
+
+        // looping the 
+    }
+
+
+    // send data to backend without jquery
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:8000/exp/"+subject_identifier, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(data_to_send));
+
+}
+
+
+
 const all_conditions = [
     'pitch',
     'spatial',
@@ -28,14 +67,14 @@ const all_conditions = [
 
 test_folder.close();
 
-function update_test(input_test_name){
+function update_test(input_test_name) {
     current_index = 0;
     current_test = input_test_name;
     update_gui();
 
 }
 
-function update_gui(){
+function update_gui() {
     document.getElementById("test_index").innerHTML = current_index;
     document.getElementById("test_index").style.color = "green";
     document.getElementById("test_method").innerHTML = current_test;
@@ -43,7 +82,7 @@ function update_gui(){
 }
 
 
-test_folder.add(global_config, 'current_test',  ['single_linear','single_cycle','single_pulse','double_linear','double_cycle','double_pulse']).name('Dataset').onChange( value => {
+test_folder.add(global_config, 'current_test', ['single_linear', 'single_cycle', 'single_pulse', 'double_linear', 'double_cycle', 'double_pulse']).name('Dataset').onChange(value => {
     console.log("current dataset", value);
     global_config.test_type = value;
 
@@ -56,131 +95,152 @@ test_folder.add(global_config, 'current_test',  ['single_linear','single_cycle',
 })
 
 
-actual_test_folder.add(global_config, 'subject_index',[0,1,2,3]).name('Subject Index').onChange( value => {
 
-console.log(value);
+actual_test_folder.add(global_config, 'subject_identifier', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]).name('Subject Identifier').onChange(value => {
+
+    console.log("choose the method");
 
 })
 
-actual_test_folder.add(global_config, 'the_test_order',[0,1,2,3,4,5]).name('Test Order').onChange( value => {
-    
-    if (value == 0){
-        config = overall_test( 0,  4, ["pitch","spatial","tempo"]);
-    }else if (value == 1){
-        config = overall_test( 0,  4, ["pitch","tempo","spatial"]);
-    }else if (value == 2){
-        config = overall_test( 0,  4, ["spatial","pitch","tempo"]);
-    }else if (value == 3){
-        config =  overall_test( 0,  4, ["spatial","tempo","pitch"]);
-    }else if (value == 4){
-        config =  overall_test( 0,  4, ["tempo","pitch","spatial"]);
-    }else if (value == 5){
-        config =  overall_test( 0,  4, ["tempo","spatial","pitch"]);
+
+actual_test_folder.add(global_config, 'subject_index', [0, 1, 2, 3]).name('Subject Index').onChange(value => {
+
+    console.log(value);
+
+})
+
+actual_test_folder.add(global_config, 'the_test_order', [0, 1, 2, 3, 4, 5]).name('Test Order').onChange(value => {
+
+    if (value == 0) {
+        config = overall_test(0, 4, ["pitch", "spatial", "tempo"]);
+    } else if (value == 1) {
+        config = overall_test(0, 4, ["pitch", "tempo", "spatial"]);
+    } else if (value == 2) {
+        config = overall_test(0, 4, ["spatial", "pitch", "tempo"]);
+    } else if (value == 3) {
+        config = overall_test(0, 4, ["spatial", "tempo", "pitch"]);
+    } else if (value == 4) {
+        config = overall_test(0, 4, ["tempo", "pitch", "spatial"]);
+    } else if (value == 5) {
+        config = overall_test(0, 4, ["tempo", "spatial", "pitch"]);
     }
 
     console.log(config);
 
 
-    
+
     // }
     update_gui();
 
 
 
 
-    })
-    // add a button to the folder actual_test_folder
-    var generate_function = { add:function(){ 
-        
-        console.log("clicked") 
+})
+// add a button to the folder actual_test_folder
+var generate_function = {
+    add: function () {
+
+        console.log("clicked")
         const source = document.getElementById("entry-template").innerHTML;
-    const template = Handlebars.compile(source);
-    document.getElementById("main_control_pannel").style.display = "none";
-    
-    document.getElementById("main").innerHTML = template({ config: config[index] });
+        const template = Handlebars.compile(source);
+        document.getElementById("main_control_pannel").style.display = "none";
+
+        document.getElementById("main").innerHTML = template({ config: config[index] });
 
 
 
-    var value = config[0].test_content;
+        var value = config[0].test_content;
 
-    console.log("current dataset", value);
-    global_config.test_type = value;
+        console.log("current dataset", value);
+        global_config.test_type = value;
 
-    current_index = config[0].data_index+1+4*global_config.subject_index;
-    current_test = value;
+        current_index = config[0].data_index + 1 + 4 * global_config.subject_index;
+        current_test = value;
 
-    state_timer.load_value_of_index(current_index,current_test);
-    document.getElementById("test_index").innerHTML = current_index;
-    
-    }};
+        state_timer.load_value_of_index(current_index, current_test);
+        document.getElementById("test_index").innerHTML = current_index;
 
-    actual_test_folder.add(generate_function,'add').name('Press to Load Test');  
+        update_gui();
+        actual_test_folder.close();
+
+    },
+
+    save: function () {
+        save_data_to_backend();
+    }
+};
 
 
 
-test_folder.add(global_config, 'test_method',    ['pitch','spatial','tempo']).name('Test Method').onChange( value => {
+
+actual_test_folder.add(generate_function, 'add').name('Press to Load Test');
+
+actual_test_folder.add(generate_function, 'save').name('SAVE DATA');
+
+
+test_folder.add(global_config, 'test_method', ['pitch', 'spatial', 'tempo']).name('Test Method').onChange(value => {
 
     console.log("choose the method");
-    
+
 })
 
 
-    
+
 
 
 var get_random_value_function = state_timer.random_graph.bind(state_timer);
 
 
-folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('Dataset').onChange( value => {
+folder0.add(global_config.audio_config, 'dataset', ['default', 'linear', 'linear_change', 'sinwave']).name('Dataset').onChange(value => {
     global_config.test_type = value;
     console.log("current dataset", value);
     state_timer.update_database(value);
-} );
+});
 
 
 
 
-mode_folder.add(global_config, 'test_type',  ['default','single_linear','single_cycle','single_pulse','double_linear','double_cycle','double_pulse']).name('Dataset').onChange( value => {
+mode_folder.add(global_config, 'test_type', ['default', 'single_linear', 'single_cycle', 'single_pulse', 'double_linear', 'double_cycle', 'double_pulse']).name('Dataset').onChange(value => {
     console.log("current dataset", value);
     state_timer.update_config(global_config);
 
     state_timer.random_graph();
 
 
-} );
+});
 
 
 
 
 
-mode_folder.add(global_config, 'noise_level', 0, 0.2).step(0.05).name('NOISE LEVEL').onFinishChange( value => {
+mode_folder.add(global_config, 'noise_level', 0, 0.2).step(0.05).name('NOISE LEVEL').onFinishChange(value => {
     global_config.noise_level = value;
     state_timer.update_config(global_config);
     state_timer.random_graph();
-} );
+});
 
 
-mode_folder.add(global_config, 'unit_based_sample_play').name('unit_based_sample_play').onFinishChange( value => {
+mode_folder.add(global_config, 'unit_based_sample_play').name('unit_based_sample_play').onFinishChange(value => {
     global_config.unit_based_sample_play = value;
-    console.log("unit_based_sample_play changed",value);
+    console.log("unit_based_sample_play changed", value);
     state_timer.update_config(global_config);
 })
 
 
 
-mode_folder.add(global_config, 'value_mode').name('value_mode').onFinishChange( value => {
-    if (value){
-        
+mode_folder.add(global_config, 'value_mode').name('value_mode').onFinishChange(value => {
+    if (value) {
+
         //global_config.unit_based_sample_play = false;
-        console.log("unit_based_sample_play changed",false);
-        global_config.audio_config.pitchnpan_interval  = 5;
+        console.log("unit_based_sample_play changed", false);
+        global_config.audio_config.pitchnpan_interval = 5;
     }
     state_timer.update_config(global_config);
 })
 
 
 
-mode_folder.add( { add:get_random_value_function},'add').name('Get Random New Value');
+mode_folder.add({ add: get_random_value_function }, 'add').name('Get Random New Value');
 
 
 mode_folder.hide();
@@ -191,11 +251,11 @@ folder0.close();
 
 
 
-folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_change','sinwave']).name('Dataset').onChange( value => {
+folder0.add(global_config.audio_config, 'dataset', ['default', 'linear', 'linear_change', 'sinwave']).name('Dataset').onChange(value => {
     console.log("current dataset", value);
     state_timer.update_config(global_config);
     state_timer.update_database(value);
-} );
+});
 
 
 //create a function to randomly retrive a function 
@@ -203,37 +263,37 @@ folder0.add(global_config.audio_config, 'dataset',  ['default','linear','linear_
 
 
 
-folder0.add(global_config, 'time_duration', 10, 120).step(1).name('SCALE DETAILS').onFinishChange( value => {
+folder0.add(global_config, 'time_duration', 10, 120).step(1).name('SCALE DETAILS').onFinishChange(value => {
     global_config.time_duration = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder0.add(global_config.audio_config, 'pitchnpan_interval', 0.125,8).step(0.1).name('SAMPLE ALLOW TIME').onFinishChange( value => {
+folder0.add(global_config.audio_config, 'pitchnpan_interval', 0.125, 8).step(0.1).name('SAMPLE ALLOW TIME').onFinishChange(value => {
     global_config.audio_config.pitchnpan_interval = value;
     state_timer.update_config(global_config);
-} );
+});
 
 
 fetch('./res/configs.json')
-  .then((response) => response.json())
-  .then((data) => {
-  var config_name_list = [];
-  for (var i = 0; i < data.length; i++) {
-    config_name_list.push(data[i].name);
-  }
-  folder0.add(global_config, 'encoding_method',  config_name_list).name('Encoding Method').onChange( value => {
-    
-    
-    var index = data.findIndex(p => p.name == value);
-    console.log("update data", data[index].data);
-    global_config = data[index].data;
-    state_timer.update_config(global_config);
-
-    //state_timer.update_database(value);
-} );
+    .then((response) => response.json())
+    .then((data) => {
+        var config_name_list = [];
+        for (var i = 0; i < data.length; i++) {
+            config_name_list.push(data[i].name);
+        }
+        folder0.add(global_config, 'encoding_method', config_name_list).name('Encoding Method').onChange(value => {
 
 
-});
+            var index = data.findIndex(p => p.name == value);
+            console.log("update data", data[index].data);
+            global_config = data[index].data;
+            state_timer.update_config(global_config);
+
+            //state_timer.update_database(value);
+        });
+
+
+    });
 
 
 var advanced_folder = gui.addFolder('Advanced Setting');
@@ -246,48 +306,48 @@ console.log(global_config);
 
 folder1.close();
 
-folder1.add(global_config.audio_config, 'mode',  ['percnrepeat','pitchpoly','pitchnpan', 'spatial','percnpan','spatial_simple','spatial_explore']).name('Mode').onChange( value => {
+folder1.add(global_config.audio_config, 'mode', ['percnrepeat', 'pitchpoly', 'pitchnpan', 'spatial', 'percnpan', 'spatial_simple', 'spatial_explore']).name('Mode').onChange(value => {
     global_config.audio_config.mode = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder1.add(global_config, 'time_duration', 10, 60).step(1).name('Time Duration').onFinishChange( value => {
+folder1.add(global_config, 'time_duration', 10, 60).step(1).name('Time Duration').onFinishChange(value => {
     global_config.time_duration = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder1.add(global_config, 'dynamic_scale', 0.5, 3).step(1).name('Scale').onFinishChange( value => {
+folder1.add(global_config, 'dynamic_scale', 0.5, 3).step(1).name('Scale').onFinishChange(value => {
     global_config.dynamic_scale = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder1.add(global_config, 'radius', 0.5, 3).step(0.25).name('Radius').onFinishChange( value => {
+folder1.add(global_config, 'radius', 0.5, 3).step(0.25).name('Radius').onFinishChange(value => {
     global_config.radius = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder1.add(global_config, 'theta', Math.PI/6, 2*Math.PI).step(0.01).name('Theta').onFinishChange( value => {
+folder1.add(global_config, 'theta', Math.PI / 6, 2 * Math.PI).step(0.01).name('Theta').onFinishChange(value => {
     global_config.theta = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05,8).step(0.1).name('Interval').onFinishChange( value => {
+folder1.add(global_config.audio_config, 'pitchnpan_interval', 0.05, 8).step(0.1).name('Interval').onFinishChange(value => {
     global_config.audio_config.pitchnpan_interval = value;
     state_timer.update_config(global_config);
-} );
+});
 
-folder1.add(global_config.audio_config, 'voice_over', 'voice_over').onFinishChange( value => {
+folder1.add(global_config.audio_config, 'voice_over', 'voice_over').onFinishChange(value => {
     global_config.audio_config.voice_over = value;
     state_timer.update_config(global_config);
 })
 
 
-folder1.add(global_config.audio_config, 'switch_real_samples', 'switch_real_samples').onFinishChange( value => {
+folder1.add(global_config.audio_config, 'switch_real_samples', 'switch_real_samples').onFinishChange(value => {
     global_update_config.audio_config.switch_real_samples = value;
     state_timer.update_config(global_config);
 })
 
-folder1.add(global_config.audio_config, 'reference_timeline', 'reference_timeline').onFinishChange( value => {
+folder1.add(global_config.audio_config, 'reference_timeline', 'reference_timeline').onFinishChange(value => {
     global_config.audio_config.reference_timeline = value;
     state_timer.update_config(global_config);
 })
@@ -301,18 +361,18 @@ audio_config_folder.close();
 var synths_folder = audio_config_folder.addFolder('Synths');
 var audio_location_folder = audio_config_folder.addFolder('Audience Location');
 
-audio_location_folder.add(global_config.audio_config.audience_location, 'pitch', -1, 1).step(0.05).name('X').onFinishChange( value => {
+audio_location_folder.add(global_config.audio_config.audience_location, 'pitch', -1, 1).step(0.05).name('X').onFinishChange(value => {
     global_config.audio_config.audience_location.pitch = value;
     console.log("changed pitch")
     state_timer.update_config(global_config);
 })
 
-audio_location_folder.add(global_config.audio_config.audience_location, 'yaw', -1, 1).step(0.05).name('Y').onFinishChange( value => {
+audio_location_folder.add(global_config.audio_config.audience_location, 'yaw', -1, 1).step(0.05).name('Y').onFinishChange(value => {
     global_config.audio_config.audience_location.yaw = value;
     state_timer.update_config(global_config);
 })
 
-audio_location_folder.add(global_config.audio_config.audience_location, 'roll', -1, 1).step(0.05).name('Z').onFinishChange( value => {
+audio_location_folder.add(global_config.audio_config.audience_location, 'roll', -1, 1).step(0.05).name('Z').onFinishChange(value => {
     global_config.audio_config.audience_location.roll = value;
     state_timer.update_config(global_config);
 })
@@ -320,35 +380,35 @@ audio_location_folder.add(global_config.audio_config.audience_location, 'roll', 
 
 
 
-global_config.audio_config.audio_channels.forEach((trem,i)=>{
-    
+global_config.audio_config.audio_channels.forEach((trem, i) => {
+
     var single_channel = synths_folder.addFolder('Channel  ' + i);
     var osc_type = single_channel.addFolder('OSC Type');
 
-    osc_type.add(global_config.audio_config.audio_channels[i].synth.oscillator, 'type', ['sine', 'square', 'triangle', 'sawtooth']).name('OSC').onFinishChange( value => {
+    osc_type.add(global_config.audio_config.audio_channels[i].synth.oscillator, 'type', ['sine', 'square', 'triangle', 'sawtooth']).name('OSC').onFinishChange(value => {
         global_config.audio_config.audio_channels[i].synth.oscillator.type = value;
         console.log(value);
         state_timer.update_config(global_config);
     })
 
     var sub_folder = single_channel.addFolder('Tremolo Effect');
-    sub_folder.add(global_config.audio_config.audio_channels[i].tremolo_effect, 'frequency', 0, 8).step(1).name('Frequency').onFinishChange( value => {
+    sub_folder.add(global_config.audio_config.audio_channels[i].tremolo_effect, 'frequency', 0, 8).step(1).name('Frequency').onFinishChange(value => {
         global_config.audio_config.audio_channels[i].tremolo_effect.frequency = value;
         state_timer.update_config(global_config);
     })
-    sub_folder.add(global_config.audio_config.audio_channels[i].tremolo_effect, 'depth', 0, 1).step(0.1).name('Depth').onFinishChange( value => {
+    sub_folder.add(global_config.audio_config.audio_channels[i].tremolo_effect, 'depth', 0, 1).step(0.1).name('Depth').onFinishChange(value => {
         global_config.audio_config.audio_channels[i].tremolo_effect.depth = value;
         state_timer.update_config(global_config);
     })
 
-    sub_folder.add(global_config.audio_config.audio_channels[i], 'mute').name('Mute').onFinishChange( value => {
+    sub_folder.add(global_config.audio_config.audio_channels[i], 'mute').name('Mute').onFinishChange(value => {
         global_config.audio_config.audio_channels[i].mute = value;
-        console.log("mute changed",value);
+        console.log("mute changed", value);
         state_timer.update_config(global_config);
     })
 
-    if (i==1){
-        folder0.add(global_config.audio_config.audio_channels[i], 'mute').name('Solo On One set of Data').onFinishChange( value => {
+    if (i == 1) {
+        folder0.add(global_config.audio_config.audio_channels[i], 'mute').name('Solo On One set of Data').onFinishChange(value => {
             global_config.audio_config.audio_channels[i].mute = value;
             state_timer.update_config(global_config);
         })
@@ -357,34 +417,34 @@ global_config.audio_config.audio_channels.forEach((trem,i)=>{
 })
 
 
-function global_update_config(){
+function global_update_config() {
     console.log("global update config");
     state_timer.update_pan(global_config);
 
 }
 
-update_global_config =global_update_config;
+update_global_config = global_update_config;
 
 play_function = state_timer.start.bind(state_timer);
 stop_function = state_timer.stop.bind(state_timer);
 
 
-function update_test_data_selection(training_config_info){
+function update_test_data_selection(training_config_info) {
     console.log(training_config_info);
 
-    console.log("passed succesful, dataset value is: " , training_config_info.test_content);
+    console.log("passed succesful, dataset value is: ", training_config_info.test_content);
     //split string with _ and get the last element
     var value = training_config_info.test_content;
 
     console.log("current dataset", value);
     global_config.test_type = value;
 
-    current_index = training_config_info.data_index+1+4*global_config.subject_index;
+    current_index = training_config_info.data_index + 1 + 4 * global_config.subject_index;
     current_test = value;
 
-    state_timer.load_value_of_index(current_index,current_test);
+    state_timer.load_value_of_index(current_index, current_test);
     document.getElementById("test_index").innerHTML = current_index;
-    
+
     // }
     update_gui();
 
@@ -393,27 +453,28 @@ function update_test_data_selection(training_config_info){
 
 }
 
-simple_update_test_data_selection =  update_test_data_selection;
+simple_update_test_data_selection = update_test_data_selection;
 
 
 document.getElementById("start").onclick = state_timer.start.bind(state_timer);
 document.getElementById("pitch").onchange = () => {
     console.log('it changed'); // Do something
-  }
+}
 document.getElementById("stop").onclick = state_timer.stop.bind(state_timer);
 document.getElementById("single_value").onclick = load_next_text_graph;
 
 
 
-function load_next_text_graph(){
-    current_index= current_index+1;
-    if (current_index<=max_range){
-        console.log("current index",current_index);
-        state_timer.load_value_of_index(current_index,current_test);
+function load_next_text_graph() {
+    current_index = current_index + 1;
+    if (current_index <= max_range) {
+        console.log("current index", current_index);
+        state_timer.load_value_of_index(current_index, current_test);
         document.getElementById("test_index").innerHTML = current_index;
-    }else{
-        console.log("complete_cycle",current_index);
+    } else {
+        console.log("complete_cycle", current_index);
     }
 }
+
 
 

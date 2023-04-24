@@ -28,7 +28,8 @@ function overall_test (start_index=0, end_index=4,input_conditions=conditions) {
                     "type": "from -10 to 10, what is the value?",
                     "action_hint": "[Inform the audience that a random value is comming]",
                     "content": `You will hear ${series_type} series data. You are expected to differentiate the trend of the data after the full play of the data`,
-                    "action": "play_audio"
+                    "action": "play_audio",
+                    "answer":-1
                 }
             ]
         })))
@@ -45,7 +46,8 @@ function overall_test (start_index=0, end_index=4,input_conditions=conditions) {
                     "test_content": `${series_type}_linear`,
                     "action_hint": "[wait for the audience to answer]",
                     "content": "What is the trend of each of the data /n A. All the way up B. All the way Down C.Up and Down D. Down and Up",
-                    "action": "Record the answer"
+                    "action": "Record the answer",
+                    "answer":-1
                 },
                 {
                     condition,
@@ -56,7 +58,8 @@ function overall_test (start_index=0, end_index=4,input_conditions=conditions) {
                     "test_content": `${series_type}_linear`,
                     "action_hint": "[input the answer]",
                     "content": "What is the value range of the data? /n A. All above zero B. All below zero C. It is a mixed Situation D. I can't really know",
-                    "action": "Record the answer"
+                    "action": "Record the answer",
+                    "answer":-1
                 }
             ]
         })))

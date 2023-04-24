@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, user-scalable=no" />
   <script src="./utils/transformHelper.js"></script>
   </script>
-  <script src="./utils/control_system.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.42/Tone.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"> </script>
@@ -53,7 +52,7 @@
                 <li class="list-group-item" style="display: none;">type: {{config.test_content}}</li>
                 <li class="list-group-item"><button onclick="play_function()">Play</button><button onclick="stop_function()">STOP</button></li>
                 <li class="list-group-item"><button onclick="play_content()">SPEAK</button>Guide: {{config.type}}</li>
-                <li class="list-group-item">Answer: <textarea id="answer"></textarea></li>
+                <li class="list-group-item">Answer: <textarea id="answer">{{config.answer}}</textarea></li>
                 <li class="list-group-item"><button onclick="save()">Save & NEXT</button></li>
                 <li class="list-group-item"><button onclick="previous()">Previous</button></li>
             </ul>

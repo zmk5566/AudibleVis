@@ -45,6 +45,7 @@ function save () {
     
     const answer = document.getElementById("answer").value
     console.log(answer, config[index].question_id);
+    config[index].answer = answer;
     index++;
     // console.log(template({ config: config[index] }));
     load_new_sample();

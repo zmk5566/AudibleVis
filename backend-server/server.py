@@ -3,6 +3,7 @@ from typing import List
 import pandas as pd
 import os
 from fastapi.middleware.cors import CORSMiddleware
+import json
 
 
 app = FastAPI(debug=True)
@@ -27,6 +28,30 @@ def get_next_filename(folder_name):
 def check_folder_exists(folder_name):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
+
+# Define a function to save the JSON data which is recieved
+
+@app.post('/exp/{subject_identifier}')
+def save_json(subject_identifier: str, json_data: List[dict]):
+    # save the json data to a file using panda frame
+    print(json_data)
+
+    # save this json
+    folder_name = "exp"
+    check_folder_exists(folder_name)
+    try:
+        filename = f'{subject_identifier}.json'
+        filepath = os.path.join(folder_name, filename)
+        with open(filepath, 'w') as f:
+            json.dump(json_data, f)
+        return json_data
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Error saving json to file: {str(e)}')
+    
+
+
+
 
 @app.post('/save_csv/{folder_name}')
 def save_csv(folder_name: str,json_data: List[dict]):
