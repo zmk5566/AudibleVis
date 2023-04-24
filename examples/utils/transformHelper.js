@@ -34,6 +34,16 @@ function generate_trend_data(range_low,range_high,total_number,random_noise){
     return trend_data;
   }
 
+function generate_random_data(range_low,range_high,total_number){
+  let value = Math.random() * (range_high - range_low) + range_low;
+
+    let trend_data = [];
+    for (let i = 0; i < total_number; i++){
+      trend_data.push(value);
+    }
+    return trend_data;
+  }
+
   
   
   function generate_trend_data_by_serveral_key_point(list_of_point,length_of_index,noise){
