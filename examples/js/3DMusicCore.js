@@ -83,8 +83,8 @@ export class ThreeDimensionAuidoCore {
     }
 
     updatePan(index, timer_status, panX, panY, panZ){
-      // console.log("update pan");
-      // console.log(index,panX,panY,panZ);
+       console.log("update pan");
+      console.log(index,panX,panY,panZ);
       this.panners[index].setPosition(panX, panY, panZ);
     }
 

@@ -96,6 +96,7 @@ var global_config =
     var simple_update_test_data_selection = [];
     var play_function = [];
     var stop_function = [];
+    var global_update_method = [];
 
 
 

@@ -160,6 +160,10 @@ var generate_function = {
         state_timer.load_value_of_index(current_index, current_test);
         document.getElementById("test_index").innerHTML = current_index;
 
+        save ();
+
+        previous ();
+
         update_gui();
         actual_test_folder.close();
 
@@ -188,7 +192,7 @@ test_folder.add(global_config, 'test_method', ['pitch', 'spatial', 'tempo']).nam
 
 
 
-var get_random_value_function = state_timer.random_graph.bind(state_timer);
+//var get_random_value_function = state_timer.random_graph.bind(state_timer);
 
 
 folder0.add(global_config.audio_config, 'dataset', ['default', 'linear', 'linear_change', 'sinwave']).name('Dataset').onChange(value => {
@@ -240,7 +244,7 @@ mode_folder.add(global_config, 'value_mode').name('value_mode').onFinishChange(v
 
 
 
-mode_folder.add({ add: get_random_value_function }, 'add').name('Get Random New Value');
+//mode_folder.add({ add: get_random_value_function }, 'add').name('Get Random New Value');
 
 
 mode_folder.hide();
@@ -476,5 +480,34 @@ function load_next_text_graph() {
     }
 }
 
+
+function updated_method (input_method) {
+    console.log("updated method");
+
+    switch (input_method) {
+        case "pitch":
+            console.log("pitch");
+
+            // global_config.audio_config.mode = value;
+            // state_timer.update_config(global_config);
+
+            global_config.audio_config.mode = "pitchnpan";
+            break;
+        case "spatial":
+            console.log("spatial");
+            global_config.audio_config.mode = "percnpan";
+            break;
+        case "tempo":
+            console.log("tempo");
+            global_config.audio_config.mode = "percnrepeat";
+            break;
+    }
+
+
+    state_timer.update_config(global_config);
+}
+
+
+global_update_method = updated_method;
 
 

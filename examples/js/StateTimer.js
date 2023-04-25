@@ -220,173 +220,6 @@ export class StateTimer {
         this.chart.drawChart_by_index(index, method);
     }
 
-    async send_few_value_to_server(index, methods) {
-        if (index != 0) {
-
-            switch (methods) {
-                case 'single_linear':
-
-                    var list_of_possibilities = ["up_up", "up_down", "down_up", "down_down"];
-                    //get a random possibility
-                    var type = list_of_possibilities[Math.floor(Math.random() * list_of_possibilities.length)];
-                    var data = process_list_to_json(this.retrive_linear_list_based_on_type(type));
-                    sendData(methods, data);
-                    break;
-                case 'double_linear':
-
-
-                    var list_of_possibilities = ["up_up", "up_down", "down_up", "down_down"];
-                    //get a random possibility
-                    var type = list_of_possibilities[Math.floor(Math.random() * list_of_possibilities.length)];
-                    var type2 = list_of_possibilities[Math.floor(Math.random() * list_of_possibilities.length)];
-
-                    var data = process_list_to_json_two_dataset(this.retrive_linear_list_based_on_type(type), this.retrive_linear_list_based_on_type(type2));
-                    sendData(methods, data);
-                    break;
-                case 'single_cycle':
-                    var amplitude = Math.random() * 0.75 + 0.25;
-                    var frequency = Math.random() * 4 + 1;
-                    var phase = Math.random() * Math.PI * 2;
-
-                    var data = process_list_to_json(generate_sinwave(amplitude, frequency, phase, 0, 16), this.config.noise_level);
-                    sendData(methods, data);
-                    break;
-                case 'double_cycle':
-                    var amplitude = Math.random() * 0.75 + 0.25;
-                    var frequency = Math.random() * 4 + 1;
-                    var phase = Math.random() * Math.PI * 2;
-
-                    var amplitude2 = Math.random() * 0.75 + 0.25;
-                    var frequency2 = Math.random() * 4 + 1;
-                    var phase2 = Math.random() * Math.PI * 2;
-
-                    var data = process_list_to_json_two_dataset(generate_sinwave(amplitude, frequency, phase, 0, 16), generate_sinwave(amplitude2, frequency2, phase2, 0, 16), this.config.noise_level);
-                    sendData(methods, data);
-                    break;
-                case 'single_pulse':
-                    var amplitude = Math.random() * 0.75 + 0.25;
-                    var frequency = Math.random() * 1 + 0.5;
-                    var phase = Math.random() * Math.PI * 2;
-
-                    var data = process_list_to_json(generate_pulse_wave(amplitude, frequency, phase, 0, 16), this.config.noise_level);
-                    sendData(methods, data);
-                    break;
-                case 'double_pulse':
-                    var amplitude = Math.random() * 0.75 + 0.25;
-                    var frequency = Math.random() * 1 + 0.5;
-                    var phase = Math.random() * Math.PI * 2;
-
-                    var data = process_list_to_json_two_dataset(generate_pulse_wave(amplitude, frequency, phase, 0, 16), generate_pulse_wave(amplitude2, frequency2, phase2, 0, 16), this.config.noise_level);
-                    sendData(methods, data);
-                    break;
-                case 'single_random':
-
-                    var data = process_list_to_json(generate_random_data(-1, 1, 16), 0);
-                    sendData(methods, data);
-                    break;
-                case 'double_random':
-
-                    var data = process_list_to_json_two_dataset(generate_random_data(-1, 1, 16), generate_random_data(-1, 1, 16), 0);
-                    sendData(methods, data);
-                    break;
-
-            }
-            await new Promise(r => setTimeout(r, 500));
-            this.send_few_value_to_server(index - 1, methods);
-        }
-
-
-    }
-
-
-
-
-    retrive_linear_list_based_on_type(type) {
-        var random_value_start, get_second_value, get_final_result, random_index, random_index2;
-        var temp_list = [];
-        switch (type) {
-            case 'up_up':
-                //get first random value 
-                random_value_start = getRandomArbitrary(-1, 0.25);
-                get_second_value = getRandomArbitrary(random_value_start, 0.75);
-                get_final_result = getRandomArbitrary(get_second_value, 1);
-
-                // get random index
-                random_index = getRandomInt(2, 14);
-                random_index2 = 16 - random_index;
-
-                break;
-            case 'up_down':
-
-                random_value_start = getRandomArbitrary(-1, 0.75);
-                get_second_value = getRandomArbitrary(random_value_start, 1);
-                get_final_result = getRandomArbitrary(get_second_value, -1);
-
-                // get random index
-                random_index = getRandomInt(2, 14);
-                random_index2 = 16 - random_index;
-
-                break;
-            case 'down_up':
-
-                random_value_start = getRandomArbitrary(0.75, 0.1);
-                get_second_value = getRandomArbitrary(-1, random_value_start);
-                get_final_result = getRandomArbitrary(get_second_value, 1);
-
-                // get random index
-                random_index = getRandomInt(2, 14);
-                random_index2 = 16 - random_index;
-
-                break;
-            case 'down_down':
-
-                random_value_start = getRandomArbitrary(0.75, 0.1);
-                get_second_value = getRandomArbitrary(-0.65, random_value_start);
-                get_final_result = getRandomArbitrary(get_second_value, -1);
-
-                // get random index
-                random_index = getRandomInt(2, 14);
-                random_index2 = 16 - random_index;
-
-                break;
-        }
-        temp_list = generate_trend_data_by_serveral_key_point([random_value_start, get_second_value, get_final_result], [random_index, random_index2], 0);
-        return temp_list;
-    }
-
-
-    random_graph() {
-        switch (this.config.test_type) {
-            case 'single_linear':
-                console.log("single_linear");
-                console.log("start to be random");
-                this.trigger_linear_random_generate();
-                break;
-            case 'single_cycle':
-                console.log("single_cycle");
-                console.log("start to be random");
-                this.trigger_cycle_random_generate();
-                break;
-            case 'single_pulse':
-                console.log("single_pulse");
-                console.log("start to be random");
-                this.trigger_pulse_random_generate();
-                break;
-            case 'double_linear':
-                this.trigger_linear_random_generate(true);
-                console.log("double_linear");
-                break;
-            case 'double_cycle':
-                this.trigger_cycle_random_generate(true);
-                break;
-            case 'double_pulse':
-                this.trigger_pulse_random_generate(true);
-                break;
-
-
-        }
-
-    }
 
     update_config(config) {
         this.stop();
@@ -412,14 +245,24 @@ export class StateTimer {
     }
 
     process_static_data_point(data_point, index) {
-        var temp_index_position = 0;
+        var temp_index_position = 0.5;
 
+        console.log(this.totalData.length);
 
+        // TODO this function need to be changed with a mapping function
+        if (this.totalData.length !=1){
         temp_index_position = 1 / (this.totalData.length - 1) * index;
+        }else{
+
+        }
+        
 
         var [x_cord, y_cord, z_cord] =
             value2DtoCartersian(this.config.radius, temp_index_position, this.timer, 0, 1, -this.config.theta / 2, +this.config.theta / 2, 0, 1, -0.5, +0.5);
-        //console.log(data_point);
+
+        console.log(this.config.radius, temp_index_position, this.timer, -this.config.theta , this.config.theta )
+        console.log(x_cord, y_cord, z_cord);
+
         var temp_coord = this.vis3d.get_localPoints(x_cord, y_cord, z_cord);
         //console.log(temp_coord)
         this.music_core.updatePan(index, this.uniform_value, temp_coord[1] * this.config.dynamic_scale, temp_coord[0] * this.config.dynamic_scale, temp_coord[2] * this.config.dynamic_scale);
