@@ -24,7 +24,7 @@ var global_config =
           "yaw": 0,
           "roll": 0
         },
-        "mode": "percnpan",
+        "mode": "pitchnpan",
         "dataset": "default",
         "voice_over_time": 1,
         "pitchnpan_interval": 1,

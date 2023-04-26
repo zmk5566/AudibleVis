@@ -225,6 +225,7 @@ export class ThreeDimensionAuidoCore {
       console.log(index);
       this.synths[index].triggerAttack(this.caculate_freq(timer_status), now + index * interval);
       this.synths[index].triggerRelease(now + interval * (index + 1));
+      
       this.panners[index].setPosition(panX, panY, panZ);
     } else {
       this.volumes[index].set({ "mute": true });
