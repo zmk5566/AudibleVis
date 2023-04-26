@@ -481,33 +481,46 @@ function load_next_text_graph() {
 }
 
 
-function updated_method (input_method) {
+function updated_method () {
     console.log("updated method");
+
+    // sleep for 1 second
+
+    var input_method = config[index].condition;
+
+    console.log("input method", input_method);
+    console.log("current index", index);
+    console.log(config);
 
     switch (input_method) {
         case "pitch":
             console.log("pitch");
-
             // global_config.audio_config.mode = value;
             // state_timer.update_config(global_config);
-
-            global_config.audio_config.mode = "pitchnpan";
+            state_timer.config.audio_config.mode= "pitchnpan";
             break;
         case "spatial":
             console.log("spatial");
-            global_config.audio_config.mode = "percnpan";
+            state_timer.config.audio_config.mode = "percnpan";
             break;
         case "tempo":
             console.log("tempo");
-            global_config.audio_config.mode = "percnrepeat";
+            state_timer.config.audio_config.mode = "percnrepeat";
             break;
     }
+    //state_timer.update_config(global_config);
+}
 
-
-    state_timer.update_config(global_config);
+function delay_run() {
+    console.log("delay run");
+    setTimeout(function () {
+        console.log("delay run 2");
+        updated_method();
+    }, 50);
 }
 
 
-global_update_method = updated_method;
+
+global_update_method =  delay_run;
 
 

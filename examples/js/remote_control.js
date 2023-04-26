@@ -38,8 +38,9 @@ function previous () {
 function load_new_sample(){
     document.getElementById("main").innerHTML = template({ config: config[index] });
     console.log("sample loaded", config[index]);
-    global_update_method(config[index].condition);
     simple_update_test_data_selection(config[index]);
+
+    global_update_method();
 }
 
 function save () {
