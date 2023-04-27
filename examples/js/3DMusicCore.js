@@ -124,7 +124,7 @@ export class ThreeDimensionAuidoCore {
 
       var over_past_time = 0.5;
       this.players[index].start(now + index * interval + time_balance);
-      this.panners[index].setPosition(panX, panY, panZ);
+      //this.panners[index].setPosition(panX, panY, panZ);
 
     } else {
       this.volumes[index].set({ "mute": true });

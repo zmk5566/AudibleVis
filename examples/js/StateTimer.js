@@ -129,7 +129,8 @@ export class StateTimer {
 
         }
 
-        //spatial updates
+        //spatial 
+
 
         this.totalData.forEach((d, i) => {
             if (this.config.audio_config.mode !== "percnrepeat" && this.config.audio_config.mode !== "pitchnpan") {
@@ -143,7 +144,6 @@ export class StateTimer {
 
 
         })
-
 
 
         //console.log(this.chart.gettotalData()[2]);
@@ -285,7 +285,7 @@ export class StateTimer {
             value2DtoCartersian(this.config.radius, data_point.uniform_value, this.timer, 0, 1, -this.config.theta / 2, +this.config.theta / 2, 0, 1, -0.5, +0.5);
         //console.log(data_point);
         var temp_coord = this.vis3d.get_localPoints(x_cord, y_cord, z_cord);
-        console.log("processing data pan", temp_coord)
+        //console.log("processing data pan", temp_coord)
         //update the pan
         this.music_core.updatePan(index, this.timer, temp_coord[1] * this.config.dynamic_scale, temp_coord[0] * this.config.dynamic_scale, temp_coord[2] * this.config.dynamic_scale);
     }
