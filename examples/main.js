@@ -6,7 +6,7 @@ console.log(global_config);
 var state_timer = new StateTimer(Tone.context, global_config);
 state_timer.init();
 var current_index = 0;
-var max_range = 12;
+var max_range = 72;
 var current_test = "no-test";
 
 var gui = new GUI();
@@ -136,6 +136,8 @@ actual_test_folder.add(global_config, 'the_test_order', [0, 1, 2, 3, 4, 5]).name
 
 
 })
+
+var hide_display=false;
 // add a button to the folder actual_test_folder
 var generate_function = {
     add: function () {
@@ -154,7 +156,7 @@ var generate_function = {
         console.log("current dataset", value);
         global_config.test_type = value;
 
-        current_index = config[0].data_index + 1 + 4 * global_config.subject_index;
+        current_index = config[0].data_index + 1 + 4 * global_config.subject_index+4*Math.floor(index/24);
         current_test = value;
 
         state_timer.load_value_of_index(current_index, current_test);
@@ -171,15 +173,32 @@ var generate_function = {
 
     save: function () {
         save_data_to_backend();
-    }
-};
+    },
 
+    hide: function(){
+        if (hide_display==false){
+            document.getElementById("all_vis").style.display = "none";
+            hide_display=true;
+        }else{
+            document.getElementById("all_vis").style.display = "block";
+            hide_display=false;
+        }
+    }
+}
+
+actual_test_folder.add(global_config.audio_config, 'dataset', ['default', 'train_range_single', 'train_range_double', 'train_linear_single',"train_linear_double"]).name('Dataset').onChange(value => {
+    console.log("current dataset", value);
+    state_timer.update_config(global_config);
+    state_timer.update_database(value);
+});
 
 
 
 actual_test_folder.add(generate_function, 'add').name('Press to Load Test');
 
 actual_test_folder.add(generate_function, 'save').name('SAVE DATA');
+
+actual_test_folder.add(generate_function, 'hide').name('HIDE VIS');
 
 
 test_folder.add(global_config, 'test_method', ['pitch', 'spatial', 'tempo']).name('Test Method').onChange(value => {
@@ -193,15 +212,6 @@ test_folder.add(global_config, 'test_method', ['pitch', 'spatial', 'tempo']).nam
 
 
 //var get_random_value_function = state_timer.random_graph.bind(state_timer);
-
-
-folder0.add(global_config.audio_config, 'dataset', ['default', 'linear', 'linear_change', 'sinwave']).name('Dataset').onChange(value => {
-    global_config.test_type = value;
-    console.log("current dataset", value);
-    state_timer.update_database(value);
-});
-
-
 
 
 mode_folder.add(global_config, 'test_type', ['default', 'single_linear', 'single_cycle', 'single_pulse', 'double_linear', 'double_cycle', 'double_pulse']).name('Dataset').onChange(value => {
@@ -255,11 +265,6 @@ folder0.close();
 
 
 
-folder0.add(global_config.audio_config, 'dataset', ['default', 'linear', 'linear_change', 'sinwave']).name('Dataset').onChange(value => {
-    console.log("current dataset", value);
-    state_timer.update_config(global_config);
-    state_timer.update_database(value);
-});
 
 
 //create a function to randomly retrive a function 
@@ -443,7 +448,7 @@ function update_test_data_selection(training_config_info) {
     console.log("current dataset", value);
     global_config.test_type = value;
 
-    current_index = training_config_info.data_index + 1 + 4 * global_config.subject_index;
+    current_index = training_config_info.data_index + 1 + 4 * global_config.subject_index+4*Math.floor(index/24);;
     current_test = value;
 
     state_timer.load_value_of_index(current_index, current_test);

@@ -39,6 +39,23 @@ def save_json(subject_identifier: str, json_data: List[dict]):
     # save this json
     folder_name = "exp"
     check_folder_exists(folder_name)
+
+    try:
+        df = pd.DataFrame(json_data)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f'Error converting JSON data to dataframe: {str(e)}')
+    
+    # Save the dataframe as a CSV file with an incremented filename
+    try:
+        filename = f'{get_next_filename(folder_name)}.csv'
+        filepath = os.path.join(folder_name, filename)
+        df.to_csv(filepath, index=False)
+
+
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f'Error saving dataframe to CSV: {str(e)}')
+    
     try:
         filename = f'{subject_identifier}.json'
         filepath = os.path.join(folder_name, filename)
