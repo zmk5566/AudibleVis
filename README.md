@@ -11,8 +11,3 @@ https://zmk5566.github.io/soni4vis-spatial/examples/simple_analysis.html
 ## Simple 3D Audio 
 
 https://zmk5566.github.io/soni4vis-spatial/examples/simple_3d_source_with_ar.html 
-
-
-## D3 linechart with sonification and AR
-
-https://zmk5566.github.io/soni4vis-spatial/examples/ar_linechart_withdata.html
