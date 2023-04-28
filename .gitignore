@@ -1,1 +1,5 @@
 node_modules
+*.csv#
+*.pyc
+*.pyc
+*.pyc
