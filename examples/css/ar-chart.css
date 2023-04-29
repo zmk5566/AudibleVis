@@ -63,12 +63,25 @@ select{
     width:950px;
   
   }
+
+  #all_vis{
+    text-align: -webkit-center;
+  }
   
   .flex-container {
     margin-top:180px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    text-align: center;
+  }
+
+  .entry{
+   margin-top: 200px;
+  }
+
+  #start_test{
+    text-align: -webkit-center;
   }
 
   .button {

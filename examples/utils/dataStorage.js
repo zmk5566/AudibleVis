@@ -16,6 +16,7 @@ var global_config =
       "theta": 2.09439510239,
       "unit_based_sample_play":true,
       "test_mode": "test_mode",
+      "is_testing": false,
       "encoding_method":"TIME-PAN-(PERC-SEQ)",
       "audio_config": {
         "voice_over": false,
@@ -230,3 +231,7 @@ var global_config =
 
 
   }
+
+  var output_data = [];
+
+  var global_data_save = [];

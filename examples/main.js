@@ -8,6 +8,8 @@ state_timer.init();
 var current_index = 0;
 var max_range = 72;
 var current_test = "no-test";
+var test_index = 0;
+var is_testing =false ;
 
 var gui = new GUI();
 
@@ -20,42 +22,53 @@ var test_folder = gui.addFolder('Test Setting');
 var actual_test_folder = gui.addFolder('Actual Test Setting');
 
 
-function save_data_to_backend() {
-    // use adjax to construst and send data to backend
-    var current_subject_index = global_config.subject_index;
-    var current_test_type = global_config.test_type;
-    // create an empty array the ready 
-    var data_to_send = [];
-    var subject_identifier = global_config.subject_identifier;
-    console.log(config);
-    // loop through all the answers in the config
-    for (var i = 0; i < config.length; i++) {
-        // get the answer
-        var answer = config[i].answer;
-        var single_data = {
-            "subject_index": current_subject_index,
-            "data_index": config[i].data_index,
-            "question_id":config[i].question_id,
-
-            //"test_type": config[i].type,
-            //"test_content": config[i].content,
-            "answer": config[i].answer
+function prepare_the_output_data(){
+        // use adjax to construst and send data to backend
+        var current_subject_index = global_config.subject_index;
+        var current_test_type = global_config.test_type;
+        // create an empty array the ready 
+        var data_to_send = [];
+        var subject_identifier = global_config.subject_identifier;
+        console.log(config);
+        // loop through all the answers in the config
+        for (var i = 0; i < config.length; i++) {
+            // get the answer
+            var answer = config[i].answer;
+            var single_data = {
+                "subject_index": current_subject_index,
+                "data_index": config[i].data_index,
+                "question_id":config[i].question_id,
+    
+                //"test_type": config[i].type,
+                //"test_content": config[i].content,
+                "answer": config[i].answer
+            }
+            data_to_send.push(single_data);
+    
+    
+            // looping the 
         }
-        data_to_send.push(single_data);
+        return data_to_send;
+    
+}
+
+function save_data_to_backend() {
 
 
-        // looping the 
-    }
-
+    var output_data = prepare_the_output_data();
+    
+    save_the_answer(output_data);
 
     // send data to backend without jquery
 
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:8000/exp/"+subject_identifier, true);
+    xhr.open("POST", "http://localhost:8000/exp/"+global_config.subject_identifier, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.send(JSON.stringify(data_to_send));
+    xhr.send(JSON.stringify(output_data));
 
 }
+
+global_data_save = save_data_to_backend;
 
 
 
@@ -145,7 +158,7 @@ var generate_function = {
         console.log("clicked")
         const source = document.getElementById("entry-template").innerHTML;
         const template = Handlebars.compile(source);
-        document.getElementById("main_control_pannel").style.display = "none";
+        //document.getElementById("main_control_pannel").style.display = "none";
 
         document.getElementById("main").innerHTML = template({ config: config[index] });
 
@@ -168,6 +181,10 @@ var generate_function = {
 
         update_gui();
         actual_test_folder.close();
+
+        document.getElementById("training_panel").style.display = "block";
+        document.getElementById("main").style.display = "none";
+
 
     },
 
@@ -453,6 +470,11 @@ function update_test_data_selection(training_config_info) {
 
     state_timer.load_value_of_index(current_index, current_test);
     document.getElementById("test_index").innerHTML = current_index;
+    
+
+    console.log("current index", current_index%24);
+
+
 
     // }
     update_gui();
@@ -465,18 +487,45 @@ function update_test_data_selection(training_config_info) {
 simple_update_test_data_selection = update_test_data_selection;
 
 
+function next_text(){
+    var test_list = ['default','train_range_single', 'train_range_double', 'train_linear_single',"train_linear_double"]
+    if (test_index < test_list.length){
+        state_timer.update_database(test_list[test_index]);
+        test_index = test_index + 1;
+    }else{
+        console.log("test complete");
+        document.getElementById("start_value").style.display = "block";
+    }
+
+}
+
+function start_test(){
+    // hide the visulization and display
+    //generate_function.hide();
+    //hide the start test button
+    document.getElementById("training_panel").style.display = "none";
+    document.getElementById("main").style.display = "block";
+    state_timer.load_value_of_index(current_index, current_test);
+
+}
+
+
 document.getElementById("start").onclick = state_timer.start.bind(state_timer);
 document.getElementById("pitch").onchange = () => {
     console.log('it changed'); // Do something
 }
 document.getElementById("stop").onclick = state_timer.stop.bind(state_timer);
-document.getElementById("single_value").onclick = load_next_text_graph;
+document.getElementById("single_value").onclick = next_text;
+document.getElementById("start_value").onclick = start_test;
+
+
 
 
 
 function load_next_text_graph() {
     current_index = current_index + 1;
     if (current_index <= max_range) {
+
         console.log("current index", current_index);
         state_timer.load_value_of_index(current_index, current_test);
         document.getElementById("test_index").innerHTML = current_index;
@@ -497,6 +546,12 @@ function updated_method () {
     console.log("current index", index);
     console.log(config);
 
+    console.log("current reminder", index%24 );
+
+
+
+
+
     switch (input_method) {
         case "pitch":
             console.log("pitch");
@@ -513,14 +568,31 @@ function updated_method () {
             state_timer.config.audio_config.mode = "percnrepeat";
             break;
     }
+
+    if (index%24 == 0){
+        console.log("change method");
+        document.getElementById("training_panel").style.display = "block";
+        document.getElementById("main").style.display = "none";
+        initialize_test_index();
+
+    }
+
     //state_timer.update_config(global_config);
 }
 
+function initialize_test_index(){
+    test_index = 0;
+    //load test data
+    state_timer.update_database("default");
+    //hide the button of start test
+    document.getElementById("start_value").style.display = "none";
+}
 function delay_run() {
     console.log("delay run");
     setTimeout(function () {
         console.log("delay run 2");
-        updated_method();
+
+            updated_method();
     }, 50);
 }
 

@@ -36,10 +36,17 @@ function previous () {
 }
 
 function load_new_sample(){
+    console.log("load_new_sample",index);
+    
+    if (index < 72){
     document.getElementById("main").innerHTML = template({ config: config[index] });
     console.log("sample loaded", config[index]);
     simple_update_test_data_selection(config[index]);
 
+}else{
+    global_data_save();
+}
+    
     global_update_method();
 }
 
@@ -49,6 +56,7 @@ function save () {
     console.log(answer, config[index].question_id);
     config[index].answer = answer;
     index++;
+    
     // console.log(template({ config: config[index] }));
     load_new_sample();
     update_title_color();
@@ -79,4 +87,15 @@ function update_title_color(){
     var title_element = document.getElementById("title_element").style.backgroundColor = color;
 
 }
+
+
+function save_the_answer(json_data){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json_data));
+    var dlAnchorElem = document.getElementById('downloadAnchorElem');
+    dlAnchorElem.setAttribute("href",     dataStr     );
+    dlAnchorElem.setAttribute("download", global_config.subject_identifier+".json");
+    dlAnchorElem.click();
+}
+
+
 

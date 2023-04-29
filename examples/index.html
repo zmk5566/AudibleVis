@@ -19,7 +19,7 @@
 
 <body style="width: 100vw;">
 
-  <div class="flex-container" >
+  <div class="flex-container" id= "training_panel" style="display:none">
     <div id="all_vis">
     <div id="vis_3d">
     </div>
@@ -34,7 +34,11 @@
         <button id="stop" class="button">stop</button>
       </div>
       <div>
-        <button id="single_value" class="button">next question</button>
+        <button id="single_value" class="button">Next Test Dataset</button>
+
+      </div>
+      <div id="start_test">
+        <button id="start_value" class="button" style="display:none">Start This Test</button>
       </div>
 
     </div>
@@ -60,8 +64,10 @@
             </ul>
         </div>
     </script>
-    <div id="main"></div>
+    <div id="main" style="display: none;"></div>
+    <a id="downloadAnchorElem" style="display:none"></a>
     <script src="./js/remote_control.js"></script>
+    
 </body>
 
 <footer>
