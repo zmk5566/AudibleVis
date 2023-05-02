@@ -1,6 +1,6 @@
 # AudibleVis
 
-A sonification project which aid the help people who are blind and visual impariment.
+A Sonification project which aid the help people who are blind and visual impariment.
 
 Examples are provided:
 
