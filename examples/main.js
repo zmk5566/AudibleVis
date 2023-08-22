@@ -116,11 +116,11 @@ actual_test_folder.add(global_config, 'subject_identifier', [1, 2, 3, 4, 5, 6, 7
 })
 
 
-actual_test_folder.add(global_config, 'subject_index', [0, 1, 2, 3]).name('Subject Index').onChange(value => {
+// actual_test_folder.add(global_config, 'subject_index', [0, 1, 2, 3]).name('Subject Index').onChange(value => {
 
-    console.log(value);
+//     console.log(value);
 
-})
+// })
 
 actual_test_folder.add(global_config, 'the_test_order', [0, 1, 2, 3, 4, 5]).name('Test Order').onChange(value => {
 
@@ -203,7 +203,7 @@ var generate_function = {
     }
 }
 
-actual_test_folder.add(global_config.audio_config, 'dataset', ['default', 'train_range_single', 'train_range_double', 'train_linear_single',"train_linear_double"]).name('Dataset').onChange(value => {
+actual_test_folder.add(global_config.audio_config, 'dataset', ['default']).name('Dataset').onChange(value => {
     console.log("current dataset", value);
     state_timer.update_config(global_config);
     state_timer.update_database(value);
@@ -213,9 +213,9 @@ actual_test_folder.add(global_config.audio_config, 'dataset', ['default', 'train
 
 actual_test_folder.add(generate_function, 'add').name('Press to Load Test');
 
-actual_test_folder.add(generate_function, 'save').name('SAVE DATA');
+//actual_test_folder.add(generate_function, 'save').name('SAVE DATA');
 
-actual_test_folder.add(generate_function, 'hide').name('HIDE VIS');
+//actual_test_folder.add(generate_function, 'hide').name('HIDE VIS');
 
 
 test_folder.add(global_config, 'test_method', ['pitch', 'spatial', 'tempo']).name('Test Method').onChange(value => {
@@ -488,7 +488,7 @@ simple_update_test_data_selection = update_test_data_selection;
 
 
 function next_text(){
-    var test_list = ['default','train_range_single', 'train_range_double', 'train_linear_single',"train_linear_double"]
+    var test_list = ['default']
     if (test_index < test_list.length){
         state_timer.update_database(test_list[test_index]);
         test_index = test_index + 1;
