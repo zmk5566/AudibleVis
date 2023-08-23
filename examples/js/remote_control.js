@@ -38,7 +38,7 @@ function previous () {
 function load_new_sample(){
     console.log("load_new_sample",index);
     
-    if (index < 72){
+    if (index < 32){
     document.getElementById("main").innerHTML = template({ config: config[index] });
     console.log("sample loaded", config[index]);
     simple_update_test_data_selection(config[index]);

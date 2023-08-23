@@ -1,17 +1,5 @@
-date,A,B
-0,0.8353503749054747,-0.3515250958367582
-1,0.8353503749054747,-0.3515250958367582
-2,0.8353503749054747,-0.3515250958367582
-3,0.8353503749054747,-0.3515250958367582
-4,0.8353503749054747,-0.3515250958367582
-5,0.8353503749054747,-0.3515250958367582
-6,0.8353503749054747,-0.3515250958367582
-7,0.8353503749054747,-0.3515250958367582
-8,0.8353503749054747,-0.3515250958367582
-9,0.8353503749054747,-0.3515250958367582
-10,0.8353503749054747,-0.3515250958367582
-11,0.8353503749054747,-0.3515250958367582
-12,0.8353503749054747,-0.3515250958367582
-13,0.8353503749054747,-0.3515250958367582
-14,0.8353503749054747,-0.3515250958367582
-15,0.8353503749054747,-0.3515250958367582
+Here is a detailed reading note on the paper "Adversarial T-shirt! Evading Person Detectors in A Physical World" by Kaidi Xu, Gaoyuan Zhang, Sijia Liu, Quanfu Fan, Mengshu Sun, Hongge Chen, Pin-Yu Chen, Yanzhi Wang & Xue Lin:
+
+The paper discusses how deep neural networks (DNNs) are vulnerable to adversarial attacks. The so-called physical adversarial examples deceive DNN-based decision-makers by attaching adversarial patches to real objects. However, most of the existing works on physical adversarial attacks focus on static objects such as glass frames, stop signs and images attached to cardboard. In this work, the authors propose Adversarial T-shirts, a robust physical adversarial example for evading person detectors even if it could undergo non-rigid deformation due to a moving person’s pose changes . To the best of their knowledge, this is the first work that models the effect of deformation for designing physical adversarial examples with respect to non-rigid objects such as T-shirts . They show that the proposed method achieves 74% and 57% attack success rates in the digital and physical worlds respectively against YOLOv2 . In contrast, the state-of-the-art physical attack method to fool a person detector only achieves 18% attack success rate . Furthermore, by leveraging min-max optimization, they extend their method to the ensemble attack setting against two object detectors YOLO-v2 and Faster R-CNN simultaneously .
+
+I personally really appriciate the angle the author pick as a way of provoking the establishments and involve the attack in the everyday life scenario. 

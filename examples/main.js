@@ -6,10 +6,11 @@ console.log(global_config);
 var state_timer = new StateTimer(Tone.context, global_config);
 state_timer.init();
 var current_index = 0;
-var max_range = 72;
+var max_range = 8;
 var current_test = "no-test";
 var test_index = 0;
 var is_testing =false ;
+var single_set_questions_total_num = 16;
 
 var gui = new GUI();
 
@@ -74,8 +75,7 @@ global_data_save = save_data_to_backend;
 
 const all_conditions = [
     'pitch',
-    'spatial',
-    'tempo'
+    'spatial'
 ]
 
 test_folder.close();
@@ -125,17 +125,17 @@ actual_test_folder.add(global_config, 'subject_identifier', [1, 2, 3, 4, 5, 6, 7
 actual_test_folder.add(global_config, 'the_test_order', [0, 1, 2, 3, 4, 5]).name('Test Order').onChange(value => {
 
     if (value == 0) {
-        config = overall_test(0, 4, ["pitch", "spatial", "tempo"]);
+        config = overall_test(0, 4, ["pitch", "spatial"]);
     } else if (value == 1) {
-        config = overall_test(0, 4, ["pitch", "tempo", "spatial"]);
+        config = overall_test(0, 4, ["pitch", "spatial"]);
     } else if (value == 2) {
-        config = overall_test(0, 4, ["spatial", "pitch", "tempo"]);
+        config = overall_test(0, 4, ["spatial", "pitch"]);
     } else if (value == 3) {
-        config = overall_test(0, 4, ["spatial", "tempo", "pitch"]);
+        config = overall_test(0, 4, ["spatial", "pitch"]);
     } else if (value == 4) {
-        config = overall_test(0, 4, ["tempo", "pitch", "spatial"]);
+        config = overall_test(0, 4, ["pitch", "spatial"]);
     } else if (value == 5) {
-        config = overall_test(0, 4, ["tempo", "spatial", "pitch"]);
+        config = overall_test(0, 4, [ "spatial", "pitch"]);
     }
 
     console.log(config);
@@ -169,7 +169,7 @@ var generate_function = {
         console.log("current dataset", value);
         global_config.test_type = value;
 
-        current_index = config[0].data_index + 1 + 4 * global_config.subject_index+4*Math.floor(index/24);
+        current_index = config[0].data_index + 1 + 4 * global_config.subject_index+4*Math.floor(index/single_set_questions_total_num);
         current_test = value;
 
         state_timer.load_value_of_index(current_index, current_test);
@@ -218,7 +218,7 @@ actual_test_folder.add(generate_function, 'add').name('Press to Load Test');
 //actual_test_folder.add(generate_function, 'hide').name('HIDE VIS');
 
 
-test_folder.add(global_config, 'test_method', ['pitch', 'spatial', 'tempo']).name('Test Method').onChange(value => {
+test_folder.add(global_config, 'test_method', ['pitch', 'spatial']).name('Test Method').onChange(value => {
 
     console.log("choose the method");
 
@@ -465,14 +465,14 @@ function update_test_data_selection(training_config_info) {
     console.log("current dataset", value);
     global_config.test_type = value;
 
-    current_index = training_config_info.data_index + 1 + 4 * global_config.subject_index+4*Math.floor(index/24);;
+    current_index = training_config_info.data_index + 1 + 4 * global_config.subject_index+4*Math.floor(index/single_set_questions_total_num);;
     current_test = value;
 
     state_timer.load_value_of_index(current_index, current_test);
     document.getElementById("test_index").innerHTML = current_index;
     
 
-    console.log("current index", current_index%24);
+    console.log("current index", current_index%single_set_questions_total_num);
 
 
 
@@ -546,7 +546,7 @@ function updated_method () {
     console.log("current index", index);
     console.log(config);
 
-    console.log("current reminder", index%24 );
+    console.log("current reminder", index%single_set_questions_total_num );
 
 
 
@@ -569,7 +569,7 @@ function updated_method () {
             break;
     }
 
-    if (index%24 == 0){
+    if (index%single_set_questions_total_num == 0){
         console.log("change method");
         document.getElementById("training_panel").style.display = "block";
         document.getElementById("main").style.display = "none";

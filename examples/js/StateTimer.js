@@ -18,6 +18,7 @@ export class StateTimer {
         this.music_core = new ThreeDimensionAuidoCore(3, this.config.audio_config);
         this.totalData = [];
         this.current_counter = 0;
+        this.total_num_data = 5;
     }
 
     init() {
@@ -106,7 +107,7 @@ export class StateTimer {
                 console.log(this.timer);
 
                 if (this.config.unit_based_sample_play === true) {
-                    this.totalData = this.chart.trigger_line_movement(Math.floor(this.timer * 16) / 16);
+                    this.totalData = this.chart.trigger_line_movement(Math.floor(this.timer * this.total_num_data) / this.total_num_data);
                 } else {
                     this.totalData = this.chart.trigger_line_movement(this.timer);
                 }
@@ -160,14 +161,14 @@ export class StateTimer {
         var phase = Math.random() * Math.PI * 2;
 
         if (!double) {
-            temp_list = process_list_to_json(generate_sinwave(amplitude, frequency, phase, 0, 16), this.config.noise_level);
+            temp_list = process_list_to_json(generate_sinwave(amplitude, frequency, phase, 0, this.total_num_data), this.config.noise_level);
         } else {
 
             var amplitude2 = Math.random() * 0.75 + 0.25;
             var frequency2 = Math.random() * 4 + 1;
             var phase2 = Math.random() * Math.PI * 2;
 
-            temp_list = process_list_to_json_two_dataset(generate_sinwave(amplitude, frequency, phase, 0, 16), generate_sinwave(amplitude2, frequency2, phase2, 0, 16), this.config.noise_level);
+            temp_list = process_list_to_json_two_dataset(generate_sinwave(amplitude, frequency, phase, 0, this.total_num_data), generate_sinwave(amplitude2, frequency2, phase2, 0, this.total_num_data), this.config.noise_level);
         }
 
         this.chart.process_the_data_draw(temp_list);
@@ -182,12 +183,12 @@ export class StateTimer {
         var frequency = Math.random() * 1 + 0.5;
         var phase = Math.random() * Math.PI * 2;
         if (!double) {
-            temp_list = process_list_to_json(generate_pulse_wave(amplitude, frequency, phase, 0, 16), this.config.noise_level);
+            temp_list = process_list_to_json(generate_pulse_wave(amplitude, frequency, phase, 0, this.total_num_data), this.config.noise_level);
         } else {
             var amplitude2 = Math.random() * 0.75 + 0.25;
             var frequency2 = Math.random() * 1 + 0.5;
             var phase2 = Math.random() * Math.PI * 2;
-            temp_list = process_list_to_json_two_dataset(generate_pulse_wave(amplitude, frequency, phase, 0, 16), generate_pulse_wave(amplitude2, frequency2, phase2, 0, 16), this.config.noise_level);
+            temp_list = process_list_to_json_two_dataset(generate_pulse_wave(amplitude, frequency, phase, 0, this.total_num_data), generate_pulse_wave(amplitude2, frequency2, phase2, 0, this.total_num_data), this.config.noise_level);
         }
 
         this.chart.process_the_data_draw(temp_list);
@@ -416,7 +417,7 @@ export class StateTimer {
 
     get_time_elapse() {
         //console.log(this.totalData.length);
-        this.time_consume = this.config.audio_config.pitchnpan_interval * 16;
+        this.time_consume = this.config.audio_config.pitchnpan_interval * this.total_num_data;
         return this.get_uniformed_time_elapse();
 
     }
