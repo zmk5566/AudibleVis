@@ -37,7 +37,7 @@ var global_config =
             "mute": false,
             "synth": {
               "oscillator": {
-                "type": "square"
+                "type": "triangle"
               },
               "envelope": {
                 "attack": 0,
